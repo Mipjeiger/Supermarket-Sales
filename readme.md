@@ -12,12 +12,25 @@
 - Build Streamlit for User Interface Forecasting dashboard
 - Alert using slack to notify on error logging in models, LLMs, & servers
 - CI/CD setp to deploy for all evaluation benchmarks passed. To integrate recycle provided system deployment
+- Streamlit Deployment
+- Optional -> Deploy to render cloud or railway cloud
 
 ## 📝 Notes
 - In practice, strong RAG evaluation combines:
     - Retrieval checks → Did we fetch the right information?
     - Answer checks → Did we explain it correctly?
     - Continuous testing → Are we improving over time?
+
+## 👨‍💻 Engineering Logs
+
+1. Machine Learning models result
+    ![alt text](Database/images/55279818-5B1E-4E8C-B863-794998A0E92A_4_5005_c.jpeg)
+    
+2. Has a database in Postgresql as engineering.supermarket
+    ![alt text](<Database/images/F9178668-ED61-42E3-9669-123D99585FEF copy.png>)
+    
+3. Docker created ML system tools for end-to-end
+    ![alt text](Database/images/CFA2A243-8DA6-47A8-9EB1-04F2BDCEC177_4_5005_c.jpeg)
 
 ## ⚙️ Service tools
 1. Slack

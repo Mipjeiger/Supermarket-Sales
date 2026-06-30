@@ -1,5 +1,6 @@
 from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from typing import Optional
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -22,11 +23,12 @@ class Settings(BaseSettings):
     DEBUG: bool = False
 
     # HuggingFace API Configuration
-    HUGGINGFACE_API_KEY: str
-    GROQ_API_KEY: str
+    HUGGINGFACE_API_KEY: Optional[str] = None
+    GROQ_API_KEY: Optional[str] = None
 
     # File Paths Configuration
     MODEL_PATH: Path = BASE_DIR / "Models"
+    MLFLOW_PATH: Path = BASE_DIR / "mlflow"
     DATA_RAW: Path = BASE_DIR / "app" / "data" / "raw" / "SuperStoreOrders - SuperStoreOrders.csv"
     DATA_CLEANED: Path = BASE_DIR / "app" / "data" / "cleaned" / "data_sales_cleaned.parquet"
 
@@ -37,6 +39,23 @@ class Settings(BaseSettings):
     POSTGRES_PORT: int
     POSTGRES_DB: str
 
+    # MLflow Configuration
+    MLFLOW_TRACKING_URI: str = f"http://mlflow:5002"
+    MLFLOW_ARTIFACT_LOCATION: str = str(MLFLOW_PATH / "artifacts")
+    MLFLOW_EXPERIMENT_NAME: str = "supermarket_sales"
+
+    # Slack Configuration
+    SLACK_WEBHOOK_URL: Optional[str] = None
+    SLACK_CHANNEL: str = "supermarket_sales"
+
+    # Prometheus Configuration
+    PROMETHEUS_PORT: int = 9090
+
+    # Monitoring Configuration
+    MONITORING_INTERVAL: int = 3600  # 1 hour
+    ALERT_THRESHOLD_RMSE: float = 1.5
+    ALERT_THRESHOLD_LATENCY: float = 1.0  # seconds
+
     # Computed property for the PostgreSQL connection URL
     @property
     def POSTGRES_URL(self) -> str:
@@ -45,3 +64,7 @@ class Settings(BaseSettings):
     
 # Singleton
 settings = Settings()
+
+# Create MLflow directories if they don't exist
+settings.MLFLOW_PATH.mkdir(exist_ok=True)
+(settings.MLFLOW_PATH / "artifacts").mkdir(exist_ok=True)
