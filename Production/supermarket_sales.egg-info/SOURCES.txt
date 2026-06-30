@@ -1,0 +1,13 @@
+pyproject.toml
+app/__init__.py
+app/config/__init__.py
+app/config/config.py
+app/database/__init__.py
+app/services/__init__.py
+app/src/__init__.py
+app/src/data_ingestion.py
+app/test/__init__.py
+supermarket_sales.egg-info/PKG-INFO
+supermarket_sales.egg-info/SOURCES.txt
+supermarket_sales.egg-info/dependency_links.txt
+supermarket_sales.egg-info/top_level.txt

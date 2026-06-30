@@ -5,7 +5,7 @@
     - XGBRegressor
     - RandomForestRegressor
 - Build LLM end-to-end
-    - Choose an LLM to fine-tune based on cost, resources, latency, security and accuray on answering to users
+    - Choose an LLM to fine-tune based on cost, resources, latency, security and accurate on answering to users
     - Host the LLMs or cloud server
     - Develop LLM Powered application to ensure deployed on production and proper testing
 - Observability setup to monitor latency, logging Machine learning models and LLMs Fine-tuned
