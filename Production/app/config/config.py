@@ -20,7 +20,11 @@ class Settings(BaseSettings):
     GROQ_API_KEY: str
 
     # Model Path Configuration
-    MODEL_PATH: str = BASE_DIR / "Production" / "Models"
+    MODEL_PATH: str = BASE_DIR / "Models"
+
+    # Data Ingestion Configuration
+    DATA_RAW: str = BASE_DIR / "data" / "raw"
+    DATA_CLEANED: str = BASE_DIR /  "data" / "cleaned"
 
     # PostgreSQL Database Configuration
     POSTGRES_USER: str
@@ -35,6 +39,5 @@ class Settings(BaseSettings):
         """Synchronus connection string for PostgreSQL database especially in Docker"""
         return f"postgresql+psycopg2://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
     
-
 # Singleton
 settings = Settings()
