@@ -1,0 +1,15 @@
+# Core
+streamlit==1.29.0
+
+# Data Processing
+pandas==2.1.4
+numpy==1.26.2
+
+# Visualization
+plotly==5.18.0
+
+# HTTP
+requests==2.31.0
+
+# Utilities
+python-dotenv==1.0.0

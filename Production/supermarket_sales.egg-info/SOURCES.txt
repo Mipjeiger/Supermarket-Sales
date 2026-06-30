@@ -1,5 +1,6 @@
 pyproject.toml
 app/__init__.py
+app/main.py
 app/config/__init__.py
 app/config/config.py
 app/database/__init__.py

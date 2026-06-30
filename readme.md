@@ -18,3 +18,15 @@
     - Retrieval checks → Did we fetch the right information?
     - Answer checks → Did we explain it correctly?
     - Continuous testing → Are we improving over time?
+
+## ⚙️ Service tools
+1. Slack
+2. Streamlit
+3. Docker
+4. FastAPI
+5. MLFlow
+6. Grafana
+7. Prometheus
+8. PostgreSQL
+9. Github actions
+10. Kubernetes

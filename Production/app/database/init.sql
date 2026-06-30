@@ -2,6 +2,7 @@
 CREATE SCHEMA engineering;
 
 DROP TABLE IF EXISTS engineering.supermarket;
+TRUNCATE TABLE engineering.supermarket;
 CREATE TABLE engineering.supermarket (
     id SERIAL PRIMARY KEY,
     order_id VARCHAR(100),
