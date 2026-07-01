@@ -14,6 +14,7 @@
 - CI/CD setp to deploy for all evaluation benchmarks passed. To integrate recycle provided system deployment
 - Streamlit Deployment
 - Optional -> Deploy to render cloud or railway cloud
+- Build agentic AI for scalabling system
 
 ## 📝 Notes
 - In practice, strong RAG evaluation combines:
