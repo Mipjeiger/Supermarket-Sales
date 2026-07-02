@@ -21,6 +21,8 @@ class Settings(BaseSettings):
     # API Configuration
     PROJECT_NAME: str = "SuperMarket Sales Prediction"
     DEBUG: bool = False
+    API_VERSION : str = "v1"
+    PORT: int = 8000
 
     # HuggingFace API Configuration
     HUGGINGFACE_API_KEY: Optional[str] = None
