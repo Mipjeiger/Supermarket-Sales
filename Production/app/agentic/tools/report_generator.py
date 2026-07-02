@@ -9,7 +9,6 @@ from pathlib import Path
 import markdown
 from jinja2 import Template
 import matplotlib.pyplot as plt
-import seaborn as sns
 from io import BytesIO
 import base64
 
