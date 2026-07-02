@@ -1,4 +1,5 @@
 import logging
+import time
 from typing import Dict, List, Optional
 
 logger = logging.getLogger(__name__)
@@ -6,9 +7,11 @@ logger = logging.getLogger(__name__)
 class AbuseInvestigationAgent:
     """Agent responsible for investigating potential abuse cases."""
 
-    def __init__(self, model=None, config: Optional[Dict] = None):
-        self.model = model
+    def __init__(self, llm_model=None, vector_store=None, config: Optional[Dict] = None):
+        self.model = llm_model
+        self.vector_store = vector_store
         self.config = config or {}
+        self.investigation_history: List[Dict] = [] # Store investigation steps and results
 
     async def investigate_abuse(self, user_data: Dict) -> Dict:
         """
@@ -39,8 +42,12 @@ class AbuseInvestigationAgent:
             "confidence": 0.8 if abuse_detected else 0.1,
             "findings": [{"evidence_item": e} for e in evidence],
             "recommendations": (
-                ["Suspend accound pending review"] if abuse_detected else ["No action needed"]
-            )
+                ["Suspend account pending review"] if abuse_detected else ["No action needed"]
+            ),
+            "investigated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
         }
+
+        # Save investigation result to history, so the system telemetry counts it correctly
+        self.investigation_history.append(result)
 
         return result

@@ -5,9 +5,11 @@ Configured for decoupled execution using HuggingFace External Cloud Inference.
 """
 
 import logging
+import time
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks
+from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks, Request
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 import uvicorn
 from datetime import datetime
 
@@ -20,7 +22,11 @@ from langchain_huggingface import HuggingFaceEndpoint
 # Import API routers (Safe from circular imports)
 from app.api.endpoints import (
     prediction,
-    monitoring
+    monitoring,
+    fraud_detection,
+    abuse_detection,
+    security_analysis,
+    agentic_investigation
 )
 
 # Import agentic framework components
@@ -113,20 +119,36 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+# Automated Prometheus metrics Middleware
+class PrometheusMetricsMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        start_time = time.time()
+        
+        response = await call_next(request)
+
+        # Calculate execution latency
+        duration = time.time() - start_time
+
+        # Gather route information for clean telemetry
+        route_path = request.scope.get("route").path if request.scope.get("route") else request.url.path
+
+        # Track metrics for Prometheus
+        MetricsCollector.track_api_request(
+            endpoint=route_path,
+            method=request.method,
+            status_code=response.status_code,
+        )
+
+        return response
+
+# Middleware components
+app.add_middleware(PrometheusMetricsMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-)
-
-# Late imports to ensure routers read cleanly from app.state dependencies
-from app.api.endpoints import (
-    fraud_detection,
-    abuse_detection,
-    security_analysis,
-    agentic_investigation
 )
 
 # Include routers
@@ -206,6 +228,5 @@ if __name__ == "__main__":
     uvicorn.run(
         "app.main:app",
         host=settings.HOST,
-        port=settings.PORT,
-        reload=settings.DEBUG
+        port=settings.PORT
     )

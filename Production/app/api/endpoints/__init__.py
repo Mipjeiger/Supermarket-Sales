@@ -5,7 +5,8 @@ from app.api.endpoints import (
     abuse_detection,
     security_analysis,
     agentic_investigation,
-    monitoring
+    monitoring,
+    routes
 )
 
 __all__ = [
@@ -14,5 +15,6 @@ __all__ = [
     'abuse_detection',
     'security_analysis',
     'agentic_investigation',
-    'monitoring'
+    'monitoring',
+    'routes'
 ]
