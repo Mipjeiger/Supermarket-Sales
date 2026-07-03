@@ -224,6 +224,22 @@ async def system_status():
         "timestamp": datetime.now().isoformat()
     }
 
+@app.get("/models")
+async def list_models():
+    """List available ML models from the configured directory."""
+    try:
+        from app.ml.traditional.list_models import load_models
+        models = load_models()
+        return {
+            "available_models": models,
+            "timestamp": datetime.now().isoformat(),
+            "Message": f"Successfully loaded {len(models)} models from the Models directory."
+        }
+
+    except Exception as e:
+        logger.error(f"❌ Error listing models: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error listing models: {str(e)}")
+
 if __name__ == "__main__":
     uvicorn.run(
         "app.main:app",

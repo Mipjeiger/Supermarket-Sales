@@ -1,9 +1,13 @@
 ## 📊 Project structure for enterprise Supermarket Sales Prediction flows
 
-- Build machine learning models using regressor algorithm
-    - LinearRegression
-    - XGBRegressor
-    - RandomForestRegressor
+- Build Machine Learning models to help LLM judge prediction for reason
+    - Build machine learning models using regressor algorithm for sales prediction
+        - LinearRegression
+        - XGBRegressor
+        - RandomForestRegressor
+    - Build entity Fraud prediction using ML models and analysis factor to integrate with streamlit
+    - Build entity Abuse detection for production using ML models and analysis factor to integrate with streamlit
+    - Build entity Security agent to fast investigate on LLM analysis in main app
 - Build LLM end-to-end
     - Choose an LLM to fine-tune based on cost, resources, latency, security and accurate on answering to users
     - Host the LLMs or cloud server

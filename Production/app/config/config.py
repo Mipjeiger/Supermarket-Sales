@@ -30,6 +30,7 @@ class Settings(BaseSettings):
 
     # File Paths Configuration
     MODEL_PATH: Path = BASE_DIR / "Models"
+    MODEL_PATH_ML: list = list(MODEL_PATH.glob("*.pkl"))  # List all .pkl files in the Models directory
     MLFLOW_PATH: Path = BASE_DIR / "mlflow"
     DATA_RAW: Path = BASE_DIR / "app" / "data" / "raw" / "SuperStoreOrders - SuperStoreOrders.csv"
     DATA_CLEANED: Path = BASE_DIR / "app" / "data" / "cleaned" / "data_sales_cleaned.parquet"
