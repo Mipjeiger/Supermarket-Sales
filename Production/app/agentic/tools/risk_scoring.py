@@ -302,7 +302,7 @@ class RiskScoringTool:
                 'value': data.get('sales')
             })
         
-        if data.get('discount', 0) > 0.35:
+        if data.get('discount', 0) > 0.4:
             risk_factors.append({
                 'factor': 'High discount rate',
                 'severity': 'medium',
