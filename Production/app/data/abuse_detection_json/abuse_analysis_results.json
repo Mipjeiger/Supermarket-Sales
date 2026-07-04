@@ -1,0 +1,1823 @@
+[
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2011-03-11",
+    "abuse_score": 0.03888888888888889,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2011-03-11\n- Daily Orders: 1\n- Weekly Orders: 1.00\n- Monthly Orders: 1.00\n- Spike Ratio: 0.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99775, Requested 379. Please try again in 2m13.055999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2011-03-11 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 1.0,
+      "monthly_orders": 1.0,
+      "spike_ratio": 0.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2011-04-04",
+    "abuse_score": 0.04777777777777778,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2011-04-04\n- Daily Orders: 1\n- Weekly Orders: 2.00\n- Monthly Orders: 2.00\n- Spike Ratio: 0.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99774, Requested 666. Please try again in 6m20.16s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2011-04-04 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 2.0,
+      "monthly_orders": 2.0,
+      "spike_ratio": 0.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2011-07-03",
+    "abuse_score": 0.05666666666666667,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2011-07-03\n- Daily Orders: 1\n- Weekly Orders: 3.00\n- Monthly Orders: 3.00\n- Spike Ratio: 0.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99774, Requested 666. Please try again in 6m20.16s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2011-07-03 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 3.0,
+      "monthly_orders": 3.0,
+      "spike_ratio": 0.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2011-12-02",
+    "abuse_score": 0.13222222222222224,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2011-12-02\n- Daily Orders: 1\n- Weekly Orders: 4.00\n- Monthly Orders: 4.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99774, Requested 666. Please try again in 6m20.16s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2011-12-02 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 4.0,
+      "monthly_orders": 4.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2011-12-03",
+    "abuse_score": 0.1411111111111111,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2011-12-03\n- Daily Orders: 1\n- Weekly Orders: 5.00\n- Monthly Orders: 5.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99774, Requested 666. Please try again in 6m20.16s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2011-12-03 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 5.0,
+      "monthly_orders": 5.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2011-12-05",
+    "abuse_score": 0.15000000000000002,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2011-12-05\n- Daily Orders: 1\n- Weekly Orders: 6.00\n- Monthly Orders: 6.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99773, Requested 666. Please try again in 6m19.296s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2011-12-05 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 6.0,
+      "monthly_orders": 6.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2011-12-08",
+    "abuse_score": 0.15888888888888889,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2011-12-08\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 7.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99773, Requested 666. Please try again in 6m19.296s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2011-12-08 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 7.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2011-12-10",
+    "abuse_score": 0.1611111111111111,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2011-12-10\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 8.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99773, Requested 666. Please try again in 6m19.296s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2011-12-10 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 8.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2012-06-04",
+    "abuse_score": 0.16333333333333333,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2012-06-04\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 9.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99773, Requested 379. Please try again in 2m11.328s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2012-06-04 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 9.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2012-11-01",
+    "abuse_score": 0.16555555555555557,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2012-11-01\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 10.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99773, Requested 666. Please try again in 6m19.296s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2012-11-01 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 10.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2012-12-02",
+    "abuse_score": 0.16777777777777778,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2012-12-02\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 11.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99773, Requested 666. Please try again in 6m19.296s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2012-12-02 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 11.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2012-12-03",
+    "abuse_score": 0.37555555555555553,
+    "risk_level": "LOW",
+    "patterns": [
+      "Velocity Alert Active",
+      "Spike Above Baseline"
+    ],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2012-12-03\n- Daily Orders: 2\n- Weekly Orders: 8.00\n- Monthly Orders: 13.00\n- Spike Ratio: 2.00\n- Velocity Alert Flag: 1",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99773, Requested 673. Please try again in 6m25.344s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2012-12-03 00:00:00",
+      "daily_orders": 2,
+      "weekly_orders": 8.0,
+      "monthly_orders": 13.0,
+      "spike_ratio": 2.0,
+      "velocity_alert_flag": 1
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2012-12-06",
+    "abuse_score": 0.1727777777777778,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2012-12-06\n- Daily Orders: 1\n- Weekly Orders: 8.00\n- Monthly Orders: 14.00\n- Spike Ratio: 0.88\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99773, Requested 666. Please try again in 6m19.296s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2012-12-06 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 8.0,
+      "monthly_orders": 14.0,
+      "spike_ratio": 0.875,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2012-12-07",
+    "abuse_score": 0.17500000000000002,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2012-12-07\n- Daily Orders: 1\n- Weekly Orders: 8.00\n- Monthly Orders: 15.00\n- Spike Ratio: 0.88\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99772, Requested 666. Please try again in 6m18.432s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2012-12-07 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 8.0,
+      "monthly_orders": 15.0,
+      "spike_ratio": 0.875,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2012-12-08",
+    "abuse_score": 0.17722222222222225,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2012-12-08\n- Daily Orders: 1\n- Weekly Orders: 8.00\n- Monthly Orders: 16.00\n- Spike Ratio: 0.88\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99772, Requested 666. Please try again in 6m18.432s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2012-12-08 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 8.0,
+      "monthly_orders": 16.0,
+      "spike_ratio": 0.875,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2012-12-12",
+    "abuse_score": 0.17944444444444446,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2012-12-12\n- Daily Orders: 1\n- Weekly Orders: 8.00\n- Monthly Orders: 17.00\n- Spike Ratio: 0.88\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99772, Requested 666. Please try again in 6m18.432s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2012-12-12 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 8.0,
+      "monthly_orders": 17.0,
+      "spike_ratio": 0.875,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2013-11-11",
+    "abuse_score": 0.1816666666666667,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2013-11-11\n- Daily Orders: 1\n- Weekly Orders: 8.00\n- Monthly Orders: 18.00\n- Spike Ratio: 0.88\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99772, Requested 666. Please try again in 6m18.432s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2013-11-11 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 8.0,
+      "monthly_orders": 18.0,
+      "spike_ratio": 0.875,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2013-12-05",
+    "abuse_score": 0.1838888888888889,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2013-12-05\n- Daily Orders: 1\n- Weekly Orders: 8.00\n- Monthly Orders: 19.00\n- Spike Ratio: 0.88\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99771, Requested 666. Please try again in 6m17.568s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2013-12-05 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 8.0,
+      "monthly_orders": 19.0,
+      "spike_ratio": 0.875,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2013-12-06",
+    "abuse_score": 0.17944444444444446,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2013-12-06\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 20.00\n- Spike Ratio: 0.88\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99771, Requested 666. Please try again in 6m17.568s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2013-12-06 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 20.0,
+      "spike_ratio": 0.875,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2013-12-07",
+    "abuse_score": 0.39555555555555555,
+    "risk_level": "LOW",
+    "patterns": [
+      "Velocity Alert Active",
+      "Spike Above Baseline"
+    ],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2013-12-07\n- Daily Orders: 2\n- Weekly Orders: 8.00\n- Monthly Orders: 22.00\n- Spike Ratio: 2.00\n- Velocity Alert Flag: 1",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99771, Requested 673. Please try again in 6m23.616s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2013-12-07 00:00:00",
+      "daily_orders": 2,
+      "weekly_orders": 8.0,
+      "monthly_orders": 22.0,
+      "spike_ratio": 2.0,
+      "velocity_alert_flag": 1
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2013-12-08",
+    "abuse_score": 0.29000000000000004,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2013-12-08\n- Daily Orders: 2\n- Weekly Orders: 9.00\n- Monthly Orders: 24.00\n- Spike Ratio: 1.75\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99771, Requested 666. Please try again in 6m17.568s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2013-12-08 00:00:00",
+      "daily_orders": 2,
+      "weekly_orders": 9.0,
+      "monthly_orders": 24.0,
+      "spike_ratio": 1.75,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2013-12-10",
+    "abuse_score": 0.4788888888888889,
+    "risk_level": "MEDIUM",
+    "patterns": [
+      "Velocity Alert Active",
+      "Spike Above Baseline"
+    ],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2013-12-10\n- Daily Orders: 3\n- Weekly Orders: 11.00\n- Monthly Orders: 27.00\n- Spike Ratio: 2.33\n- Velocity Alert Flag: 1",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99771, Requested 674. Please try again in 6m24.48s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2013-12-10 00:00:00",
+      "daily_orders": 3,
+      "weekly_orders": 11.0,
+      "monthly_orders": 27.0,
+      "spike_ratio": 2.333333333333333,
+      "velocity_alert_flag": 1
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2013-12-11",
+    "abuse_score": 0.207979797979798,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2013-12-11\n- Daily Orders: 1\n- Weekly Orders: 11.00\n- Monthly Orders: 28.00\n- Spike Ratio: 0.64\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99771, Requested 666. Please try again in 6m17.568s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2013-12-11 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 11.0,
+      "monthly_orders": 28.0,
+      "spike_ratio": 0.6363636363636364,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2014-07-02",
+    "abuse_score": 0.21020202020202022,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2014-07-02\n- Daily Orders: 1\n- Weekly Orders: 11.00\n- Monthly Orders: 29.00\n- Spike Ratio: 0.64\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99771, Requested 666. Please try again in 6m17.568s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2014-07-02 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 11.0,
+      "monthly_orders": 29.0,
+      "spike_ratio": 0.6363636363636364,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2014-09-09",
+    "abuse_score": 0.2124242424242424,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2014-09-09\n- Daily Orders: 1\n- Weekly Orders: 11.00\n- Monthly Orders: 30.00\n- Spike Ratio: 0.64\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99770, Requested 666. Please try again in 6m16.704s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2014-09-09 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 11.0,
+      "monthly_orders": 30.0,
+      "spike_ratio": 0.6363636363636364,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2014-10-02",
+    "abuse_score": 0.21464646464646464,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2014-10-02\n- Daily Orders: 1\n- Weekly Orders: 11.00\n- Monthly Orders: 31.00\n- Spike Ratio: 0.64\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99770, Requested 666. Please try again in 6m16.704s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2014-10-02 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 11.0,
+      "monthly_orders": 31.0,
+      "spike_ratio": 0.6363636363636364,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2014-11-03",
+    "abuse_score": 0.2102020202020202,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2014-11-03\n- Daily Orders: 1\n- Weekly Orders: 10.00\n- Monthly Orders: 32.00\n- Spike Ratio: 0.64\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99770, Requested 666. Please try again in 6m16.704s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2014-11-03 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 10.0,
+      "monthly_orders": 32.0,
+      "spike_ratio": 0.6363636363636364,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2014-12-01",
+    "abuse_score": 0.21,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2014-12-01\n- Daily Orders: 1\n- Weekly Orders: 9.00\n- Monthly Orders: 33.00\n- Spike Ratio: 0.70\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99770, Requested 666. Please try again in 6m16.704s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2014-12-01 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 9.0,
+      "monthly_orders": 33.0,
+      "spike_ratio": 0.7,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2014-12-02",
+    "abuse_score": 0.20407407407407405,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2014-12-02\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 34.00\n- Spike Ratio: 0.78\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99770, Requested 379. Please try again in 2m8.735999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2014-12-02 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 34.0,
+      "spike_ratio": 0.7777777777777777,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2014-12-04",
+    "abuse_score": 0.2211111111111111,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2014-12-04\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 35.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99770, Requested 666. Please try again in 6m16.704s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2014-12-04 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 35.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2014-12-06",
+    "abuse_score": 0.2211111111111111,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2014-12-06\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 35.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99769, Requested 666. Please try again in 6m15.84s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2014-12-06 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 35.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Bergman",
+    "current_order_date": "2014-12-12",
+    "abuse_score": 0.2211111111111111,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Bergman\n- Evaluation Date: 2014-12-12\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 35.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99769, Requested 379. Please try again in 2m7.872s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Bergman",
+      "order_date": "2014-12-12 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 35.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2011-09-12",
+    "abuse_score": 0.03888888888888889,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2011-09-12\n- Daily Orders: 1\n- Weekly Orders: 1.00\n- Monthly Orders: 1.00\n- Spike Ratio: 0.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99769, Requested 665. Please try again in 6m14.976s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2011-09-12 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 1.0,
+      "monthly_orders": 1.0,
+      "spike_ratio": 0.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2011-12-04",
+    "abuse_score": 0.04777777777777778,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2011-12-04\n- Daily Orders: 1\n- Weekly Orders: 2.00\n- Monthly Orders: 2.00\n- Spike Ratio: 0.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99769, Requested 665. Please try again in 6m14.976s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2011-12-04 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 2.0,
+      "monthly_orders": 2.0,
+      "spike_ratio": 0.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2011-12-05",
+    "abuse_score": 0.05666666666666667,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2011-12-05\n- Daily Orders: 1\n- Weekly Orders: 3.00\n- Monthly Orders: 3.00\n- Spike Ratio: 0.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99769, Requested 665. Please try again in 6m14.976s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2011-12-05 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 3.0,
+      "monthly_orders": 3.0,
+      "spike_ratio": 0.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2011-12-06",
+    "abuse_score": 0.13222222222222224,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2011-12-06\n- Daily Orders: 1\n- Weekly Orders: 4.00\n- Monthly Orders: 4.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99769, Requested 665. Please try again in 6m14.976s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2011-12-06 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 4.0,
+      "monthly_orders": 4.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2011-12-07",
+    "abuse_score": 0.1411111111111111,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2011-12-07\n- Daily Orders: 1\n- Weekly Orders: 5.00\n- Monthly Orders: 5.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99769, Requested 378. Please try again in 2m7.008s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2011-12-07 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 5.0,
+      "monthly_orders": 5.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2011-12-09",
+    "abuse_score": 0.15000000000000002,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2011-12-09\n- Daily Orders: 1\n- Weekly Orders: 6.00\n- Monthly Orders: 6.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99768, Requested 665. Please try again in 6m14.111999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2011-12-09 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 6.0,
+      "monthly_orders": 6.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2011-12-10",
+    "abuse_score": 0.36444444444444446,
+    "risk_level": "LOW",
+    "patterns": [
+      "Velocity Alert Active",
+      "Spike Above Baseline"
+    ],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2011-12-10\n- Daily Orders: 2\n- Weekly Orders: 8.00\n- Monthly Orders: 8.00\n- Spike Ratio: 2.00\n- Velocity Alert Flag: 1",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99768, Requested 672. Please try again in 6m20.16s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2011-12-10 00:00:00",
+      "daily_orders": 2,
+      "weekly_orders": 8.0,
+      "monthly_orders": 8.0,
+      "spike_ratio": 2.0,
+      "velocity_alert_flag": 1
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2011-12-12",
+    "abuse_score": 0.2588888888888889,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2011-12-12\n- Daily Orders: 2\n- Weekly Orders: 9.00\n- Monthly Orders: 10.00\n- Spike Ratio: 1.75\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99768, Requested 665. Please try again in 6m14.111999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2011-12-12 00:00:00",
+      "daily_orders": 2,
+      "weekly_orders": 9.0,
+      "monthly_orders": 10.0,
+      "spike_ratio": 1.75,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2012-10-12",
+    "abuse_score": 0.1662962962962963,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2012-10-12\n- Daily Orders: 1\n- Weekly Orders: 9.00\n- Monthly Orders: 11.00\n- Spike Ratio: 0.78\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99768, Requested 665. Please try again in 6m14.111999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2012-10-12 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 9.0,
+      "monthly_orders": 11.0,
+      "spike_ratio": 0.7777777777777777,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2012-12-02",
+    "abuse_score": 0.1685185185185185,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2012-12-02\n- Daily Orders: 1\n- Weekly Orders: 9.00\n- Monthly Orders: 12.00\n- Spike Ratio: 0.78\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99768, Requested 665. Please try again in 6m14.111999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2012-12-02 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 9.0,
+      "monthly_orders": 12.0,
+      "spike_ratio": 0.7777777777777777,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2012-12-07",
+    "abuse_score": 0.17074074074074072,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2012-12-07\n- Daily Orders: 1\n- Weekly Orders: 9.00\n- Monthly Orders: 13.00\n- Spike Ratio: 0.78\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99768, Requested 665. Please try again in 6m14.111999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2012-12-07 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 9.0,
+      "monthly_orders": 13.0,
+      "spike_ratio": 0.7777777777777777,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2012-12-12",
+    "abuse_score": 0.17296296296296296,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2012-12-12\n- Daily Orders: 1\n- Weekly Orders: 9.00\n- Monthly Orders: 14.00\n- Spike Ratio: 0.78\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99767, Requested 665. Please try again in 6m13.248s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2012-12-12 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 9.0,
+      "monthly_orders": 14.0,
+      "spike_ratio": 0.7777777777777777,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2013-03-06",
+    "abuse_score": 0.17518518518518517,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2013-03-06\n- Daily Orders: 1\n- Weekly Orders: 9.00\n- Monthly Orders: 15.00\n- Spike Ratio: 0.78\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99767, Requested 665. Please try again in 6m13.248s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2013-03-06 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 9.0,
+      "monthly_orders": 15.0,
+      "spike_ratio": 0.7777777777777777,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2013-08-03",
+    "abuse_score": 0.17074074074074075,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2013-08-03\n- Daily Orders: 1\n- Weekly Orders: 8.00\n- Monthly Orders: 16.00\n- Spike Ratio: 0.78\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99767, Requested 665. Please try again in 6m13.248s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2013-08-03 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 8.0,
+      "monthly_orders": 16.0,
+      "spike_ratio": 0.7777777777777777,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2013-08-06",
+    "abuse_score": 0.17277777777777778,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2013-08-06\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 17.00\n- Spike Ratio: 0.88\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99767, Requested 665. Please try again in 6m13.248s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2013-08-06 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 17.0,
+      "spike_ratio": 0.875,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2013-12-01",
+    "abuse_score": 0.18333333333333335,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2013-12-01\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 18.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99767, Requested 665. Please try again in 6m13.248s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2013-12-01 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 18.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2013-12-02",
+    "abuse_score": 0.18555555555555553,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2013-12-02\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 19.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99767, Requested 378. Please try again in 2m5.279999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2013-12-02 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 19.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2013-12-03",
+    "abuse_score": 0.3933333333333333,
+    "risk_level": "LOW",
+    "patterns": [
+      "Velocity Alert Active",
+      "Spike Above Baseline"
+    ],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2013-12-03\n- Daily Orders: 2\n- Weekly Orders: 8.00\n- Monthly Orders: 21.00\n- Spike Ratio: 2.00\n- Velocity Alert Flag: 1",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99766, Requested 672. Please try again in 6m18.432s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2013-12-03 00:00:00",
+      "daily_orders": 2,
+      "weekly_orders": 8.0,
+      "monthly_orders": 21.0,
+      "spike_ratio": 2.0,
+      "velocity_alert_flag": 1
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2013-12-05",
+    "abuse_score": 0.2877777777777778,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2013-12-05\n- Daily Orders: 2\n- Weekly Orders: 9.00\n- Monthly Orders: 23.00\n- Spike Ratio: 1.75\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99766, Requested 665. Please try again in 6m12.383999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2013-12-05 00:00:00",
+      "daily_orders": 2,
+      "weekly_orders": 9.0,
+      "monthly_orders": 23.0,
+      "spike_ratio": 1.75,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2013-12-09",
+    "abuse_score": 0.19518518518518518,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2013-12-09\n- Daily Orders: 1\n- Weekly Orders: 9.00\n- Monthly Orders: 24.00\n- Spike Ratio: 0.78\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99766, Requested 378. Please try again in 2m4.416s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2013-12-09 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 9.0,
+      "monthly_orders": 24.0,
+      "spike_ratio": 0.7777777777777777,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2013-12-10",
+    "abuse_score": 0.1974074074074074,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2013-12-10\n- Daily Orders: 1\n- Weekly Orders: 9.00\n- Monthly Orders: 25.00\n- Spike Ratio: 0.78\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99766, Requested 665. Please try again in 6m12.383999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2013-12-10 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 9.0,
+      "monthly_orders": 25.0,
+      "spike_ratio": 0.7777777777777777,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2013-12-11",
+    "abuse_score": 0.19962962962962963,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2013-12-11\n- Daily Orders: 1\n- Weekly Orders: 9.00\n- Monthly Orders: 26.00\n- Spike Ratio: 0.78\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99765, Requested 665. Please try again in 6m11.52s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2013-12-11 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 9.0,
+      "monthly_orders": 26.0,
+      "spike_ratio": 0.7777777777777777,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2014-03-12",
+    "abuse_score": 0.20185185185185184,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2014-03-12\n- Daily Orders: 1\n- Weekly Orders: 9.00\n- Monthly Orders: 27.00\n- Spike Ratio: 0.78\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99765, Requested 665. Please try again in 6m11.52s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2014-03-12 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 9.0,
+      "monthly_orders": 27.0,
+      "spike_ratio": 0.7777777777777777,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2014-04-08",
+    "abuse_score": 0.20407407407407407,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2014-04-08\n- Daily Orders: 1\n- Weekly Orders: 9.00\n- Monthly Orders: 28.00\n- Spike Ratio: 0.78\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99765, Requested 378. Please try again in 2m3.552s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2014-04-08 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 9.0,
+      "monthly_orders": 28.0,
+      "spike_ratio": 0.7777777777777777,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2014-04-09",
+    "abuse_score": 0.19962962962962963,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2014-04-09\n- Daily Orders: 1\n- Weekly Orders: 8.00\n- Monthly Orders: 29.00\n- Spike Ratio: 0.78\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99765, Requested 665. Please try again in 6m11.52s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2014-04-09 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 8.0,
+      "monthly_orders": 29.0,
+      "spike_ratio": 0.7777777777777777,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2014-06-01",
+    "abuse_score": 0.20166666666666666,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2014-06-01\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 30.00\n- Spike Ratio: 0.88\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99765, Requested 378. Please try again in 2m3.552s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2014-06-01 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 30.0,
+      "spike_ratio": 0.875,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2014-12-07",
+    "abuse_score": 0.4177777777777778,
+    "risk_level": "MEDIUM",
+    "patterns": [
+      "Velocity Alert Active",
+      "Spike Above Baseline"
+    ],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2014-12-07\n- Daily Orders: 2\n- Weekly Orders: 8.00\n- Monthly Orders: 32.00\n- Spike Ratio: 2.00\n- Velocity Alert Flag: 1",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99765, Requested 386. Please try again in 2m10.464s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2014-12-07 00:00:00",
+      "daily_orders": 2,
+      "weekly_orders": 8.0,
+      "monthly_orders": 32.0,
+      "spike_ratio": 2.0,
+      "velocity_alert_flag": 1
+    }
+  },
+  {
+    "customer_name": "Aaron Hawkins",
+    "current_order_date": "2014-12-12",
+    "abuse_score": 0.21500000000000002,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Hawkins\n- Evaluation Date: 2014-12-12\n- Daily Orders: 1\n- Weekly Orders: 8.00\n- Monthly Orders: 33.00\n- Spike Ratio: 0.88\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99765, Requested 665. Please try again in 6m11.52s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Hawkins",
+      "order_date": "2014-12-12 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 8.0,
+      "monthly_orders": 33.0,
+      "spike_ratio": 0.875,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2011-01-04",
+    "abuse_score": 0.03888888888888889,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2011-01-04\n- Daily Orders: 1\n- Weekly Orders: 1.00\n- Monthly Orders: 1.00\n- Spike Ratio: 0.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99764, Requested 667. Please try again in 6m12.383999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2011-01-04 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 1.0,
+      "monthly_orders": 1.0,
+      "spike_ratio": 0.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2011-06-06",
+    "abuse_score": 0.04777777777777778,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2011-06-06\n- Daily Orders: 1\n- Weekly Orders: 2.00\n- Monthly Orders: 2.00\n- Spike Ratio: 0.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99764, Requested 380. Please try again in 2m4.416s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2011-06-06 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 2.0,
+      "monthly_orders": 2.0,
+      "spike_ratio": 0.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2011-12-03",
+    "abuse_score": 0.05666666666666667,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2011-12-03\n- Daily Orders: 1\n- Weekly Orders: 3.00\n- Monthly Orders: 3.00\n- Spike Ratio: 0.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99764, Requested 667. Please try again in 6m12.383999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2011-12-03 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 3.0,
+      "monthly_orders": 3.0,
+      "spike_ratio": 0.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2011-12-06",
+    "abuse_score": 0.13222222222222224,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2011-12-06\n- Daily Orders: 1\n- Weekly Orders: 4.00\n- Monthly Orders: 4.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99764, Requested 667. Please try again in 6m12.383999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2011-12-06 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 4.0,
+      "monthly_orders": 4.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2011-12-07",
+    "abuse_score": 0.1411111111111111,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2011-12-07\n- Daily Orders: 1\n- Weekly Orders: 5.00\n- Monthly Orders: 5.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99763, Requested 667. Please try again in 6m11.52s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2011-12-07 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 5.0,
+      "monthly_orders": 5.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2011-12-11",
+    "abuse_score": 0.15000000000000002,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2011-12-11\n- Daily Orders: 1\n- Weekly Orders: 6.00\n- Monthly Orders: 6.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99763, Requested 667. Please try again in 6m11.52s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2011-12-11 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 6.0,
+      "monthly_orders": 6.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2011-12-12",
+    "abuse_score": 0.15888888888888889,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2011-12-12\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 7.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99763, Requested 667. Please try again in 6m11.52s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2011-12-12 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 7.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2012-03-09",
+    "abuse_score": 0.1611111111111111,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2012-03-09\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 8.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99763, Requested 380. Please try again in 2m3.552s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2012-03-09 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 8.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2012-11-10",
+    "abuse_score": 0.16333333333333333,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2012-11-10\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 9.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99763, Requested 667. Please try again in 6m11.52s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2012-11-10 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 9.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2012-12-02",
+    "abuse_score": 0.16555555555555557,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2012-12-02\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 10.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99763, Requested 667. Please try again in 6m11.52s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2012-12-02 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 10.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2012-12-04",
+    "abuse_score": 0.16777777777777778,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2012-12-04\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 11.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99763, Requested 380. Please try again in 2m3.552s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2012-12-04 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 11.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2012-12-05",
+    "abuse_score": 0.16999999999999998,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2012-12-05\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 12.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99762, Requested 667. Please try again in 6m10.656s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2012-12-05 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 12.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2012-12-08",
+    "abuse_score": 0.17222222222222222,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2012-12-08\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 13.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99762, Requested 667. Please try again in 6m10.656s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2012-12-08 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 13.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2012-12-09",
+    "abuse_score": 0.17444444444444446,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2012-12-09\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 14.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99762, Requested 380. Please try again in 2m2.688s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2012-12-09 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 14.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2012-12-11",
+    "abuse_score": 0.17666666666666664,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2012-12-11\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 15.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99762, Requested 667. Please try again in 6m10.656s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2012-12-11 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 15.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2013-02-01",
+    "abuse_score": 0.17888888888888888,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2013-02-01\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 16.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99762, Requested 667. Please try again in 6m10.656s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2013-02-01 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 16.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2013-02-04",
+    "abuse_score": 0.1811111111111111,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2013-02-04\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 17.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99762, Requested 667. Please try again in 6m10.656s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2013-02-04 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 17.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2013-12-03",
+    "abuse_score": 0.18333333333333335,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2013-12-03\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 18.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99761, Requested 380. Please try again in 2m1.824s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2013-12-03 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 18.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2013-12-09",
+    "abuse_score": 0.18555555555555553,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2013-12-09\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 19.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99761, Requested 667. Please try again in 6m9.792s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2013-12-09 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 19.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2014-02-08",
+    "abuse_score": 0.18777777777777777,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2014-02-08\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 20.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99761, Requested 667. Please try again in 6m9.792s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2014-02-08 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 20.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2014-03-01",
+    "abuse_score": 0.19,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2014-03-01\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 21.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99761, Requested 380. Please try again in 2m1.824s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2014-03-01 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 21.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2014-04-03",
+    "abuse_score": 0.19222222222222224,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2014-04-03\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 22.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99760, Requested 380. Please try again in 2m0.96s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2014-04-03 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 22.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2014-04-10",
+    "abuse_score": 0.19444444444444442,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2014-04-10\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 23.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99760, Requested 667. Please try again in 6m8.928s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2014-04-10 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 23.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2014-05-09",
+    "abuse_score": 0.19666666666666666,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2014-05-09\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 24.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99760, Requested 380. Please try again in 2m0.96s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2014-05-09 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 24.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2014-07-02",
+    "abuse_score": 0.1988888888888889,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2014-07-02\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 25.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99760, Requested 667. Please try again in 6m8.928s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2014-07-02 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 25.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2014-08-12",
+    "abuse_score": 0.20111111111111107,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2014-08-12\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 26.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99759, Requested 667. Please try again in 6m8.063999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2014-08-12 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 26.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2014-12-01",
+    "abuse_score": 0.2033333333333333,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2014-12-01\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 27.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99759, Requested 667. Please try again in 6m8.063999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2014-12-01 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 27.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2014-12-05",
+    "abuse_score": 0.4111111111111111,
+    "risk_level": "MEDIUM",
+    "patterns": [
+      "Velocity Alert Active",
+      "Spike Above Baseline"
+    ],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2014-12-05\n- Daily Orders: 2\n- Weekly Orders: 8.00\n- Monthly Orders: 29.00\n- Spike Ratio: 2.00\n- Velocity Alert Flag: 1",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99759, Requested 388. Please try again in 2m7.008s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2014-12-05 00:00:00",
+      "daily_orders": 2,
+      "weekly_orders": 8.0,
+      "monthly_orders": 29.0,
+      "spike_ratio": 2.0,
+      "velocity_alert_flag": 1
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2014-12-09",
+    "abuse_score": 0.20833333333333337,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2014-12-09\n- Daily Orders: 1\n- Weekly Orders: 8.00\n- Monthly Orders: 30.00\n- Spike Ratio: 0.88\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99759, Requested 667. Please try again in 6m8.063999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2014-12-09 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 8.0,
+      "monthly_orders": 30.0,
+      "spike_ratio": 0.875,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Aaron Smayling",
+    "current_order_date": "2014-12-10",
+    "abuse_score": 0.21055555555555558,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Aaron Smayling\n- Evaluation Date: 2014-12-10\n- Daily Orders: 1\n- Weekly Orders: 8.00\n- Monthly Orders: 31.00\n- Spike Ratio: 0.88\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99758, Requested 667. Please try again in 6m7.2s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Aaron Smayling",
+      "order_date": "2014-12-10 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 8.0,
+      "monthly_orders": 31.0,
+      "spike_ratio": 0.875,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Adam Bellavance",
+    "current_order_date": "2011-01-06",
+    "abuse_score": 0.03888888888888889,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Adam Bellavance\n- Evaluation Date: 2011-01-06\n- Daily Orders: 1\n- Weekly Orders: 1.00\n- Monthly Orders: 1.00\n- Spike Ratio: 0.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99758, Requested 667. Please try again in 6m7.2s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Adam Bellavance",
+      "order_date": "2011-01-06 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 1.0,
+      "monthly_orders": 1.0,
+      "spike_ratio": 0.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Adam Bellavance",
+    "current_order_date": "2011-07-01",
+    "abuse_score": 0.04777777777777778,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Adam Bellavance\n- Evaluation Date: 2011-07-01\n- Daily Orders: 1\n- Weekly Orders: 2.00\n- Monthly Orders: 2.00\n- Spike Ratio: 0.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99758, Requested 667. Please try again in 6m7.2s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Adam Bellavance",
+      "order_date": "2011-07-01 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 2.0,
+      "monthly_orders": 2.0,
+      "spike_ratio": 0.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Adam Bellavance",
+    "current_order_date": "2011-11-11",
+    "abuse_score": 0.05666666666666667,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Adam Bellavance\n- Evaluation Date: 2011-11-11\n- Daily Orders: 1\n- Weekly Orders: 3.00\n- Monthly Orders: 3.00\n- Spike Ratio: 0.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99758, Requested 380. Please try again in 1m59.232s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Adam Bellavance",
+      "order_date": "2011-11-11 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 3.0,
+      "monthly_orders": 3.0,
+      "spike_ratio": 0.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Adam Bellavance",
+    "current_order_date": "2011-12-03",
+    "abuse_score": 0.13222222222222224,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Adam Bellavance\n- Evaluation Date: 2011-12-03\n- Daily Orders: 1\n- Weekly Orders: 4.00\n- Monthly Orders: 4.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99758, Requested 380. Please try again in 1m59.232s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Adam Bellavance",
+      "order_date": "2011-12-03 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 4.0,
+      "monthly_orders": 4.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Adam Bellavance",
+    "current_order_date": "2011-12-04",
+    "abuse_score": 0.1411111111111111,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Adam Bellavance\n- Evaluation Date: 2011-12-04\n- Daily Orders: 1\n- Weekly Orders: 5.00\n- Monthly Orders: 5.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99758, Requested 667. Please try again in 6m7.2s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Adam Bellavance",
+      "order_date": "2011-12-04 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 5.0,
+      "monthly_orders": 5.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Adam Bellavance",
+    "current_order_date": "2012-10-10",
+    "abuse_score": 0.15000000000000002,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Adam Bellavance\n- Evaluation Date: 2012-10-10\n- Daily Orders: 1\n- Weekly Orders: 6.00\n- Monthly Orders: 6.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99757, Requested 667. Please try again in 6m6.336s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Adam Bellavance",
+      "order_date": "2012-10-10 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 6.0,
+      "monthly_orders": 6.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Adam Bellavance",
+    "current_order_date": "2012-12-01",
+    "abuse_score": 0.15888888888888889,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Adam Bellavance\n- Evaluation Date: 2012-12-01\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 7.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99757, Requested 667. Please try again in 6m6.336s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Adam Bellavance",
+      "order_date": "2012-12-01 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 7.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Adam Bellavance",
+    "current_order_date": "2012-12-05",
+    "abuse_score": 0.1611111111111111,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Adam Bellavance\n- Evaluation Date: 2012-12-05\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 8.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99756, Requested 380. Please try again in 1m57.504s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Adam Bellavance",
+      "order_date": "2012-12-05 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 8.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Adam Bellavance",
+    "current_order_date": "2012-12-06",
+    "abuse_score": 0.16333333333333333,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Adam Bellavance\n- Evaluation Date: 2012-12-06\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 9.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99756, Requested 667. Please try again in 6m5.472s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Adam Bellavance",
+      "order_date": "2012-12-06 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 9.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  },
+  {
+    "customer_name": "Adam Bellavance",
+    "current_order_date": "2012-12-08",
+    "abuse_score": 0.16555555555555557,
+    "risk_level": "LOW",
+    "patterns": [],
+    "historical_context": "Daily Velocity Alert Metrics:\n- Customer Target: Adam Bellavance\n- Evaluation Date: 2012-12-08\n- Daily Orders: 1\n- Weekly Orders: 7.00\n- Monthly Orders: 10.00\n- Spike Ratio: 1.00\n- Velocity Alert Flag: 0",
+    "llm_analysis": "LLM unavailable. Errors: ['HuggingFace failed: Model meta-llama/Llama-3.1-8B-Instruct is not supported for task text-generation and provider novita. Supported task: conversational.', \"Groq failed: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01katr34q2erz904dzn297vh2r` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99756, Requested 667. Please try again in 6m5.472s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}\"]",
+    "metrics_row": {
+      "customer_name": "Adam Bellavance",
+      "order_date": "2012-12-08 00:00:00",
+      "daily_orders": 1,
+      "weekly_orders": 7.0,
+      "monthly_orders": 10.0,
+      "spike_ratio": 1.0,
+      "velocity_alert_flag": 0
+    }
+  }
+]
