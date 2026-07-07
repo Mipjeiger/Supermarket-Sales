@@ -83,7 +83,7 @@ def read_features(path: Path) -> pd.DataFrame:
     return pd.read_parquet(path)
 
 def get_model_name_from_path(path: Path) -> str:
-    return path.stem.replace("model_", "").replace(".pkl", "")
+    return path.stem.replace("_model", "").replace(".joblib", "")
 
 def build_model_input_from_row(
     feature_row: pd.Series,
@@ -290,28 +290,50 @@ def model_prediction_summary(model, input_df):
         if model is None:
             return None, None, "Model file not found or loaded."
 
-        # BUG FIX: Catch un-fitted scikit-learn models before attempting inference to handle pipeline issues cleanly
+        # Handle fitment checking dynamically based on the engine type
         from sklearn.utils.validation import check_is_fitted
         try:
-            check_is_fitted(model)
+            if hasattr(model, "is_fitted"):
+                if not model.is_fitted():
+                    return None, None, "Model is not fitted."
+            else:
+                check_is_fitted(model)
+        
         except NotFittedError:
-            return None, None, "NotFittedError: This model pickle exists but was exported without being fitted. Check your training loop."
+            return None, None, "NotFittedError: This model pickle exists but was exported without being fitted."
 
         prediction = model.predict(input_df)
         confidence = None
 
-        if isinstance(model, ClassifierMixin) or hasattr(model, "predict_proba"):
+        # Robust identification
+        model_class_name = type(model).__name__.lower()
+        estimator_type = getattr(model, "_estimator_type", None)
+
+        # Use soft duck-typing verification to support XGBoost and CatBoost objects cleanly
+        is_classifier = (
+            "classifier" in model_class_name
+            or estimator_type == "classifier"
+            or hasattr(model, "predict_proba")
+        )
+
+        is_regressor = (
+            "regressor" in model_class_name
+            or estimator_type == "regressor"
+            or hasattr(model, "predict")
+        )
+
+        if is_classifier:
             if hasattr(model, "predict_proba"):
                 confidence = float(np.max(model.predict_proba(input_df)))
             status = "ok"
-        elif isinstance(model, RegressorMixin):
+        
+        elif is_regressor:
             status = "ok"
         else:
             status = "Unknown"
 
         return prediction[0], confidence, status
     except Exception as e:
-        # BUG FIX: Prevent application crash by returning error description directly via status variable
         return None, None, f"Runtime Inference Error: {str(e)}"
 
 # -----------------------------------------------------------------------------
@@ -424,7 +446,7 @@ with st.sidebar:
 # -----------------------------------------------------------------------------
 # Page Header
 # -----------------------------------------------------------------------------
-st.title("🛒 Supermarket Intelligence Agent")
+st.title("🛒 Supermarket AI Agent system helper")
 st.caption("Integrated sales prediction, fraud prediction, abuse detection, and security analysis")
 
 if primary_df.empty:
@@ -466,49 +488,105 @@ feature_fraud_record = features_fraud_df.loc[selected_index]
 # Sales Prediction Tab
 # -----------------------------------------------------------------------------
 with tab1:
-    st.subheader("Sales Prediction")
-    st.write("Predict sales using the saved regression model family.")
+    st.subheader("📈 Sales Optimization Pipeline")
+
+    # Toggle between validating past records and forecasting upcoming demand
+    sales_mode = st.radio(
+        "Select Pipeline Mode",
+        ["Phase 1: Historical Alignment (Minimize Error)", 
+         "Phase 2: Future Demand Forecasting (What-If Simulation)"],
+         horizontal=True
+    )
 
     if st.session_state.sales_model_name is None:
         st.info("No sales model available.")
     else:
         sales_model = sales_models.get(st.session_state.sales_model_name)
         sales_input_df = build_model_input_from_row(feature_sales_record, features_sales_df)
-        sales_input_scaled = pd.DataFrame(scaler.transform(sales_input_df), columns=sales_input_df.columns)
 
-        col1, col2 = st.columns([1, 1])
-        with col1:
-            st.markdown("**Selected record**")
-            st.dataframe(
-                pd.DataFrame([selected_record]).T.rename(columns={0: "value"}),
-                use_container_width=True,
-            )
+        if sales_mode == "Phase 1: Historical Alignment (Minimize Error)":
+            st.markdown("### 🎯 Model Error Verification")
+            st.caption("Validating the production model by comparing predictions directly against true historical targets.")
 
-        with col2:
-            st.markdown("**Model input preview**")
-            st.dataframe(sales_input_df, use_container_width=True)
+            col1, col2 = st.columns([1, 1])
+            with col1:
+                st.markdown("**Selected record**")
+                st.dataframe(
+                    pd.DataFrame([selected_record]).T.rename(columns={0: "value"}),
+                    use_container_width=True,
+                )
 
-        with st.expander("Feature Validation"):
-            st.write("Feature dataframe shape:", features_sales_df.shape)
-            st.write("Expected feature count:", features_sales_df.shape[1])
-            st.write("Inference input shape:", sales_input_df.shape)
-            st.write("Expected columns:")
-            st.write(features_sales_df.columns.tolist())
-            st.write("Actual columns:")
-            st.write(sales_input_df.columns.tolist())
-            st.write(
-                "Column Match:",
-                features_sales_df.columns.tolist() == sales_input_df.columns.tolist()
-            )
+            with col2:
+                st.markdown("**Model input preview**")
+                st.dataframe(sales_input_df, use_container_width=True)
 
-        if st.button("Run Sales Prediction", type="primary"):
-            prediction, confidence, status = model_prediction_summary(sales_model, sales_input_scaled)
+            if st.button("Execute Verification", type="primary"):
+                # Apply standard scaling transformation to model features
+                sales_input_scaled = pd.DataFrame(scaler.transform(sales_input_df), columns=sales_input_df.columns)
+                prediction, _, status = model_prediction_summary(sales_model, sales_input_scaled)
 
-            if status == "ok":
-                # BUG FIX: Because Regressors do not produce confidence scores, we drop the secondary column completely 
-                st.metric("Predicted Value", f"{prediction:,.4f}" if prediction is not None else "N/A")
-            else:
-                st.error(f"Sales prediction failed: {status}")
+                if status == "ok":
+                    # Inverse log transform to revert target back to original currency scale
+                    prediction_actual = np.expm1(prediction)
+                    actual_sales = float(selected_record.get("sales", 0))
+                    absolute_variance = abs(actual_sales - prediction_actual)
+                    error_percentage = (absolute_variance / actual_sales * 100) if actual_sales > 0 else 0
+
+                    c1, c2, c3 = st.columns(3)
+                    with c1:
+                        st.metric("Actual Store Sales", f"Rp.{actual_sales:,.2f}")
+                    with c2:
+                        st.metric("Model Predicted Sales", f"Rp.{prediction_actual:,.2f}")
+                    with c3:
+                        st.metric("Row-by-Row Variance Error", f"{error_percentage:.2f}%", delta=f"Rp.{absolute_variance:,.2f}", delta_color="inverse")
+               
+                else:
+                    st.error(f"Sales prediction failed: {status}")
+
+        else:
+            st.markdown("### 📊 Future Demand Forecasting")
+            st.caption("Simulate upcoming marketplace condition to forecast volume demand and revenue output.")
+
+            st.markdown("#### Adjust Future Parameter Multipliers")
+            sim_col1, sim_col2, sim_col3 = st.columns(3)
+
+            # Allow interactive overrides of feature variables to simulate future events
+            with sim_col1:
+                quantity_mult = st.slider("Future Transaction Volume Scale", 0.5, 5.0, 1.0, step=0.1)
+            with sim_col2:
+                discount_mult = st.slider("Future Promotion/Discount Aggression", 0.0, 2.0, 1.0, step=0.1)
+            with sim_col3:
+                operational_shift = st.number_input("Bulk Processing Correction Adjustment", value=0.0)
+
+            # Construct dynamic simulated features
+            simulated_input_df = sales_input_df.copy()
+
+            # Safely adjust feature targets
+            for col in simulated_input_df.columns:
+                if 'quantity' in col.lower():
+                    simulated_input_df[col] = simulated_input_df[col] * quantity_mult
+                if 'discount' in col.lower():
+                    simulated_input_df[col] = simulated_input_df[col] * discount_mult
+
+            st.markdown("**Engineered Simulation Vector Preview**")
+            st.dataframe(simulated_input_df, use_container_width=True)
+
+            if st.button("Generate Future Projections", type="primary"):
+                # Scale the simulated feature block
+                simulated_input_scaled = pd.DataFrame(scaler.transform(simulated_input_df), columns=simulated_input_df.columns)
+                sim_prediction, _, sim_status = model_prediction_summary(sales_model, simulated_input_scaled)
+
+                if sim_status == "ok":
+                    forecasted_revenue = np.expm1(sim_prediction) + operational_shift
+                    
+                    st.success("Future inference engine generated demand projections successfully!")
+                    st.metric(
+                        label="Forecasted Projected Revenue Output", 
+                        value=f"Rp.{forecasted_revenue:,.2f}",
+                        delta=f"Based on adjusted {st.session_state.sales_model_name} architecture"
+                    )
+                else:
+                    st.error(f"Simulation Prediction Blocked: {sim_status}")
 
 # -----------------------------------------------------------------------------
 # Fraud Prediction Tab
