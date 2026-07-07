@@ -55,13 +55,14 @@ CUSTOMER_METRICS_DIR = BASE_DIR / "app" / "data" / "customer_day_metrics"
 ABUSE_JSON_DIR = BASE_DIR / "app" / "data" / "abuse_detection_json"
 MODELS_DIR = BASE_DIR / "Models"
 FRAUD_MODELS_DIR = MODELS_DIR / "fraud_ml_models"
+SALES_MODELS_DIR = MODELS_DIR / "sales_ml_models"
 
 PRIMARY_DATA_PATH = DATA_DIR / "sql_supermarket.parquet"
 CUSTOMER_METRICS_PATH = CUSTOMER_METRICS_DIR / "customer_day_metrics.parquet"
 ABUSE_JSON_PATH = ABUSE_JSON_DIR / "abuse_analysis_results_2.json"
 X_FEATURES_SALES = DATA_DIR / "X_features.parquet"
 X_FEATURES_FRAUD = DATA_DIR / "X_features_fraud.parquet"
-SCALER_PATH = MODELS_DIR / "scaler.pkl"
+SCALER_PATH = SALES_MODELS_DIR / "scaler.joblib"
 
 # -----------------------------------------------------------------------------
 # Helpers
@@ -141,9 +142,10 @@ def load_abuse_json(path: Path) -> pd.DataFrame:
 @st.cache_resource(show_spinner=False)
 def load_sales_models() -> Dict[str, Any]:
     model_files = [
-        MODELS_DIR / "model_LinearRegression.pkl",
-        MODELS_DIR / "model_RandomForestRegressor.pkl",
-        MODELS_DIR / "model_XGBRegressor.pkl",
+        SALES_MODELS_DIR / "CatboostRegressor_model.joblib",
+        SALES_MODELS_DIR / "DecisionTreeRegressor_model.joblib",
+        SALES_MODELS_DIR / "RandomForestRegressor_model.joblib",
+        SALES_MODELS_DIR / "XGBRegressor_model.joblib",
     ]
     models = {}
     for path in model_files:
