@@ -76,6 +76,8 @@ services:
     environment:
       - FASTAPI_URL=http://fastapi:8000
       - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - HUGGINGFACE_API_KEY=${HUGGINGFACE_API_KEY}
+      - GROQ_API_KEY=${GROQ_API_KEY}
     volumes:
       - ./dashboard:/app/dashboard
       - ./Models:/app/Models
