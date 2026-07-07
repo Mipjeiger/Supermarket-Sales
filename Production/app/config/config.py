@@ -30,7 +30,9 @@ class Settings(BaseSettings):
 
     # File Paths Configuration
     MODEL_PATH: Path = BASE_DIR / "Models"
-    MODEL_PATH_ML: list = list(MODEL_PATH.glob("*.pkl"))  # List all .pkl files in the Models directory
+    MODEL_PATH_ML: list = list(MODEL_PATH.glob("*.pkl"))
+    SALES_MODEL_PATH: list = list((MODEL_PATH_ML[0] / "sales_ml_models").glob("*.joblib")) if MODEL_PATH_ML else []
+    FRAUD_MODEL_PATH: list = list((MODEL_PATH_ML[0] / "fraud_ml_models").glob("*.pkl")) if MODEL_PATH_ML else []
     MLFLOW_PATH: Path = BASE_DIR / "mlflow"
     DATA_RAW: Path = BASE_DIR / "app" / "data" / "raw" / "SuperStoreOrders - SuperStoreOrders.csv"
     DATA_CLEANED: Path = BASE_DIR / "app" / "data" / "cleaned" / "data_sales_cleaned.parquet"

@@ -62,7 +62,7 @@ CUSTOMER_METRICS_PATH = CUSTOMER_METRICS_DIR / "customer_day_metrics.parquet"
 ABUSE_JSON_PATH = ABUSE_JSON_DIR / "abuse_analysis_results_2.json"
 X_FEATURES_SALES = DATA_DIR / "X_features.parquet"
 X_FEATURES_FRAUD = DATA_DIR / "X_features_fraud.parquet"
-SCALER_PATH = SALES_MODELS_DIR / "scaler.joblib"
+SCALER_PATH = SALES_MODELS_DIR / "scaler" / "scaler.joblib"
 
 # -----------------------------------------------------------------------------
 # Helpers
