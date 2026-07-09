@@ -25,16 +25,12 @@ class ModelRegistry:
     def _initialize(self):
         """Initialize the model registry"""
         try:
-            # Set MLFlow tracking URI
+            # Set MLFlow tracking URI & experiment name
             mlflow.set_tracking_uri(settings.MLFLOW_TRACKING_URI)
-
-            # Set experiment
             mlflow.set_experiment(settings.MLFLOW_EXPERIMENT_NAME)
 
-            # Load all models from local models directory
+            # Map the exact active multi-directory structures
             self._load_local_models()
-
-            # Load performance data
             self._load_performance_data()
 
             logger.info("✅ ModelRegistry initialized successfully.")
@@ -45,44 +41,72 @@ class ModelRegistry:
             self._fallback_load()
 
     def _load_local_models(self):
-        """Load models from local .pkl files"""
+        """Recursively collect model binaries across nested workspace variants (.joblib and .pkl)."""
         model_dir = Path(settings.MODEL_PATH)
 
         if not model_dir.exists():
             logger.warning(f"⚠️ Model directory does not exist: {model_dir}. Creating it.")
             return
         
-        # Find all .pkl files
-        pkl_files = list(model_dir.glob("*.pkl"))
+        # Scan nested sales engines
+        sales_path = model_dir / "sales_ml_models"
+        if sales_path.exists():
+            for file_path in sales_path.glob("*_model.joblib"):
+                try:
+                    name_key = file_path.stem.replace("_model", "")
+                    self._models[name_key] = joblib.load(file_path)
+                    logger.info(f"✅ Loaded Sales model: {name_key} from {file_path}")
+                
+                except Exception as e:
+                    logger.error(f"❌ Failed to load Sales model from {file_path}: {str(e)}")
 
-        for pkl_file in pkl_files:
-            try:
-                model_name = pkl_file.stem.replace("model_", "")
-                self._models[model_name] = joblib.load(pkl_file)
-                logger.info(f"✅ Loaded model: {model_name} from {pkl_file}")
-            
-            except Exception as e:
-                logger.error(f"❌ Failed to load model from {pkl_file}: {str(e)}")
+        # Scan nested fraud engines
+        fraud_path = model_dir / "fraud_ml_models"
+        if fraud_path.exists():
+            for file_path in fraud_path.glob("*_model.joblib"):
+                try:
+                    name_key = file_path.stem.replace("_model", "")
+                    self._models[name_key] = joblib.load(file_path)
+                    logger.info(f"✅ Loaded Fraud model: {name_key} from {file_path}")
+                
+                except Exception as e:
+                    logger.error(f"❌ Failed to load Fraud model from {file_path}: {str(e)}")
 
     def _load_performance_data(self):
-        """Load model performance data from CSV."""
+        """Parse structured metrics from isolated domain summary tables."""
         perf_file = Path(settings.MODEL_PATH) / "model_performance_comparison.csv"
 
-        if perf_file.exists():
+        # Load sales metrics matrix
+        sales_metrics = perf_file / "sales_models" / "model_comparison_summary.csv"
+        if sales_metrics.exists():
             try:
-                df = pd.read_csv(perf_file)
+                df = pd.read_csv(sales_metrics)
 
                 for _, row in df.iterrows():
-                    model_name = row['Model']
-                    self._performance[model_name] = {
+                    self._performance[row['Model']] = {
                         'rmse': row.get('RMSE', 0),
                         'mae': row.get('MAE', 0),
                         'r2': row.get('R2', 0)
                     }
-                logger.info(f"✅ Loaded performance data for {len(self._performance)} models.")
             
             except Exception as e:
-                logger.error(f"❌ Failed to load performance data: {str(e)}")
+                logger.error(f"❌ Failed to load Sales performance metrics: {str(e)}")
+
+        # Load fraud metrics matrix
+        fraud_metrics = perf_file / "fraud_models" / "model_comparison_results.csv"
+        if fraud_metrics.exists():
+            try:
+                df = pd.read_csv(fraud_metrics)
+
+                for _, row in df.iterrows():
+                    self._performance[row['Model']] = {
+                        'accuracy': row.get('Accuracy', 0),
+                        'f1': row.get('F1_Score', row.get('F1', 0)),
+                        'precision': row.get('Precision', 0)
+                    }
+            
+            except Exception as e:
+                logger.error(f"❌ Failed to load Fraud performance metrics: {str(e)}")
 
     def _fallback_load(self):
         """Fallback mechanism to load models if MLflow fails."""
@@ -112,10 +136,7 @@ class ModelRegistry:
             with mlflow.start_run(run_name=f"register_{model_name}"):
 
                 # Log model
-                mlflow.sklearn.log_model(
-                    joblib.load(model_path),
-                    artifact_path=model_name
-                )
+                mlflow.sklearn.log_model(joblib.load(model_path), artifact_path=model_name)
 
                 # Log metrics
                 mlflow.log_metrics(metrics)
@@ -132,15 +153,17 @@ class ModelRegistry:
             return None
         
         best_model = None
-        best_score = float('inf') if metric == "rmse" else float('-inf')
+        best_score = float('inf') if metric in ["rmse", "mae"] else float('-inf')
 
         for model_name, perf in self._performance.items():
-            score = perf.get(metric, 0)
+            score = perf.get(metric)
+            if score is None:
+                continue
 
-            if metric == "rmse" and score < best_score:
+            if metric in ["rmse", "mae"] and score < best_score:
                 best_score = score
                 best_model = model_name
-            elif metric != "rmse" and score > best_score:
+            elif metric not in ["rmse", "mae"] and score > best_score:
                 best_score = score
                 best_model = model_name
 
