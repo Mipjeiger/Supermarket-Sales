@@ -93,3 +93,21 @@ def register_pipeline():
 
             try:
                 model_artifact = joblib.load(model_file)
+                with mlflow.start_run(run_name=f"fraud_{raw_name.lower()}"):
+                    mlflow.set_tag("pipeline_tier", "production")
+                    mlflow.set_tag("model_domain", "fraud_classification")
+
+                    mlflow.sklearn.log_model(model_artifact, artifact_path="model")
+
+                    metrics = fraud_metrics.get(raw_name, {})
+                    if metrics:
+                        mlflow.log_metrics(metrics)
+                        logger.info(f"✅ Logged metrics for {raw_name}: {metrics}")
+
+            except Exception as e:
+                logger.error(f"❌ Error registering model {raw_name}: {str(e)}")
+
+# Usage
+if __name__ == "__main__":
+    register_pipeline()
+    logger.info("\n🚀 ML Pipeline execution finished! Navigate to the MLflow UI to inspect metrics.")
