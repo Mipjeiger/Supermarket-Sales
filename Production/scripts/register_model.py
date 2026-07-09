@@ -19,20 +19,26 @@ FRAUD_DIR = BASE_MODEL_PATH / "fraud_ml_models"
 def parse_metrics_file(csv_path: Path) -> dict:
     """Parse to dynamically convert model comparison tables into lookup dictionaries."""
     perf_map = {}
+
     if not csv_path.exists():
         logger.warning(f"⚠️ Performance metrics file {csv_path} does not exist.")
         return perf_map
     
     try:
         df = pd.read_csv(csv_path)
-        if 'Model' in df.columns: # Standardize string lookup variations
+        df.columns = [str(col).strip().lower() for col in df.columns]
 
+        # Check for lowercase 'model identifier
+        if 'model' in df.columns:
             for _, row in df.iterrows():
-                model_name = str(row['Model']).strip()
+                model_name = str(row['model']).strip()
                 
                 # Extract all numeric attributes across varying columns dynamically
-                metrics_dict = {k: v for k, v in row.items() if k != 'Model' and pd.notna(v) and isinstance(v, (int, float))}
+                metrics_dict = {k: v for k, v in row.items() if k != 'model' and pd.notna(v) and isinstance(v, (int, float))}
                 perf_map[model_name] = metrics_dict    
+        else:
+            logger.warning(f"⚠️ Could not find a 'model' key column header in {csv_path.name}")
+                
     except Exception as e:
         logger.error(f"❌ Error parsing performance metrics file: {str(e)}")
 
@@ -46,7 +52,40 @@ def load_json_parameters(json_path: Path) -> dict:
     
     try:
         with open(json_path, "r", encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
+
+        # Scenario A: JSON is already a standard dictionary mapping model
+        if isinstance(data, dict):
+            return data
+        
+        # Scenario B: JSON is a list of dictionaries with 'model_name' keys
+        if isinstance(data, list):
+            logger.info(f"📋 Detecting JSON array structure in {json_path.name}. Normalizing...")
+            normalized_map = {}
+
+            for item in data:
+                if isinstance(item, dict):
+
+                    # Identify which key holds the name of the algorithm
+                    model_key = None
+                    for identifier in ['Model', 'model', 'model_name', 'name']:
+                        if identifier in item:
+                            model_key = str(item[identifier]).strip()
+                            break
+                    
+                    if model_key:
+                        if 'params' in item and isinstance(item['params'], dict):
+                            normalized_map[model_key] = item['params']
+
+                        elif 'parameters' in item and isinstance(item['parameters'], dict):
+                            normalized_map[model_key] = item['parameters']
+
+                        else:
+                            # Extract everything except the identifier key itself
+                            normalized_map[model_key] = {k: v for k, v in item.items() if k not in ['Model', 'model', 'model_name', 'name']}
+            
+            return normalized_map
+
     except Exception as e:
         logger.error(f"❌ Error loading JSON parameters from {json_path}: {str(e)}")
         return {}

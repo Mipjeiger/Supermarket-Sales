@@ -2,7 +2,7 @@ import os
 import logging
 import pandas as pd
 from sqlalchemy import create_engine, text
-from app.config.config import settings
+from app.core.config import settings
 
 # Setup clean production logs
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")

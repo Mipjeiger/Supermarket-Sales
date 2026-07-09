@@ -32,7 +32,9 @@ services:
       MLFLOW_TRACKING_URI: /mlflow
     volumes:
       - ./mlflow:/mlflow # Local file-based storage for MLflow artifacts
-    command: mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri /mlflow --default-artifact-root /mlflow/artifacts
+    command: mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root /mlflow/artifacts --allowed-hosts "*"
+    networks:
+      - sales_network
 
   # FastAPI Backend
   fastapi:
@@ -44,7 +46,9 @@ services:
       - "8000:8000"
     depends_on:
       postgres:
-        condition: service_healthy
+        condition: service_started
+      mlflow:
+        condition: service_started
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -59,9 +63,10 @@ services:
       - ./Models:/app/Models
       - ./mlflow:/app/mlflow
       - ./app:/app/app
+      - .:/app/Production
     networks:
       - sales_network
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    entrypoint: ["/bin/bash", "/app/Production/docker/entrypoint.sh"]
 
   # Streamlit Dashboard
   streamlit:

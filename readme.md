@@ -31,7 +31,7 @@
         - ML Fraud Models run details
         ![alt text](Database/images/EA82D7C0-24E6-4C35-BCCF-D635EAC2D140.png)
         - Fraud parameters model
-        ![alt text](image.png)
+        ![alt text](Database/images/image.png)
         - Fraud metrics model
         ![alt text](Database/images/6665C830-F8AB-418D-90AF-06A118B37321.png)
 - Observability setup to monitor latency, logging Machine learning models and LLMs Fine-tuned
