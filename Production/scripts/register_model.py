@@ -1,5 +1,6 @@
 import os
 import joblib
+import json
 import pandas as pd
 import mlflow
 from pathlib import Path
@@ -24,9 +25,8 @@ def parse_metrics_file(csv_path: Path) -> dict:
     
     try:
         df = pd.read_csv(csv_path)
+        if 'Model' in df.columns: # Standardize string lookup variations
 
-        # Standardize string lookup variations
-        if 'Model' in df.columns:
             for _, row in df.iterrows():
                 model_name = str(row['Model']).strip()
                 
@@ -34,9 +34,22 @@ def parse_metrics_file(csv_path: Path) -> dict:
                 metrics_dict = {k: v for k, v in row.items() if k != 'Model' and pd.notna(v) and isinstance(v, (int, float))}
                 perf_map[model_name] = metrics_dict    
     except Exception as e:
-        logger.error(f"Error parsing performance metrics file: {str(e)}")
+        logger.error(f"❌ Error parsing performance metrics file: {str(e)}")
 
     return perf_map
+
+def load_json_parameters(json_path: Path) -> dict:
+    """Load JSON logs cleanly into structured parameter maps"""
+    if not json_path.exists():
+        logger.warning(f"⚠️ Parameters JSON file {json_path} does not exist.")
+        return {}
+    
+    try:
+        with open(json_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        logger.error(f"❌ Error loading JSON parameters from {json_path}: {str(e)}")
+        return {}
 
 def register_pipeline():
     """ML Pipeline executing tracking uploads into isolated MLflow Experiments."""
@@ -50,7 +63,13 @@ def register_pipeline():
     # ============================================================================
     if SALES_DIR.exists():
         mlflow.set_experiment("supermarket_sales_pipeline")
+
+        # Load core summary metrics
         sales_metrics = parse_metrics_file(SALES_DIR / "model_comparison_summary.csv")
+
+        # Load sales parameters JSON from logs_summary
+        sales_params_file = SALES_DIR / "logs_summary" / "sales_model_params.json"
+        sales_params_master = load_json_parameters(sales_params_file)
 
         # Crawl through joblib serialization files
         for model_file in SALES_DIR.glob("*_model.joblib"):
@@ -71,10 +90,18 @@ def register_pipeline():
 
                     # Log associated metrics matrix matching the base string patterns
                     metrics = sales_metrics.get(raw_name, {})
-
                     if metrics:
                         mlflow.log_metrics(metrics)
                         logger.info(f"✅ Logged metrics for {raw_name}: {metrics}")
+
+                    # Extract hyperparameters from the JSON summary if available
+                    params = sales_params_master.get(raw_name) or sales_params_master.get(raw_name.lower()) or {}
+
+                    if params:
+                        mlflow.log_params(params)
+                        logger.info(f"✅ Logged parameters for {raw_name}: {params}")
+                    else:
+                        logger.warning(f"⚠️ No parameters found for {raw_name} in JSON summary.")
             
             except Exception as e:
                 logger.error(f"❌ Error registering model {raw_name}: {str(e)}")
@@ -85,6 +112,19 @@ def register_pipeline():
     if FRAUD_DIR.exists():
         mlflow.set_experiment("supermarket_fraud_pipeline")
         fraud_metrics = parse_metrics_file(FRAUD_DIR / "model_comparison_results.csv")
+
+        # Load Fraud Metrics & Parameters JSON from logs_summary
+        fraud_metrics_file = FRAUD_DIR / "logs_summary" / "fraud_model_metrics.csv"
+        fraud_params_file = FRAUD_DIR / "logs_summary" / "fraud_model_params.json"
+
+        # Parse targeted logs summary files
+        fraud_metrics = parse_metrics_file(fraud_metrics_file)
+        fraud_params_master = load_json_parameters(fraud_params_file)
+
+        # Fallback layer: if logs_summary metrics table is empty, fallback to the main model_comparison_results.csv for metrics
+        if not fraud_metrics:
+            logger.info("⚠️ No metrics found in logs_summary; falling back to model_comparison_results.csv for fraud metrics.")
+            fraud_metrics = parse_metrics_file(FRAUD_DIR / "model_comparison_results.csv")
 
         # Crawl through binary pickle serialization files
         for model_file in FRAUD_DIR.glob("*.pkl"):
@@ -103,6 +143,13 @@ def register_pipeline():
                     if metrics:
                         mlflow.log_metrics(metrics)
                         logger.info(f"✅ Logged metrics for {raw_name}: {metrics}")
+
+                    params = fraud_params_master.get(raw_name) or fraud_params_master.get(raw_name.lower()) or {}
+                    if params:
+                        mlflow.log_params(params)
+                        logger.info(f"✅ Logged parameters for {raw_name}: {params}")
+                    else:
+                        logger.warning(f"⚠️ No parameters found for {raw_name} in JSON summary.")
 
             except Exception as e:
                 logger.error(f"❌ Error registering model {raw_name}: {str(e)}")
