@@ -18,14 +18,14 @@
 - Build ML Pipeline to send ML models to MLflow for tracking & experimental
 - Observability setup to monitor latency, logging Machine learning models and LLMs Fine-tuned
 - Build Streamlit for User Interface Forecasting dashboard
-    📈 Sales Prediction
+    - 📈 Sales Prediction
     ![alt text](Database/images/845BE1AB-11AA-4ED8-B322-53EE7AC865D7_1_105_c.jpeg)
-    🚨 Abuse Detection
+    - 🚨 Abuse Detection
     ![alt text](Database/images/063C7808-808F-47A7-93E0-359D5E832E2F_1_105_c.jpeg)
     ![alt text](Database/images/2DFC9CEF-16ED-47F6-8A49-D6D56E839D84_1_105_c.jpeg)
-    🔐 Security Agent
+    - 🔐 Security Agent
     ![alt text](Database/images/4A434B34-9EE5-421C-9DC5-6BAFEC921DD8_1_105_c.jpeg)
-    📊 Future Revenue Forecasting
+    - 📊 Future Revenue Forecasting
     ![alt text](Database/images/460CA2A6-72F1-4E8B-A954-B260D34211CC.png)
 - Build DVC (Data Version Control) to allow track and version large datasets, ML models, training pipelines, and git for data (Optional)
 - Alert using slack to notify on error logging in models, LLMs, & servers
