@@ -16,6 +16,24 @@
 - Build Docker to create ML system components of tools end-to-end
     ![alt text](Database/images/CFA2A243-8DA6-47A8-9EB1-04F2BDCEC177_4_5005_c.jpeg.png)
 - Build ML Pipeline to send ML models to MLflow for tracking & experimental
+    - 📈 Sales pipeline model
+        - Visualize parameters & metrics ML sales models
+        ![alt text](Database/images/AD4324B9-1022-461A-A50D-AA999AAAE951.png)
+        - ML Sales Models run details
+        ![alt text](Database/images/A558CD2B-8D74-4F63-8F26-37D07F97C0AF.png)
+        - Sales parameters model
+        ![alt text](Database/images/934186E1-644F-444A-8F5B-08B08B247267.png)
+        - Sales metrics model
+        ![alt text](Database/images/C6F8626C-2519-43FF-8A02-207F8D4C3018.png)
+    - 🚨 Fraud pipeline model
+        - Visualize parameters & metrics ML fraud models
+        ![alt text](Database/images/402D61E4-72FC-4E3B-9CF4-8392E226A37C.png)
+        - ML Fraud Models run details
+        ![alt text](Database/images/EA82D7C0-24E6-4C35-BCCF-D635EAC2D140.png)
+        - Fraud parameters model
+        ![alt text](image.png)
+        - Fraud metrics model
+        ![alt text](Database/images/6665C830-F8AB-418D-90AF-06A118B37321.png)
 - Observability setup to monitor latency, logging Machine learning models and LLMs Fine-tuned
 - Build Streamlit for User Interface Forecasting dashboard
     - 📈 Sales Prediction
