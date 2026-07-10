@@ -92,10 +92,11 @@ jobs:
     name: Dispatch Operational Signals
     needs: continuous-delivery
     runs-on: ubuntu-latest
-    if: always() && github.event_name == 'push' && secrets.SLACK_WEBHOOK_URL != ''
+    if: always() && github.event_name == 'push'
 
     steps:
       - name: Send Pipeline Status Notification to Slack
+        if: env.SLACK_WEBHOOK_URL != ''
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ needs.continuous-delivery.result }}
