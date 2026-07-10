@@ -79,7 +79,7 @@ jobs:
       - name: Build and Push FastAPI Production Image
         uses: docker/build-push-action@v6
         with:
-          context: ./Production
+          context: . # context to repo root for docker can access all files
           file: ./Production/docker/Dockerfile.api
           push: true
           tags: ${{ steps.meta.outputs.tags }}

@@ -16,9 +16,11 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --default-timeout=100 --no-cache-dir -r requirements-api.txt
 
 # Copy application code
-COPY app/ ./app/
-COPY Models/ ./Models/
+COPY Production/app/ ./app/
+COPY Production/Models/ ./Models/
 COPY mlflow/ ./mlflow/
+
+COPY Production/docker/ ./docker/
 
 # Expose port
 EXPOSE 8000
