@@ -11,9 +11,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements-api.txt .
+COPY Production/requirements-api.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --default-timeout=100 --no-cache-dir -r requirements-api.txt
+    pip install --default-timeout=100 --no-cache-dir -r Production/requirements-api.txt
 
 # Copy application code
 COPY Production/app/ ./app/
