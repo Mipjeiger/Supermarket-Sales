@@ -5,14 +5,17 @@ from sqlalchemy import create_engine, text
 from app.core.config import settings
 
 # Setup clean production logs
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
+
 
 def ingest_cleaned_data_to_postgres():
     """Reads the cleaned parquet file and uploads it directly to PostgreSQL database."""
-    
+
     parquet_path = settings.DATA_CLEANED
-    
+
     if not parquet_path.exists():
         logger.error(f"❌ Cleaned Parquet file not found at: {parquet_path}")
         return
@@ -30,30 +33,37 @@ def ingest_cleaned_data_to_postgres():
     try:
         # Wrap execution inside a secure transaction block
         with engine.begin() as connection:
-            
+
             # 1. Ensure the schema exists
             logger.info("🛠️ Verifying 'engineering' database schema exists...")
             connection.execute(text("CREATE SCHEMA IF NOT EXISTS engineering;"))
-            
+
             # 2. Clear existing data safely before reloading (Full Refresh Mode)
-            logger.info("🗑️ Wiping existing records from 'engineering.supermarket' for full refresh...")
-            connection.execute(text("TRUNCATE TABLE engineering.supermarket RESTART IDENTITY;"))
-            
+            logger.info(
+                "🗑️ Wiping existing records from 'engineering.supermarket' for full refresh..."
+            )
+            connection.execute(
+                text("TRUNCATE TABLE engineering.supermarket RESTART IDENTITY;")
+            )
+
             # 3. Stream data to your specific schema table
-            logger.info(f"🚀 Ingesting {len(df)} records into 'engineering.supermarket'...")
+            logger.info(
+                f"🚀 Ingesting {len(df)} records into 'engineering.supermarket'..."
+            )
             df.to_sql(
                 name="supermarket",
                 con=connection,
                 schema="engineering",
                 if_exists="append",
-                index=False
+                index=False,
             )
-            
+
         logger.info("✅ Data ingestion completed successfully!")
 
     except Exception as e:
         logger.error(f"❌ An error occurred during data ingestion: {str(e)}")
         raise e
+
 
 if __name__ == "__main__":
     ingest_cleaned_data_to_postgres()

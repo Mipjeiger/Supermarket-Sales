@@ -8,20 +8,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 ENV_PATH = BASE_DIR / ".env"
 print(f"ENV_PATH: {ENV_PATH}")
 
+
 class Settings(BaseSettings):
     """Application configuration for loading environment variables with Pydantic validation."""
 
     # Pydantic Settings Configuration
     model_config = SettingsConfigDict(
-        env_file=ENV_PATH,
-        env_file_encoding="utf-8",
-        extra="ignore"
+        env_file=ENV_PATH, env_file_encoding="utf-8", extra="ignore"
     )
 
     # API Configuration
     PROJECT_NAME: str = "Supermarket ML Operations API"
     DEBUG: bool = False
-    API_VERSION : str = "v1"
+    API_VERSION: str = "v1"
     PORT: int = 8000
 
     # HuggingFace API Configuration
@@ -31,11 +30,23 @@ class Settings(BaseSettings):
     # File Paths Configuration
     MODEL_PATH: Path = BASE_DIR / "Models"
     MODEL_PATH_ML: list = list(MODEL_PATH.glob("*.pkl"))
-    SALES_MODEL_PATH: list = list((MODEL_PATH_ML[0] / "sales_ml_models").glob("*.joblib")) if MODEL_PATH_ML else []
-    FRAUD_MODEL_PATH: list = list((MODEL_PATH_ML[0] / "fraud_ml_models").glob("*.pkl")) if MODEL_PATH_ML else []
+    SALES_MODEL_PATH: list = (
+        list((MODEL_PATH_ML[0] / "sales_ml_models").glob("*.joblib"))
+        if MODEL_PATH_ML
+        else []
+    )
+    FRAUD_MODEL_PATH: list = (
+        list((MODEL_PATH_ML[0] / "fraud_ml_models").glob("*.pkl"))
+        if MODEL_PATH_ML
+        else []
+    )
     MLFLOW_PATH: Path = BASE_DIR / "mlflow"
-    DATA_RAW: Path = BASE_DIR / "app" / "data" / "raw" / "SuperStoreOrders - SuperStoreOrders.csv"
-    DATA_CLEANED: Path = BASE_DIR / "app" / "data" / "cleaned" / "data_sales_cleaned.parquet"
+    DATA_RAW: Path = (
+        BASE_DIR / "app" / "data" / "raw" / "SuperStoreOrders - SuperStoreOrders.csv"
+    )
+    DATA_CLEANED: Path = (
+        BASE_DIR / "app" / "data" / "cleaned" / "data_sales_cleaned.parquet"
+    )
 
     # PostgreSQL Database Configuration
     POSTGRES_USER: str
@@ -73,7 +84,8 @@ class Settings(BaseSettings):
     def POSTGRES_URL(self) -> str:
         """Synchronous connection string for PostgreSQL database especially in Docker"""
         return f"postgresql+psycopg2://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
-    
+
+
 # Singleton
 settings = Settings()
 

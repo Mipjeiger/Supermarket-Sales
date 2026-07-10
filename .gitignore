@@ -7,3 +7,4 @@ Production/venv
 .venv
 Production/pgdata
 Production/EDA/catboost_info
+*.pyc

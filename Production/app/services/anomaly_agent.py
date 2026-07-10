@@ -11,11 +11,14 @@ from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
+
 class AnomalyAgentEngine:
     def __init__(self):
         self.classifier_name = "GradientBoostingClassifier"
 
-    def _send_slack_alert_sync(self, error_message: str, channel: str, severity: str = "critical") -> None:
+    def _send_slack_alert_sync(
+        self, error_message: str, channel: str, severity: str = "critical"
+    ) -> None:
         """Run the async Slack alert from synchronous code."""
         try:
             asyncio.run(
@@ -27,7 +30,7 @@ class AnomalyAgentEngine:
 
         except RuntimeError:
             loop = asyncio.new_event_loop()
-            
+
             try:
                 asyncio.set_event_loop(loop)
                 loop.run_until_complete(
@@ -46,17 +49,26 @@ class AnomalyAgentEngine:
 
             if model is None:
                 return {"flag": 0, "probability": 0.05}
-            
+
             # Predict the risk flag and probability
             prediction = model.predict(feature_vector)[0]
-            probability = float(model.predict_proba(feature_vector)[0][1]) if hasattr(model, "predict_proba") else 0.5
+            probability = (
+                float(model.predict_proba(feature_vector)[0][1])
+                if hasattr(model, "predict_proba")
+                else 0.5
+            )
             return {"flag": int(prediction), "probability": probability}
-        
+
         except Exception as e:
             logger.error(f"GradientBoostingClassifier scoring extraction error: {e}")
-            return {"flag": 0, "probability": 0.0}  # Default to safe with low probability
-        
-    def evaluate_and_notify_stream(self, streaming_db_row: pd.DataFrame, risk_metrics: Dict[str, Any]) -> str:
+            return {
+                "flag": 0,
+                "probability": 0.0,
+            }  # Default to safe with low probability
+
+    def evaluate_and_notify_stream(
+        self, streaming_db_row: pd.DataFrame, risk_metrics: Dict[str, Any]
+    ) -> str:
         """Injects clean structured transactional rows directly into the analysis loop."""
 
         # Run inference scoring via GradientBoostingClassifier
@@ -64,7 +76,15 @@ class AnomalyAgentEngine:
 
         # Extract and format row variables explicitly
         row_dict = streaming_db_row.iloc[0].to_dict()
-        audit_keys = ["order_id", "sales", "quantity", "discount", "profit", "shipping_cost", "profit_margin"]
+        audit_keys = [
+            "order_id",
+            "sales",
+            "quantity",
+            "discount",
+            "profit",
+            "shipping_cost",
+            "profit_margin",
+        ]
         structured_audit_json = {k: row_dict[k] for k in audit_keys if k in row_dict}
 
         # Bind features to structural templates
@@ -72,7 +92,7 @@ class AnomalyAgentEngine:
             database_row_json=json.dumps(structured_audit_json, indent=2, default=str),
             flag=ml_eval["flag"],
             probability=ml_eval["probability"],
-            abuse_score=risk_metrics.get("abuse_score", 0.0)
+            abuse_score=risk_metrics.get("abuse_score", 0.0),
         )
 
         # Generate gorunded security assessment summary via LLM provider
@@ -81,7 +101,7 @@ class AnomalyAgentEngine:
             system_instruction=ANOMALY_SYSTEM_PROMPT,
             hf_model="meta-llama/Llama-3.1-8B-Instruct",
             groq_model="llama-3.3-70b-versatile",
-            temperature=0.0
+            temperature=0.0,
         )
 
         # Conditionally send Slack notification if risk is flagged
@@ -99,8 +119,9 @@ class AnomalyAgentEngine:
                 channel=settings.SLACK_CHANNEL,
                 severity="critical",
             )
-        
+
         return brief
-    
+
+
 # Singleton initialization for global anomaly agent access
 anomaly_agent = AnomalyAgentEngine()

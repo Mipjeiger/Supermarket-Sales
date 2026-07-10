@@ -9,10 +9,10 @@ from app.api.v1.endpoints import recommendation, security
 from app.services.model_registry import model_registry
 
 logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -23,24 +23,31 @@ async def lifespan(app: FastAPI):
         # Load serialization binaries using the centralized file registry service
         model_registry.load_model("sales", "CatboostRegressor_model", ".joblib")
         model_registry.load_model("fraud", "XGBClassifier", ".pkl")
-        logger.info("📊 Upstream CatBoost and XGBoost models cached successfully into worker memory.")
+        logger.info(
+            "📊 Upstream CatBoost and XGBoost models cached successfully into worker memory."
+        )
 
         # Fire up the background kafka consumer thread loop
         asyncio.create_task(run_transaction_consumer())
-        logger.info("📡 Kafka consumer thread loop initialized for real-time transaction streaming.")
+        logger.info(
+            "📡 Kafka consumer thread loop initialized for real-time transaction streaming."
+        )
     except Exception as e:
-        logger.error(f"🚨 Critical failure during model registration startup sequence: {str(e)}")
-    
+        logger.error(
+            f"🚨 Critical failure during model registration startup sequence: {str(e)}"
+        )
+
     yield
 
     logger.info("🛑 Shutting down Supermarket Compound ML-LLM Engine...")
+
 
 # Initialize FastAPI with metadata parsed
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.API_VERSION,
     debug=settings.DEBUG,
-    lifespan=lifespan
+    lifespan=lifespan,
 )
 
 # Production CORS Middleware Configuration
@@ -57,14 +64,15 @@ app.add_middleware(
 app.include_router(
     recommendation.router,
     prefix="/api/v1/recommendation",
-    tags=["Contextual Recommendation"]
+    tags=["Contextual Recommendation"],
 )
 
 app.include_router(
     security.router,
     prefix="/api/v1/security",
-    tags=["Real-time Streaming Security Operations"]
+    tags=["Real-time Streaming Security Operations"],
 )
+
 
 @app.get("/")
 def root_health_check():
@@ -74,5 +82,5 @@ def root_health_check():
         "version": settings.API_VERSION,
         "infrastructure": "Docker container mesh",
         "vector_store": "Qdrant Cloud Managed Cluster",
-        "debug_mode": settings.DEBUG
+        "debug_mode": settings.DEBUG,
     }

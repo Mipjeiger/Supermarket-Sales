@@ -9,6 +9,7 @@ from app.prompts.behavior_templates import BEHAVIOR_SYSTEM_PROMPT, BEHAVIOR_USER
 
 logger = logging.getLogger(__name__)
 
+
 class BehaviorAnalystEngine:
     def __init__(self):
         self.model_name = "CatboostRegressor_model"
@@ -18,15 +19,19 @@ class BehaviorAnalystEngine:
             model = model_registry.get_model(self.model_name)
 
             if model is None:
-                return 500.0 # Default to baseline fallback
+                return 500.0  # Default to baseline fallback
             raw_pred = model.predict(historical_features)
-            return float(np.expm1(raw_pred[0]))  # Convert log-transformed prediction back to original scale
-        
+            return float(
+                np.expm1(raw_pred[0])
+            )  # Convert log-transformed prediction back to original scale
+
         except Exception as e:
             logger.error(f"❌ Upstream regressor failed: {e}")
-            return 500.0 
-        
-    def generate_personalized_offers(self, customer_id: str, last_transaction_df: pd.DataFrame) -> str:
+            return 500.0
+
+    def generate_personalized_offers(
+        self, customer_id: str, last_transaction_df: pd.DataFrame
+    ) -> str:
         """Fuse structural database columns with ML thresholds to ground the LLM."""
 
         # Calculate spending boundary using the ML model
@@ -40,8 +45,15 @@ class BehaviorAnalystEngine:
 
         # Isolate column to pass as verified history context
         grounded_keys = [
-            "order_id", "category", "sub_category", "product_name", 
-            "sales", "quantity", "discount", "profit_margin", "unit_price"
+            "order_id",
+            "category",
+            "sub_category",
+            "product_name",
+            "sales",
+            "quantity",
+            "discount",
+            "profit_margin",
+            "unit_price",
         ]
         history_summary = {k: row_dict[k] for k in grounded_keys if k in row_dict}
 
@@ -51,7 +63,7 @@ class BehaviorAnalystEngine:
             segment=segment,
             region=region,
             historical_rows_json=json.dumps(history_summary, indent=2, default=str),
-            spend_ceiling=spend_ceiling
+            spend_ceiling=spend_ceiling,
         )
 
         # Invoke LLM via provider recommended
@@ -60,5 +72,5 @@ class BehaviorAnalystEngine:
             system_instruction=BEHAVIOR_SYSTEM_PROMPT,
             hf_model="meta-llama/Llama-3.1-8B-Instruct",
             groq_model="llama-3.3-70b-versatile",
-            temperature=0.2
+            temperature=0.2,
         )
