@@ -12,7 +12,6 @@ permissions:
 
 env:
   REGISTRY: ghcr.io
-  # GHCR requires entirely lowercase image paths to prevent build errors
   IMAGE_NAME: mipjeiger/supermarket-sales-api
 
 jobs:
@@ -36,8 +35,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 black bandit
 
-      # Instructing tools to scan inside your specific subdirectory
-      with:
       - name: Code Formatting Check (Black)
         run: black --check Production/app/
 
@@ -54,7 +51,7 @@ jobs:
     name: Build & Publish Container Image
     needs: continuous-integration
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' # Only trigger compilation on actual merges/pushes
+    if: github.event_name == 'push'
 
     steps:
       - name: Checkout Code Repository
@@ -82,7 +79,6 @@ jobs:
       - name: Build and Push FastAPI Production Image
         uses: docker/build-push-action@v6
         with:
-          # Point context and file relative to the repository root
           context: ./Production
           file: ./Production/docker/Dockerfile.api
           push: true
@@ -96,7 +92,7 @@ jobs:
     name: Dispatch Operational Signals
     needs: continuous-delivery
     runs-on: ubuntu-latest
-    if: always() && github.event_name == 'push'
+    if: always() && github.event_name == 'push' && secrets.SLACK_WEBHOOK_URL != ''
 
     steps:
       - name: Send Pipeline Status Notification to Slack
@@ -106,5 +102,3 @@ jobs:
           fields: repo,message,commit,author,action,workflow
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        # Only attempts execution if you have a configured secret hook
-        if: env.SLACK_WEBHOOK_URL != ''
