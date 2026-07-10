@@ -2,7 +2,7 @@ import logging
 import aiohttp
 from typing import Dict, Optional
 from datetime import datetime
-from app.config.config import settings
+from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 

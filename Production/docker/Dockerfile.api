@@ -1,16 +1,19 @@
 FROM python:3.11-slim
 
+# Prevent Python from writing pyc files and buffering stdout/stderr
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    gcc \
-    g++ \
+# Install essential system utilities for health checks
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements-api.txt /app/requirements-api.txt
-
-RUN pip install --default-timeout=100 --no-cache-dir -r requirements-api.txt
+COPY requirements-api.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --default-timeout=100 --no-cache-dir -r requirements-api.txt
 
 # Copy application code
 COPY app/ ./app/
@@ -21,4 +24,5 @@ COPY mlflow/ ./mlflow/
 EXPOSE 8000
 
 # Run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0", "--port", "8000"]
+RUN chmod +x /app/docker/entrypoint.sh
+ENTRYPOINT ["/app/docker/entrypoint.sh"]

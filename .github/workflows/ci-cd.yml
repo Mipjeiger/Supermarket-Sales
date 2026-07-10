@@ -1,0 +1,111 @@
+name: Supermarket MLOps CI/CD Pipeline
+
+on:
+  push:
+    branches: ["main", "master"]
+    tags: [ "v*.*.*"]
+  pull_request:
+    branches: ["main", "master"]
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: mipjeiger/supermarket-sales-api # GHCR requires lowercase image
+
+jobs:
+  # 🧪 Job 1: Linting, Formatting, and Security Scans
+  continuous-integration:
+    name: Code Quality & Security Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Development Tooling
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 black bandit
+
+      # Instructing tools to scan inside your specific subdirectory
+      with:
+      - name: Code Formatting Check (Black)
+        run: black --check Production/app/
+
+      - name: Linting Verification (Flake8)
+        run: |
+          flake8 Production/app --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 Production/app --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Security Vulnerability Scan (Bandit)
+        run: bandit -r Production/app -ll
+
+  # 📦 Job 2: Build and Package Container to GitHub Container Registry
+  continuous-delivery:
+    name: Build & Publish Container Image
+    needs: continuous-integration
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' # Only trigger compilation on actual merges/pushes
+
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry (GHCR)
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract Docker Metadata (Tags, Labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=sha,format=short
+
+      - name: Build and Push FastAPI Production Image
+        uses: docker/build-push-action@v6
+        with:
+          # Point context and file relative to the repository root, because the workflow end-to-end in Production
+          context: ./Production
+          file: ./Production/docker/Dockerfile.api
+          push: true
+          tags: ${{ id.meta.outputs.tags }}
+          labels: ${{ id.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # 🚨 Job 3: Operations Alert Slack Dispatcher
+  slack-deployment-alert:
+    name: Dispatch Operational Signals
+    needs: continuous-delivery
+    runs-on: ubuntu-latest
+    if: always() && github.event_name == 'push'
+
+    steps:
+      - name: Send Pipeline Status Notifications to Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ needs.continuous-delivery.result }}
+          fields: repo,message,commit,author,action,workflow
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        
+        # Only attempts execution if have a configured secret hook
+        if: secrets.SLACK_WEBHOOK_URL != ''

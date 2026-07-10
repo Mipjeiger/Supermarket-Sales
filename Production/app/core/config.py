@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     )
 
     # API Configuration
-    PROJECT_NAME: str = "SuperMarket Sales Prediction"
+    PROJECT_NAME: str = "Supermarket ML Operations API"
     DEBUG: bool = False
     API_VERSION : str = "v1"
     PORT: int = 8000
@@ -53,6 +53,10 @@ class Settings(BaseSettings):
     SLACK_WEBHOOK_URL: Optional[str] = None
     SLACK_CHANNEL: str = "supermarket_sales"
 
+    # Qdrant Configuration
+    QDRANT_URL: Optional[str] = None
+    QDRANT_API_KEY: Optional[str] = None
+
     # Prometheus Configuration
     PROMETHEUS_PORT: int = 9090
 
@@ -60,6 +64,9 @@ class Settings(BaseSettings):
     MONITORING_INTERVAL: int = 3600  # 1 hour
     ALERT_THRESHOLD_RMSE: float = 1.5
     ALERT_THRESHOLD_LATENCY: float = 1.0  # seconds
+
+    # Kafka Configuration
+    KAFKA_BOOTSTRAP_SERVERS: str = "kafka:29092"
 
     # Computed property for the PostgreSQL connection URL
     @property
