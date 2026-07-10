@@ -23,15 +23,15 @@ services:
   # MLFlow Server
   mlflow:
     build:
-      context: .
-      dockerfile: docker/Dockerfile.mlflow
+      context: ..
+      dockerfile: Production/docker/Dockerfile.mlflow
     container_name: mlflow_sales
     ports:
       - "5002:5000"
     environment:
       MLFLOW_TRACKING_URI: /mlflow
     volumes:
-      - ./mlflow:/mlflow # Local file-based storage for MLflow artifacts
+      - ./Production/mlflow:/mlflow
     command: mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root /mlflow/artifacts --allowed-hosts "*"
     networks:
       - sales_network
@@ -39,8 +39,8 @@ services:
   # FastAPI Backend
   fastapi:
     build:
-      context: .
-      dockerfile: docker/Dockerfile.api
+      context: ..
+      dockerfile: Production/docker/Dockerfile.api
     container_name: fastapi_sales
     ports:
       - "8000:8000"
@@ -95,6 +95,24 @@ services:
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
       # Static cluster identifier for KRaft initialization
       CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
+    networks:
+      - sales_network
+
+  # Apache kafka UI
+  kafka-ui:
+    image: kafbat/kafka-ui:260f9e8
+    container_name: kafka_ui_sales
+    ports:
+      - "8082:8080"
+    depends_on:
+      - kafka
+    environment:
+      DYNAMIC_CONFIG_ENABLED: 'true'
+      KAFKA_CLUSTERS_0_NAME: 'local'
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka:29092'
+      KAFKA_CLUSTERS_0_ZOOKEEPER: 'false'
+    volumes:
+      - ./kafka-ui/config.yaml:/etc/kafkaui/dynamic_config.yaml
     networks:
       - sales_network
 

@@ -32,7 +32,7 @@ while True:
 
 echo "📢 Dispatching container initialization log telemetry to Slack..."
 python3 -c "
-import os, json, urllib.request
+import os, json, urllib.request, time
 webhook_url = os.getenv('SLACK_WEBHOOK_URL')
 if webhook_url:
     payload = {

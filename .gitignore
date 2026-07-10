@@ -8,3 +8,4 @@ Production/venv
 Production/pgdata
 Production/EDA/catboost_info
 *.pyc
+kafka-ui/config.yaml
