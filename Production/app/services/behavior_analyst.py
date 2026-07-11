@@ -6,6 +6,7 @@ from typing import List, Dict, Any
 from app.services.model_registry import model_registry
 from app.services.llm_provider import llm_provider
 from app.prompts.behavior_templates import BEHAVIOR_SYSTEM_PROMPT, BEHAVIOR_USER_PROMPT
+from app.core.redis import redis_cache
 
 logger = logging.getLogger(__name__)
 
@@ -13,6 +14,15 @@ logger = logging.getLogger(__name__)
 class BehaviorAnalystEngine:
     def __init__(self):
         self.model_name = "CatboostRegressor_model"
+
+    # Redis caching methods for short storing and retrieval of ML model predictions
+    async def get_cache_behavior_profile(order_id: str):
+        cached_data = await redis_cache.client.get(f"order: {order_id}")
+
+        if cached_data:
+            return json.loads(cached_data)
+
+        return None
 
     def predict_spend_ceiling(self, historical_features: pd.DataFrame) -> float:
         try:
@@ -30,7 +40,7 @@ class BehaviorAnalystEngine:
             return 500.0
 
     def generate_personalized_offers(
-        self, customer_id: str, last_transaction_df: pd.DataFrame
+        self, order_id: str, last_transaction_df: pd.DataFrame
     ) -> str:
         """Fuse structural database columns with ML thresholds to ground the LLM."""
 
@@ -59,7 +69,7 @@ class BehaviorAnalystEngine:
 
         # Compile the structural prompt parameters
         user_prompt = BEHAVIOR_USER_PROMPT.format(
-            customer_id=customer_id,
+            order_id=order_id,
             segment=segment,
             region=region,
             historical_rows_json=json.dumps(history_summary, indent=2, default=str),
@@ -74,3 +84,7 @@ class BehaviorAnalystEngine:
             groq_model="llama-3.3-70b-versatile",
             temperature=0.2,
         )
+
+
+# Singleton instance for global access
+behavior_analyst = BehaviorAnalystEngine()

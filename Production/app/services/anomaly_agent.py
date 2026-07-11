@@ -8,13 +8,23 @@ from app.services.llm_provider import llm_provider
 from app.prompts.anomaly_templates import ANOMALY_SYSTEM_PROMPT, ANOMALY_USER_PROMPT
 from app.monitoring.slack_notifier import slack_notifier
 from app.core.config import settings
+from app.core.redis import redis_cache
 
 logger = logging.getLogger(__name__)
 
 
 class AnomalyAgentEngine:
     def __init__(self):
-        self.classifier_name = "GradientBoostingClassifier"
+        self.classifier_name = "XGBClassifier"
+
+    # Redis caching methods for short storing and retrieval of ML model predictions
+    async def get_cache_anomaly_profile(order_id: str):
+        cached_data = await redis_cache.client.get(f"order: {order_id}")
+
+        if cached_data:
+            return json.loads(cached_data)
+
+        return None
 
     def _send_slack_alert_sync(
         self, error_message: str, channel: str, severity: str = "critical"
@@ -43,7 +53,7 @@ class AnomalyAgentEngine:
                 loop.close()
 
     def evaluate_transaction_risk(self, feature_vector: pd.DataFrame) -> Dict[str, Any]:
-        """Evaluate the risk of a transaction using the GradientBoostingClassifier."""
+        """Evaluate the risk of a transaction using the XGBClassifier."""
         try:
             model = model_registry.get_model(self.classifier_name)
 
@@ -60,7 +70,7 @@ class AnomalyAgentEngine:
             return {"flag": int(prediction), "probability": probability}
 
         except Exception as e:
-            logger.error(f"GradientBoostingClassifier scoring extraction error: {e}")
+            logger.error(f"XGBClassifier scoring extraction error: {e}")
             return {
                 "flag": 0,
                 "probability": 0.0,
@@ -71,7 +81,7 @@ class AnomalyAgentEngine:
     ) -> str:
         """Injects clean structured transactional rows directly into the analysis loop."""
 
-        # Run inference scoring via GradientBoostingClassifier
+        # Run inference scoring via XGBClassifier to determine risk flag and probability
         ml_eval = self.evaluate_transaction_risk(streaming_db_row)
 
         # Extract and format row variables explicitly

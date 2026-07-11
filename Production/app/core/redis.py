@@ -4,6 +4,7 @@ import logging
 
 logger = logging.getLogger("app.core.redis")
 
+
 class RedisCacheManager:
     """Enterprise-grade async Redis connection manager for caching and pub/sub operations."""
 
@@ -13,9 +14,7 @@ class RedisCacheManager:
     def initialize(self) -> None:
         """Instantiate the Redis client with connection pooling."""
         self.client = aioredis.Redis.from_url(
-            settings.REDIS_URL,
-            encoding="utf-8",
-            decode_responses=True
+            settings.REDIS_URL, encoding="utf-8", decode_responses=True
         )
         logger.info("✅ Redis client async connection pool initialized successfully.")
 
@@ -24,6 +23,7 @@ class RedisCacheManager:
         if self.client:
             await self.client.close()
             logger.info("🔒 Redis client connection pool closed successfully.")
+
 
 # Singleton
 redis_cache = RedisCacheManager()

@@ -27,6 +27,10 @@ class Settings(BaseSettings):
     HUGGINGFACE_API_KEY: Optional[str] = None
     GROQ_API_KEY: Optional[str] = None
 
+    # Redis Configuration
+    REDIS_HOST: str = "redis"
+    REDIS_PORT: int = 6379
+
     # File Paths Configuration
     MODEL_PATH: Path = BASE_DIR / "Models"
     MODEL_PATH_ML: list = list(MODEL_PATH.glob("*.pkl"))
@@ -77,13 +81,24 @@ class Settings(BaseSettings):
     ALERT_THRESHOLD_LATENCY: float = 1.0  # seconds
 
     # Kafka Configuration
-    KAFKA_BOOTSTRAP_SERVERS: str = "kafka:29092"
+    KAFKA_BOOTSTRAP_SERVERS: str = "kafka:29092" or "localhost:9092"
 
     # Computed property for the PostgreSQL connection URL
     @property
     def POSTGRES_URL(self) -> str:
         """Synchronous connection string for PostgreSQL database especially in Docker"""
         return f"postgresql+psycopg2://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+
+    @property
+    def POSTGRES_RAW_URI(self) -> str:
+        """Strict RFC-compliant URI for native psycopg2 driver connections"""
+        return f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+
+    # Redis property
+    @property
+    def REDIS_URL(self) -> str:
+        """Redis connection URL"""
+        return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/0"
 
 
 # Singleton
