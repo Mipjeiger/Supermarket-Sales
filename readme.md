@@ -45,9 +45,17 @@
     ![alt text](Database/images/4A434B34-9EE5-421C-9DC5-6BAFEC921DD8_1_105_c.jpeg)
     - 📊 Future Revenue Forecasting
     ![alt text](Database/images/460CA2A6-72F1-4E8B-A954-B260D34211CC.png)
+- Build real-time streaming engine data pipeline in kafka
+    ![alt text](Database/images/932D316E-73CA-4BE6-BC0C-01E9024CBAAB_1_105_c.jpeg)
 - Build DVC (Data Version Control) to allow track and version large datasets, ML models, training pipelines, and git for data (Optional)
-- Alert using slack to notify on error logging in models, LLMs, & servers
+- Alert using slack to notify on error logging in
+    - Models
+    - LLMs
+    - CI/CD Pipeline
+    ![alt text](Database/images/FB0512BA-9438-4198-BF77-DB98B608D18D.png)
 - CI/CD setp to deploy for all evaluation benchmarks passed. To integrate recycle provided system deployment
+    ![alt text](Database/images/655A02F8-F13F-435D-A052-0DE8011792D2_1_105_c.jpeg)
+    ![alt text](Database/images/874CC70F-33AB-4010-890A-4CEFDD5EAE31_1_105_c.jpeg)
 - Streamlit Deployment
 
 ## 📝 Notes
