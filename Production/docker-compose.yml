@@ -31,7 +31,7 @@ services:
     environment:
       MLFLOW_TRACKING_URI: /mlflow
     volumes:
-      - ./Production/mlflow:/mlflow
+      - ./mlflow:/mlflow
     command: mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root /mlflow/artifacts --allowed-hosts "*"
     networks:
       - sales_network
@@ -46,16 +46,23 @@ services:
       - "8000:8000"
     depends_on:
       postgres:
-        condition: service_started
+        condition: service_healthy
       mlflow:
         condition: service_started
       kafka:
         condition: service_started
+      kafka-ui:
+        condition: service_started
+      redis:
+        condition: service_started
+      redisinsight:
+        condition: service_started
     environment:
+      - PYTHONPATH=/app
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_HOST=${POSTGRES_HOST}
-      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
       - POSTGRES_DB=${POSTGRES_DB}
       - MLFLOW_TRACKING_URI=http://mlflow:5000
       - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
@@ -93,7 +100,6 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-      # Static cluster identifier for KRaft initialization
       CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
     networks:
       - sales_network
@@ -112,7 +118,7 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka:29092'
       KAFKA_CLUSTERS_0_ZOOKEEPER: 'false'
     volumes:
-      - ./kafka-ui/config.yaml:/etc/kafkaui/dynamic_config.yaml
+      - ./kafka-ui/config.yaml:/application.yaml
     networks:
       - sales_network
 
@@ -163,6 +169,8 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
     depends_on:
       - prometheus
+    volumes:
+      - grafana_supermarket_data:/var/lib/grafana
     networks:
       - sales_network
 

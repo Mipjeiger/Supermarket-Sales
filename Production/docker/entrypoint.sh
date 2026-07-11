@@ -56,6 +56,7 @@ if webhook_url:
 "
 
 echo "📦 Executing automated pipeline registry..."
+export PYTHONPATH=/app # Make python to look inside /app for modules
 python3 /app/Production/scripts/register_model.py || echo "⚠️ Script warnings handled, proceeding..."
 
 echo "📡 Starting streaming data pipeline from DB postgres to kafka on automated kafka pipeline messages..."
