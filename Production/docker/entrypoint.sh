@@ -58,5 +58,8 @@ if webhook_url:
 echo "📦 Executing automated pipeline registry..."
 python3 /app/Production/scripts/register_model.py || echo "⚠️ Script warnings handled, proceeding..."
 
+echo "📡 Starting streaming data pipeline from DB postgres to kafka on automated kafka pipeline messages..."
+python3 /app/Production/scripts/postgres_to_kafka.py || echo "⚠️ Script warnings handled, proceeding..."
+
 echo "⚡ Starting FastAPI application instance..."
 exec uvicorn app.main:app --host 0.0.0.0 --port 8000

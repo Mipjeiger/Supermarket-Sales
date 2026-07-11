@@ -116,6 +116,27 @@ services:
     networks:
       - sales_network
 
+  # Redis
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis_sales
+    ports:
+      - "6379:6379"
+    networks:
+      - sales_network
+    volumes:
+      - redis_supermarket_data:/data
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight_sales
+    ports:
+      - "5540:5540"
+    depends_on:
+      - redis
+    networks:
+      - sales_network
+
   # Prometheus
   prometheus:
     image: prom/prometheus:latest
@@ -124,7 +145,7 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus
+      - prometheus_supermarket_data:/prometheus
     networks:
       - sales_network
     command:
@@ -146,8 +167,9 @@ services:
       - sales_network
 
 volumes:
-  prometheus_data:
-  grafana_data:
+  prometheus_supermarket_data:
+  grafana_supermarket_data:
+  redis_supermarket_data:
 
 networks:
   sales_network:
