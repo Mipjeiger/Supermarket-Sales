@@ -8,13 +8,16 @@ import logging
 
 """Register existing .pkl models with MLflow -> Run manually"""
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 # Set paths
 BASE_MODEL_PATH = Path("Models")
 SALES_DIR = BASE_MODEL_PATH / "sales_ml_models"
 FRAUD_DIR = BASE_MODEL_PATH / "fraud_ml_models"
+
 
 def parse_metrics_file(csv_path: Path) -> dict:
     """Parse to dynamically convert model comparison tables into lookup dictionaries."""
@@ -23,33 +26,40 @@ def parse_metrics_file(csv_path: Path) -> dict:
     if not csv_path.exists():
         logger.warning(f"⚠️ Performance metrics file {csv_path} does not exist.")
         return perf_map
-    
+
     try:
         df = pd.read_csv(csv_path)
         df.columns = [str(col).strip().lower() for col in df.columns]
 
         # Check for lowercase 'model identifier
-        if 'model' in df.columns:
+        if "model" in df.columns:
             for _, row in df.iterrows():
-                model_name = str(row['model']).strip()
-                
+                model_name = str(row["model"]).strip()
+
                 # Extract all numeric attributes across varying columns dynamically
-                metrics_dict = {k: v for k, v in row.items() if k != 'model' and pd.notna(v) and isinstance(v, (int, float))}
-                perf_map[model_name] = metrics_dict    
+                metrics_dict = {
+                    k: v
+                    for k, v in row.items()
+                    if k != "model" and pd.notna(v) and isinstance(v, (int, float))
+                }
+                perf_map[model_name] = metrics_dict
         else:
-            logger.warning(f"⚠️ Could not find a 'model' key column header in {csv_path.name}")
-                
+            logger.warning(
+                f"⚠️ Could not find a 'model' key column header in {csv_path.name}"
+            )
+
     except Exception as e:
         logger.error(f"❌ Error parsing performance metrics file: {str(e)}")
 
     return perf_map
+
 
 def load_json_parameters(json_path: Path) -> dict:
     """Load JSON logs cleanly into structured parameter maps"""
     if not json_path.exists():
         logger.warning(f"⚠️ Parameters JSON file {json_path} does not exist.")
         return {}
-    
+
     try:
         with open(json_path, "r", encoding="utf-8") as f:
             data = json.load(f)
@@ -57,10 +67,12 @@ def load_json_parameters(json_path: Path) -> dict:
         # Scenario A: JSON is already a standard dictionary mapping model
         if isinstance(data, dict):
             return data
-        
+
         # Scenario B: JSON is a list of dictionaries with 'model_name' keys
         if isinstance(data, list):
-            logger.info(f"📋 Detecting JSON array structure in {json_path.name}. Normalizing...")
+            logger.info(
+                f"📋 Detecting JSON array structure in {json_path.name}. Normalizing..."
+            )
             normalized_map = {}
 
             for item in data:
@@ -68,27 +80,34 @@ def load_json_parameters(json_path: Path) -> dict:
 
                     # Identify which key holds the name of the algorithm
                     model_key = None
-                    for identifier in ['Model', 'model', 'model_name', 'name']:
+                    for identifier in ["Model", "model", "model_name", "name"]:
                         if identifier in item:
                             model_key = str(item[identifier]).strip()
                             break
-                    
-                    if model_key:
-                        if 'params' in item and isinstance(item['params'], dict):
-                            normalized_map[model_key] = item['params']
 
-                        elif 'parameters' in item and isinstance(item['parameters'], dict):
-                            normalized_map[model_key] = item['parameters']
+                    if model_key:
+                        if "params" in item and isinstance(item["params"], dict):
+                            normalized_map[model_key] = item["params"]
+
+                        elif "parameters" in item and isinstance(
+                            item["parameters"], dict
+                        ):
+                            normalized_map[model_key] = item["parameters"]
 
                         else:
                             # Extract everything except the identifier key itself
-                            normalized_map[model_key] = {k: v for k, v in item.items() if k not in ['Model', 'model', 'model_name', 'name']}
-            
+                            normalized_map[model_key] = {
+                                k: v
+                                for k, v in item.items()
+                                if k not in ["Model", "model", "model_name", "name"]
+                            }
+
             return normalized_map
 
     except Exception as e:
         logger.error(f"❌ Error loading JSON parameters from {json_path}: {str(e)}")
         return {}
+
 
 def register_pipeline():
     """ML Pipeline executing tracking uploads into isolated MLflow Experiments."""
@@ -134,14 +153,20 @@ def register_pipeline():
                         logger.info(f"✅ Logged metrics for {raw_name}: {metrics}")
 
                     # Extract hyperparameters from the JSON summary if available
-                    params = sales_params_master.get(raw_name) or sales_params_master.get(raw_name.lower()) or {}
+                    params = (
+                        sales_params_master.get(raw_name)
+                        or sales_params_master.get(raw_name.lower())
+                        or {}
+                    )
 
                     if params:
                         mlflow.log_params(params)
                         logger.info(f"✅ Logged parameters for {raw_name}: {params}")
                     else:
-                        logger.warning(f"⚠️ No parameters found for {raw_name} in JSON summary.")
-            
+                        logger.warning(
+                            f"⚠️ No parameters found for {raw_name} in JSON summary."
+                        )
+
             except Exception as e:
                 logger.error(f"❌ Error registering model {raw_name}: {str(e)}")
 
@@ -162,8 +187,12 @@ def register_pipeline():
 
         # Fallback layer: if logs_summary metrics table is empty, fallback to the main model_comparison_results.csv for metrics
         if not fraud_metrics:
-            logger.info("⚠️ No metrics found in logs_summary; falling back to model_comparison_results.csv for fraud metrics.")
-            fraud_metrics = parse_metrics_file(FRAUD_DIR / "model_comparison_results.csv")
+            logger.info(
+                "⚠️ No metrics found in logs_summary; falling back to model_comparison_results.csv for fraud metrics."
+            )
+            fraud_metrics = parse_metrics_file(
+                FRAUD_DIR / "model_comparison_results.csv"
+            )
 
         # Crawl through binary pickle serialization files
         for model_file in FRAUD_DIR.glob("*.pkl"):
@@ -183,17 +212,26 @@ def register_pipeline():
                         mlflow.log_metrics(metrics)
                         logger.info(f"✅ Logged metrics for {raw_name}: {metrics}")
 
-                    params = fraud_params_master.get(raw_name) or fraud_params_master.get(raw_name.lower()) or {}
+                    params = (
+                        fraud_params_master.get(raw_name)
+                        or fraud_params_master.get(raw_name.lower())
+                        or {}
+                    )
                     if params:
                         mlflow.log_params(params)
                         logger.info(f"✅ Logged parameters for {raw_name}: {params}")
                     else:
-                        logger.warning(f"⚠️ No parameters found for {raw_name} in JSON summary.")
+                        logger.warning(
+                            f"⚠️ No parameters found for {raw_name} in JSON summary."
+                        )
 
             except Exception as e:
                 logger.error(f"❌ Error registering model {raw_name}: {str(e)}")
 
+
 # Usage
 if __name__ == "__main__":
     register_pipeline()
-    logger.info("\n🚀 ML Pipeline execution finished! Navigate to the MLflow UI to inspect metrics.")
+    logger.info(
+        "\n🚀 ML Pipeline execution finished! Navigate to the MLflow UI to inspect metrics."
+    )
