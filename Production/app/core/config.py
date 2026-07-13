@@ -81,7 +81,7 @@ class Settings(BaseSettings):
     ALERT_THRESHOLD_LATENCY: float = 1.0  # seconds
 
     # Kafka Configuration
-    KAFKA_BOOTSTRAP_SERVERS: str = "kafka:29092" or "localhost:9092"
+    KAFKA_BOOTSTRAP_SERVERS: str = "kafka:29092"
 
     # Computed property for the PostgreSQL connection URL
     @property
