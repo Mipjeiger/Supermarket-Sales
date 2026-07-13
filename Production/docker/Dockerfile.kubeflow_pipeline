@@ -1,0 +1,22 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install light OS dependencies (libgomp1 is required for XGBoost/LightGBM)
+RUN apt-get update && apt-get install -y --no-install-recommends libgomp1 && rm -rf /var/lib/apt/lists/*
+
+# 1. Copy and install correct pipeline requirements 📦
+COPY Production/requirements-kubeflow.txt ./requirements.txt
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --default-timeout=100 --no-cache-dir -r requirements.txt
+
+# 2. Copy the parquet training dataset 🗃️
+COPY Production/app/data/cleaned/combined_sql_supermarket.parquet ./Production/app/data/cleaned/combined_sql_supermarket.parquet
+
+# 3. Copy ONLY .pkl models from the fraud directory 🛡️
+RUN mkdir -p ./Production/Models/fraud_ml_models
+COPY Production/Models/fraud_ml_models/*.pkl ./Production/Models/fraud_ml_models/
+
+# 4. Copy ONLY .joblib models from the sales directory 📈
+RUN mkdir -p ./Production/Models/sales_ml_models
+COPY Production/Models/sales_ml_models/*.joblib ./Production/Models/sales_ml_models/
