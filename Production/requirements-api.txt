@@ -26,6 +26,13 @@ mlflow==2.9.0
 prometheus-client==0.19.0
 prometheus-fastapi-instrumentator==6.1.0
 
+# Kafka
+aiokafka==0.14.0
+kafka-python==2.2.15
+
+# Redis
+redis==4.6.0
+
 # HTTP & Async
 aiohttp==3.9.1
 requests==2.31.0
