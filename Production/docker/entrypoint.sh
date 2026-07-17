@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+# For tenporary disabling MLFlow currently first, since we are not using MLFlow for now
 echo "⏳ Waiting for MLflow tracking server to start inside container..."
 python3 -c "
 import socket
@@ -63,5 +64,5 @@ python3 /app/Production/scripts/register_model.py || echo "⚠️ Script warning
 #echo "📡 Starting streaming data pipeline from DB postgres to kafka on automated kafka pipeline messages..."
 #python3 /app/Production/scripts/postgres_to_kafka.py || echo "⚠️ Script warnings handled, proceeding..."
 
-echo "⚡ Starting FastAPI application instance..."
+echo "👷‍♂️ Starting FastAPI application instance..."
 exec uvicorn app.main:app --host 0.0.0.0 --port 8000
