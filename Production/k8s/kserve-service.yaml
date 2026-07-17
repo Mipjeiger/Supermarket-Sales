@@ -1,32 +1,30 @@
 apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
-  name: "supermarket-intelligence-service"
-  namespace: "kubeflow-production"
+  name: "sm-intel" # Fixed length characters to get lower
+  namespace: "kubeflow-supermarket-production"
   labels:
     app: supermarket-intelligence
+  annotations:
+    serving.kserve.io/deploymentMode: RawDeployment
 spec:
   predictor:
     containers:
-      - name: ml-predictor
-        image: mipjeiger/supermarket-kubeflow-pipeline:latest
-
-        # Execute production gateway with the python path module flag
+      - name: "kserve-container"
+        image: "mipjeiger/supermarket-kubeflow-pipeline:latest"
         command: ["python3", "-m", "Production.app.services.inference_gateway"]
+        env:
+          - name: "PYTHONPATH"
+            value: "/app"
+          - name: "ENV_PATH"
+            value: "/app/.env"
         ports:
           - containerPort: 8085
             protocol: TCP
-
-        environment:
-          - name: PYTHONPATH
-            value: "/app"
-          - name: ENV_PATH
-            value: "/app/.env"
-          
         resources:
-          requests:
-            cpu: "1"
-            memory: "2Gi"
           limits:
             cpu: "2"
             memory: "4Gi"
+          requests:
+            cpu: "1"
+            memory: "2Gi"
