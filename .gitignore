@@ -10,3 +10,4 @@ Production/EDA/catboost_info
 *.pyc
 kafka-ui/config.yaml
 infra
+.vscode

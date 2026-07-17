@@ -59,8 +59,9 @@ echo "📦 Executing automated pipeline registry..."
 export PYTHONPATH=/app # Make python to look inside /app for modules
 python3 /app/Production/scripts/register_model.py || echo "⚠️ Script warnings handled, proceeding..."
 
-echo "📡 Starting streaming data pipeline from DB postgres to kafka on automated kafka pipeline messages..."
-python3 /app/Production/scripts/postgres_to_kafka.py || echo "⚠️ Script warnings handled, proceeding..."
+# Removed kafka streaming scripts execution due bcs try to integrate kafka streaming within FastAPI app & streamlit instead
+#echo "📡 Starting streaming data pipeline from DB postgres to kafka on automated kafka pipeline messages..."
+#python3 /app/Production/scripts/postgres_to_kafka.py || echo "⚠️ Script warnings handled, proceeding..."
 
 echo "⚡ Starting FastAPI application instance..."
 exec uvicorn app.main:app --host 0.0.0.0 --port 8000
