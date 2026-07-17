@@ -48,7 +48,7 @@
 - Build real-time streaming engine data pipeline in kafka
     ![alt text](Database/images/932D316E-73CA-4BE6-BC0C-01E9024CBAAB_1_105_c.jpeg)
 - Build DVC (Data Version Control) to allow track and version large datasets, ML models, training pipelines, and git for data (Optional)
-- Build kubeflow for MLOps scale and deploy machine learning models workloads on Kubernetes for Production
+- Build Feast for feature engineering to get feature store (Progressing)
 - Alert using slack to notify on error logging in
     - Models
     - LLMs
