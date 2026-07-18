@@ -1,18 +1,23 @@
-from typing import Dict
 import joblib
 import logging
 import numpy as np
 import pandas as pd
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
-from typing import Optional, List, Tuple, Any
+from typing import Optional, List, Tuple, Any, Dict
 from pathlib import Path
+from enum import Enum
 
 from app.core.config import settings
 from app.services.model_registry import model_registry
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
+
+# -- Decalartive Enums for UI selection toggles --
+class PipelineMode(str, Enum):
+    HISTORICAL = "Historical Verification"
+    SIMULATION = "Inference Simulation"
 
 class SalesRequest(BaseModel):
    ship_mode: str
@@ -84,7 +89,7 @@ def _get_encoded_features(payload: SalesRequest) -> pd.DataFrame:
     if _label_maps is None:
         _feature_columns, _categorical_cols, _label_maps = _build_encoding_schema()
 
-    # ⚡ FIX: Kept OUTSIDE the if-block so it processes data on EVERY single request
+    # FIX: Kept OUTSIDE the if-block so it processes data on EVERY single request
     raw = {k.lower().replace("_", ""): v for k, v in payload.model_dump().items()}
     encoded: Dict[str, Any] = {}
 
@@ -176,7 +181,7 @@ def _get_best_model_name() -> str:
     for preferred in list_models:
         if preferred in stem_map:
             return preferred
-    return list(stem_map.keys())[0]
+    return list(stem_map.keys())[0] if stem_map else ""
 
 def _get_scaler_path() -> Optional[Path]:
     """Returns the scaler path used during training model."""
@@ -195,7 +200,7 @@ def _calculate_regression_confidence(model, feature_array, prediction_raw: float
 
             # Convert variance to a bounded percentage inverse ratio
             confidence = 1.0 / (1.0 + variance)
-            return float(np.clip(confidence * 100, 60.0, 99.9))  # Confidence between 60% and 99.9%
+            return float(np.clip(confidence * 100, 55.0, 99.5))  # Confidence between 55% and 99.5%
         
         # General model structural fallback using target bound
         return float(np.clip(95.2 - (abs(prediction_raw) * 0.001), 70.0, 98.5))
@@ -231,10 +236,16 @@ async def sales_prediction(
     model_name: Optional[str] = Query(
         None, 
         description="Specify which model to run. If omitted, defaults to the best available model."
-    )
+    ),
+    pipeline_mode: PipelineMode = Query(
+        PipelineMode.HISTORICAL,
+        description="Select runtime engine behavior. 'Historical Verification' runs data as-is. 'Inference Simulation' activates scenario forecasting multipliers."
+    ),
+    quantity_multiplier: float = Query(1.0, description="Simulate change in transaction sales volume (Only applies in Simulation mode)."),
+    discount_multiplier: float = Query(1.0, description="Simulate changes in promotional discounting activity (Only applies in Simulation mode).")
 ):
     """
-    Sales prediction endpoint with dynamic model selection.
+    Enhanced Sales Prediction API with explicit pipeline mode choices.
     """
     try:
         # 1. Fallback to default model strategy if parameter isn't provided
@@ -243,20 +254,35 @@ async def sales_prediction(
         # 2. Encode payload (Runs securely on every hit)
         feature_vector: pd.DataFrame = _get_encoded_features(payload)
 
+        # Enchanced Policy: Evaluate explicit execution selection choices for pipeline mode
+        q_mult = 1.0
+        d_mult = 1.0
+
+        if pipeline_mode == PipelineMode.SIMULATION:
+            q_mult = quantity_multiplier
+            d_mult = discount_multiplier
+
+            # Apply feature-scpace transformations for simulation multipliers
+            for col in feature_vector.columns:
+                if "quantity" in col.lower():
+                    feature_vector[col] = feature_vector[col] * q_mult
+                if "discount" in col.lower():
+                    feature_vector[col] = feature_vector[col] * d_mult
+        
+        else:
+            logger.info("⚡ Pipeline operating in Historical mode. Forecasting multipliers bypassed.")
+
         # 3. Load runtime artifacts
         model, scaler, resolved_stem = _load_sales_components(target_query)
 
-        # 4. Input processing array alignment
-        feature_array: np.ndarray
-
+        # 4. Pipeline Scale Normalization Realignment
         if scaler is not None:
-            raw_array = feature_vector.to_numpy().astype(np.float64)
-            raw_array = np.nan_to_num(raw_array)
+            raw_array = np.nan_to_num(feature_vector.to_numpy().astype(np.float64))
             feature_array = scaler.transform(raw_array.reshape(1, -1))
         else:
             feature_array = feature_vector.to_numpy().reshape(1, -1)
 
-        # 5. Predict using ML model
+        # 5. Predict using ML model & log scale
         prediction = model.predict(feature_array)
         pred_raw = float(prediction[0]) if isinstance(prediction, (np.ndarray, list)) else float(prediction)
 
@@ -273,8 +299,10 @@ async def sales_prediction(
             "prediction": round(prediction_actual, 2),
             "prediction_confidence_score": f"{round(confidence_percentage, 2)}%",
             "unit": "Rp",
-            "input_features": payload.model_dump(),
-            "encoded_features": feature_vector.to_dict(orient="records")[0]
+            "applied_multipliers": {
+                "quantity_multiplier": q_mult,
+                "discount_multiplier": d_mult
+            }
         }
 
     except HTTPException:
