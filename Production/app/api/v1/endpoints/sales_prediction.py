@@ -3,11 +3,9 @@ import joblib
 import logging
 import numpy as np
 import pandas as pd
-import joblib
-import logging
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
-from typing import Optional, List, Tuple, Dict, Any
+from typing import Optional, List, Tuple, Any
 from pathlib import Path
 
 from app.core.config import settings
@@ -39,7 +37,7 @@ class SalesRequest(BaseModel):
 # --- Module-level caches - built once on first request ---
 _feature_columns: Optional[List[str]] = None
 _categorical_cols: Optional[List[str]] = None
-_label_maps: Optional[Dict[str, int]] = None
+_label_maps: Optional[Dict[str, Dict[str, int]]] = None
 
 def _get_encode_features() -> Optional[Path]:
     """Returns the encode features path used during training model."""
@@ -49,180 +47,167 @@ def _get_encode_features() -> Optional[Path]:
 def _build_encoding_schema() -> tuple[List[str], List[str], Dict[str, Dict[str, int]]]:
     """
     Derives the full encoding schema directly from X_features.parquet.
-    - feature_columns : column order as used during training (from X_features.parquet)
-    - categorical_cols: auto-detected by comparing dtypes between X_features (int64)
-                        and combined_sql_supermarket (object). No hardcoded lists.
-    - label_maps      : {col: {string_val: int_code}} reconstructed by alphabetical
-                        sort — identical to how sklearn LabelEncoder works.
     """
     encode_path = _get_encode_features()
     if encode_path is None:
         raise RuntimeError(f"❌ X_features.parquet not found at: {settings.SALES_FEATURES}")
 
-    # Load SQL data combined
     raw_path = settings.DATA_CLEANED.parent / "combined_sql_supermarket.parquet"
     if not raw_path.exists():
         raise RuntimeError(f"❌ Parquet data not found at: {raw_path}")
 
-    # Load reference files
     X_ref = pd.read_parquet(encode_path)
     raw_df = pd.read_parquet(raw_path)
 
-    # Feature column order comes directly from .parquet file
     feature_columns: List[str] = X_ref.columns.tolist()
 
-    # Auto-detect categorical: int64 in X_ref and object dtype in raw_df
     categorical_cols: List[str] = [
         col for col in feature_columns if col in raw_df.columns
         and X_ref[col].dtype == np.int64
         and raw_df[col].dtype == object
     ]
 
-    # Build str-int map per categorical column
     label_maps: Dict[str, Dict[str, int]] = {
         col: {v: i for i, v in enumerate(sorted(raw_df[col].dropna().unique().tolist()))}
         for col in categorical_cols
     }
 
-    logger.info(f"✅ Encoding schema built from X_features.parquet: "
-        f"{len(feature_columns)} features, {len(categorical_cols)} categorical cols.")
-
+    logger.info(f"✅ Encoding schema built from X_features.parquet: {len(feature_columns)} features.")
     return feature_columns, categorical_cols, label_maps
 
 def _get_encoded_features(payload: SalesRequest) -> pd.DataFrame:
     """
-    Converts human-readable SalesRequest into an integer-encoded DataFrame
-    matching X_features.parquet column order and dtypes.
-    Raises HTTP 422 for unknown categorical values with valid options listed.
+    Converts human-readable SalesRequest into an integer-encoded DataFrame.
     """
     global _feature_columns, _categorical_cols, _label_maps
 
-    # Build schema once, cache for all subsequent requests
     if _label_maps is None:
         _feature_columns, _categorical_cols, _label_maps = _build_encoding_schema()
 
-        raw = {k.lower().replace("_", ""): v for k, v in payload.model_dump().items()}
-        encoded: Dict[str, Any] = {}
+    # ⚡ FIX: Kept OUTSIDE the if-block so it processes data on EVERY single request
+    raw = {k.lower().replace("_", ""): v for k, v in payload.model_dump().items()}
+    encoded: Dict[str, Any] = {}
 
-        for col in _feature_columns:
-            # Normalize target column name to match payload keys
-            lookup_key = col.lower().replace("_", "")
+    for col in _feature_columns:
+        lookup_key = col.lower().replace("_", "")
 
-            if lookup_key not in raw:
-                logger.warning(f"⚠️ Missing feature '{col}' in payload, defaulting to None")
-                val = 0
+        if lookup_key not in raw:
+            logger.warning(f"⚠️ Missing feature '{col}' in payload, defaulting to 0")
+            val = 0
+        else:
+            val = raw[lookup_key]
+
+        if col in _categorical_cols:
+            label_map = _label_maps[col]
+            if str(val) not in label_map:
+                encoded[col] = 0  # Fallback
             else:
-                val = raw[lookup_key]
+                encoded[col] = label_map[str(val)]
+        else:
+            try:
+                encoded[col] = float(val) if val is not None else 0.0
+            except ValueError:
+                logger.warning(f"⚠️ Non-numeric value for '{col}': {val}, defaulting to 0.0")
+                encoded[col] = 0.0
 
-            if col in _categorical_cols:
-                label_map = _label_maps[col]
+    df = pd.DataFrame([encoded], columns=_feature_columns)
+    df = df.fillna(0.0)
+    return df
 
-                if str(val) not in label_map:
-                    encoded[col] = 0 # Fallback to closet matching key
-                else:
-                    encoded[col] = label_map[str(val)]
-            else:
-                # Force numeric conversion to stop NaN generation
-                try:
-                    encoded[col] = float(val) if val is not None else 0.0
-                except ValueError:
-                    logger.warning(f"⚠️ Non-numeric value for '{col}': {val}, defaulting to 0.0")
-                    encoded[col] = 0.0
+def _get_available_models() -> Dict[str, Path]:
+    """Returns a dictionary of available model stems mapped to their full path."""
+    available: List[Path] = settings.SALES_MODEL_PATH
+    if not available:
+        return {}
+    return {p.stem: p for p in available}
 
-        df = pd.DataFrame([encoded], columns=_feature_columns)
-        df = df.fillna(0.0) # Ensure no NaN values remain
-        return df
-
-def _get_best_model_path() -> Optional[Path]:
-    """
-    Returns the best performing sales model from the model registry
-    """
+def _get_best_model_name() -> str:
+    """Returns the default fallback best performing model name."""
     list_models = [
         "CatboostRegressor_model",
         "XGBRegressor_model",
         "RandomForestRegressor_model",
         "DecisionTreeRegressor_model",
     ]
-    available: List[Path] = settings.SALES_MODEL_PATH
+    stem_map = _get_available_models()
+    if not stem_map:
+        raise RuntimeError("No models found in SALES_MODEL_PATH.")
 
-    if not available:
-        return None
-
-    # Match by stem (filename without extension)
-    stem_map = {p.stem: p for p in available}
     for preferred in list_models:
         if preferred in stem_map:
-            return stem_map[preferred]
-
-    return available[0] # Fallback: first model in list
+            return preferred
+    return list(stem_map.keys())[0]
 
 def _get_scaler_path() -> Optional[Path]:
     """Returns the scaler path used during training model."""
     scaler_path = settings.MODEL_PATH / "sales_ml_models" / "scaler" / "scaler.joblib"
     return scaler_path if scaler_path.exists() else None
 
-def _load_sales_components():
-    """Loads the best model + scaler into the registry."""
-    model_path = _get_best_model_path()
-    if model_path is None:
-        raise RuntimeError("No .joblib model files found in SALES_MODEL_PATH.")
+def _load_sales_components(selected_model_name: str):
+    """Loads the specifically requested model + scaler into the registry."""
+    stem_map = _get_available_models()
+    
+    if selected_model_name not in stem_map:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Model '{selected_model_name}' not available. Choose from: {list(stem_map.keys())}"
+        )
 
-    model_name = model_path.stem # Get model name without extension
+    # Lazy-load model into model_registry if not already initialized
+    if model_registry.get_model(selected_model_name) is None:
+        model_registry.load_model(domain="sales", model_name=selected_model_name, ext=".joblib")
 
-    # Load model into registry
-    if model_registry.get_model(model_name) is None:
-        model_registry.load_model(domain="sales", model_name=model_name, ext=".joblib")
-
-    # Load scaler separately
+    # Load shared scaler 
     scaler = None
     scaler_path = _get_scaler_path()
-    
     if scaler_path:
         try:
             scaler = joblib.load(scaler_path)
-            logger.info(f"✅ Scaler loaded from {scaler_path}")
         except Exception as e:
             logger.error(f"❌ Error loading scaler: {str(e)}")
-    else:
-        logger.warning("⚠️ Scaler path not found, skipping scaler loading")
 
-    model = model_registry.get_model(model_name)
+    model = model_registry.get_model(selected_model_name)
     if model is None:
-        raise RuntimeError(f"❌ Model '{model_name}' not loaded successfully")
+        raise RuntimeError(f"❌ Model '{selected_model_name}' failed to load from registry.")
 
-    return model, scaler, model_name
-    
+    return model, scaler
+
 @router.post("/sales-prediction")
-async def sales_prediction(payload: SalesRequest):
+async def sales_prediction(
+    payload: SalesRequest,
+    model_name: Optional[str] = Query(
+        None, 
+        description="Specify which model to run. If omitted, defaults to the best available model."
+    )
+):
     """
-    Sales prediction endpoint.
-    Loads the best performing trained model (CatboostRegressor by default)
-    and returns a sales forecast given the input features.
+    Sales prediction endpoint with dynamic model selection.
     """
     try:
-        # 1. Encode payload - integer features derived from X_features.parquet
+        # 1. Fallback to default model strategy if parameter isn't provided
+        target_model = model_name if model_name else _get_best_model_name()
+
+        # 2. Encode payload (Runs securely on every hit)
         feature_vector: pd.DataFrame = _get_encoded_features(payload)
 
-        # 2. Load model + scaled (cached after first call
-        model, scaler, model_name = _load_sales_components()
+        # 3. Load runtime artifacts
+        model, scaler = _load_sales_components(target_model)
 
-        # Apply scaler if available
+        # 4. Input processing array alignment
         feature_array: np.ndarray
         if scaler is not None:
             raw_array = feature_vector.to_numpy().astype(np.float64)
             raw_array = np.nan_to_num(raw_array)
             feature_array = scaler.transform(raw_array.reshape(1, -1))
         else:
-            feature_array = feature_vector.to_numpy().reshape(1, -1) # Fallback conversion to avoid scalar array issues
+            feature_array = feature_vector.to_numpy().reshape(1, -1)
 
-        # Predict using ML model
+        # 5. Predict using ML model
         prediction = model.predict(feature_array)
-
-        # Handle prediction output array shapes from different estimators gracefully
         pred_value = float(prediction[0]) if isinstance(prediction, (np.ndarray, list)) else float(prediction)
 
         return {
-            "model_used": model_name,
+            "model_used": target_model,
             "prediction": pred_value,
             "unit": "sales_amount",
             "input_features": payload.model_dump(),
