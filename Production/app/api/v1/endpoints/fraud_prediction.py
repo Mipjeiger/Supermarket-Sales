@@ -1,5 +1,6 @@
 import joblib
 import logging
+import time
 import numpy as np
 import pandas as pd
 from fastapi import APIRouter, HTTPException, Query
@@ -9,6 +10,7 @@ from pathlib import Path
 from enum import Enum
 
 from app.core.config import settings
+from app.monitoring.metrics import metrics_collector
 from app.services.model_registry import model_registry
 
 logger = logging.getLogger(__name__)
@@ -104,7 +106,7 @@ def get_encoded_features(payload: FraudPredictionRequest) -> pd.DataFrame:
 
         if col in _categorical_cols:
             label_map = _label_maps[col]
-            if str[val] not in label_map:
+            if str(val) not in label_map:
                 encoded[col] = 0 # Fallback to 0
             else:
                 encoded[col] = label_map[str(val)]
@@ -223,6 +225,12 @@ async def fraud_prediction(
         description="Specify the model name to use for prediction. If not provided, the best available model will be used."
     )
 ):
+    # Brdige prometheus metrics collection for this endpoint
+    start_time = time.time()
+    status = "success"
+    model_used = model_name if model_name else get_best_model_name()
+    resolved_stem = None
+
     """
     Endpoint to predict the fraud risk level of a transaction based on provided features."""
     try:
@@ -235,28 +243,40 @@ async def fraud_prediction(
         # 3. Load runtime artifacts for the selected model
         model, resolved_stem = load_fraud_components(target_query)
 
-        # 4. Predict fraud risk using the ML model
-        prediction = model.predict(feature_vector)
-        prediction_raw = model.predict_proba(feature_vector)[:, 1][0] if hasattr(model, "predict_proba") else prediction[0]
+        # 4. Predict probability score directly (0.0 to 1.0)
+        if hasattr(model, "predict_proba"):
+            prediction_prob = float(model.predict_proba(feature_vector)[:, 1][0])  # Probability of the positive class
+        else:
+            prediction_prob = float(model.predict(feature_vector)[0])  # Fallback to direct prediction
 
-        # Apply exponential scale conversion inversion logic to restore currency metrics if available in the payload
-        prediction_actual = float(np.expm1(prediction_raw))
-        if prediction_actual < 0 or prediction_actual is None:
-            prediction_actual = float(prediction_raw)  # Fallback to raw prediction if expm1 fails
-
-        # Calculate model output confidence percentage score
-        confidence_percentage = calculate_classifier_confidence(model, feature_vector, prediction_raw)
+        # 5. Calculate model output confidence percentage score
+        confidence_percentage = calculate_classifier_confidence(model, feature_vector, prediction_prob)
 
         return {
             "model_user": resolved_stem,
-            "prediction": round(prediction_actual, 2),
+            "prediction": round(prediction_prob, 2),
             "prediction_confidence_score": f"{round(confidence_percentage, 2)}%",
-            "unit": "Fraud Legcay Risk Score",
-            "risk_level": FraudRiskLevel.HIGH if prediction_actual > 0.5 else FraudRiskLevel.LOW if prediction_actual < 0.3 else FraudRiskLevel.MEDIUM
+            "unit": "Fraud Legacy Risk Score",
+            "risk_level": (
+                FraudRiskLevel.HIGH if prediction_prob >= 0.5 
+                else FraudRiskLevel.LOW if prediction_prob < 0.2 
+                else FraudRiskLevel.MEDIUM
+            )
         }
     
     except HTTPException:
+        status = "error"
         raise
     except Exception as e:
+        status = "error"
         logger.exception("❌ Error during fraud prediction: %s", str(e))
         raise HTTPException(status_code=500, detail=f"Internal server error during fraud prediction: {str(e)}")
+    
+    finally:
+        # Register metrics and pushes the metrics event to Prometheus
+        duration = time.time() - start_time
+        metrics_collector.track_prediction(
+            latency=duration,
+            model_name=resolved_stem if resolved_stem else model_used,
+            status=status
+        )
