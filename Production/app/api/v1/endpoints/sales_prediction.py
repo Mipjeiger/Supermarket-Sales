@@ -1,6 +1,7 @@
 import joblib
 import logging
 import numpy as np
+import time
 import pandas as pd
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
@@ -9,6 +10,7 @@ from pathlib import Path
 from enum import Enum
 
 from app.core.config import settings
+from app.monitoring.metrics import metrics_collector
 from app.services.model_registry import model_registry
 
 logger = logging.getLogger(__name__)
@@ -218,6 +220,7 @@ def _load_sales_components(selected_model_name: str):
     # Load shared scaler 
     scaler = None
     scaler_path = _get_scaler_path()
+
     if scaler_path:
         try:
             scaler = joblib.load(scaler_path)
@@ -241,9 +244,14 @@ async def sales_prediction(
         PipelineMode.HISTORICAL,
         description="Select runtime engine behavior. 'Historical Verification' runs data as-is. 'Inference Simulation' activates scenario forecasting multipliers."
     ),
-    quantity_multiplier: float = Query(1.0, description="Simulate change in transaction sales volume (Only applies in Simulation mode)."),
-    discount_multiplier: float = Query(1.0, description="Simulate changes in promotional discounting activity (Only applies in Simulation mode).")
+    quantity_multiplier: float = Query(1, description="Simulate change in transaction sales volume (Only applies in Simulation mode)."),
+    discount_multiplier: float = Query(0.5, description="Simulate changes in promotional discounting activity (Only applies in Simulation mode).")
 ):
+    # Bridge prometheus metrics collection with request lifecycle
+    start_time = time.time()
+    status = "success"
+    model_used = model_name if model_name else _get_best_model_name()
+    resolved_stem = None
     """
     Enhanced Sales Prediction API with explicit pipeline mode choices.
     """
@@ -268,7 +276,6 @@ async def sales_prediction(
                     feature_vector[col] = feature_vector[col] * q_mult
                 if "discount" in col.lower():
                     feature_vector[col] = feature_vector[col] * d_mult
-        
         else:
             logger.info("⚡ Pipeline operating in Historical mode. Forecasting multipliers bypassed.")
 
@@ -306,7 +313,18 @@ async def sales_prediction(
         }
 
     except HTTPException:
+        status = "error"
         raise
     except Exception as e:
+        status = "error"
         logger.exception("❌ Prediction failed")
         raise HTTPException(status_code=500, detail=f"Error during prediction: {str(e)}")
+    
+    finally:
+        # Register metrics for Prometheus monitoring
+        duration = time.time() - start_time
+        metrics_collector.track_prediction(
+            latency=duration, 
+            model_name=resolved_stem if resolved_stem else model_used,
+            status=status
+        )
