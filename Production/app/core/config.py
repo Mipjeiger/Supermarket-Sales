@@ -33,16 +33,11 @@ class Settings(BaseSettings):
 
     # File Paths Configuration
     MODEL_PATH: Path = BASE_DIR / "Models"
-    MODEL_PATH_ML: list = list(MODEL_PATH.glob("*.pkl"))
-    SALES_MODEL_PATH: list = (
-        list((MODEL_PATH_ML[0] / "sales_ml_models").glob("*.joblib"))
-        if MODEL_PATH_ML
-        else []
+    SALES_MODEL_PATH: list = list(
+        (BASE_DIR / "Models" / "sales_ml_models").glob("*.joblib")
     )
-    FRAUD_MODEL_PATH: list = (
-        list((MODEL_PATH_ML[0] / "fraud_ml_models").glob("*.pkl"))
-        if MODEL_PATH_ML
-        else []
+    FRAUD_MODEL_PATH: list = list(
+        (BASE_DIR / "Models" / "fraud_ml_models").glob("*.pkl")
     )
     MLFLOW_PATH: Path = BASE_DIR / "mlflow"
     DATA_RAW: Path = (
@@ -50,6 +45,10 @@ class Settings(BaseSettings):
     )
     DATA_CLEANED: Path = (
         BASE_DIR / "app" / "data" / "cleaned" / "data_sales_cleaned.parquet"
+    )
+    SALES_FEATURES: Path = BASE_DIR / "app" / "data" / "cleaned" / "X_features.parquet"
+    FRAUD_FEATURES: Path = (
+        BASE_DIR / "app" / "data" / "cleaned" / "X_features_fraud.parquet"
     )
 
     # PostgreSQL Database Configuration

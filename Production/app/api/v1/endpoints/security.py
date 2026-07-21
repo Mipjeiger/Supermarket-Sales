@@ -37,6 +37,7 @@ async def analyze_stream(payload: SecurityStreamRequest):
             streaming_db_row=df_row, risk_metrics=payload.risk_metrics
         )
         return {"status": "processed", "decision_brief": brief}
+
     except Exception as e:
         raise HTTPException(
             status_code=500,

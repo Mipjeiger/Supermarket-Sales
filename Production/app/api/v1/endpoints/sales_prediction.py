@@ -16,40 +16,45 @@ from app.services.model_registry import model_registry
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
+
 # -- Decalartive Enums for UI selection toggles --
 class PipelineMode(str, Enum):
     HISTORICAL = "Historical Verification"
     SIMULATION = "Inference Simulation"
 
+
 class SalesRequest(BaseModel):
-   ship_mode: str
-   customer_name: str
-   segment: str
-   state: str
-   country: str
-   market: str
-   region: str
-   category: str
-   sub_category: str
-   product_name: str
-   quantity: int
-   discount: float
-   profit: float
-   shipping_cost: float
-   order_priority: str
-   year: int
-   unit_price: float
-   profit_margin: float
+    ship_mode: str
+    customer_name: str
+    segment: str
+    state: str
+    country: str
+    market: str
+    region: str
+    category: str
+    sub_category: str
+    product_name: str
+    quantity: int
+    discount: float
+    profit: float
+    shipping_cost: float
+    order_priority: str
+    year: int
+    unit_price: float
+    profit_margin: float
+
 
 # --- Module-level caches - built once on first request ---
 _feature_columns: Optional[List[str]] = None
 _categorical_cols: Optional[List[str]] = None
 _label_maps: Optional[Dict[str, Dict[str, int]]] = None
 
+
 def _get_encode_features() -> Optional[Path]:
     """Returns the encode features path used during training model."""
     sales_features_path = settings.SALES_FEATURES
     return sales_features_path if sales_features_path.exists() else None
+
 
 def _build_encoding_schema() -> tuple[List[str], List[str], Dict[str, Dict[str, int]]]:
     """
@@ -57,7 +62,9 @@ def _build_encoding_schema() -> tuple[List[str], List[str], Dict[str, Dict[str, 
     """
     encode_path = _get_encode_features()
     if encode_path is None:
-        raise RuntimeError(f"❌ X_features.parquet not found at: {settings.SALES_FEATURES}")
+        raise RuntimeError(
+            f"❌ X_features.parquet not found at: {settings.SALES_FEATURES}"
+        )
 
     raw_path = settings.DATA_CLEANED.parent / "combined_sql_supermarket.parquet"
     if not raw_path.exists():
@@ -69,18 +76,25 @@ def _build_encoding_schema() -> tuple[List[str], List[str], Dict[str, Dict[str, 
     feature_columns: List[str] = X_ref.columns.tolist()
 
     categorical_cols: List[str] = [
-        col for col in feature_columns if col in raw_df.columns
+        col
+        for col in feature_columns
+        if col in raw_df.columns
         and X_ref[col].dtype == np.int64
         and raw_df[col].dtype == object
     ]
 
     label_maps: Dict[str, Dict[str, int]] = {
-        col: {v: i for i, v in enumerate(sorted(raw_df[col].dropna().unique().tolist()))}
+        col: {
+            v: i for i, v in enumerate(sorted(raw_df[col].dropna().unique().tolist()))
+        }
         for col in categorical_cols
     }
 
-    logger.info(f"✅ Encoding schema built from X_features.parquet: {len(feature_columns)} features.")
+    logger.info(
+        f"✅ Encoding schema built from X_features.parquet: {len(feature_columns)} features."
+    )
     return feature_columns, categorical_cols, label_maps
+
 
 def _get_encoded_features(payload: SalesRequest) -> pd.DataFrame:
     """
@@ -114,12 +128,15 @@ def _get_encoded_features(payload: SalesRequest) -> pd.DataFrame:
             try:
                 encoded[col] = float(val) if val is not None else 0.0
             except ValueError:
-                logger.warning(f"⚠️ Non-numeric value for '{col}': {val}, defaulting to 0.0")
+                logger.warning(
+                    f"⚠️ Non-numeric value for '{col}': {val}, defaulting to 0.0"
+                )
                 encoded[col] = 0.0
 
     df = pd.DataFrame([encoded], columns=_feature_columns)
     df = df.fillna(0.0)
     return df
+
 
 def _get_available_models() -> Dict[str, Path]:
     """Returns a dictionary of available model stems mapped to their full path."""
@@ -128,14 +145,17 @@ def _get_available_models() -> Dict[str, Path]:
         return {}
     return {p.stem: p for p in available}
 
+
 def _resolve_model_name(input_name: str) -> str:
     """
     Maps a clean, user-friendly model name string to the actual file stem.
     Supports flexible aliases (case-insensitive, handles missing '_model' or 'regressor').
     """
     stem_map = _get_available_models()
-    clean_input = input_name.lower().strip().replace("regressor", "").replace("model", "")
-    
+    clean_input = (
+        input_name.lower().strip().replace("regressor", "").replace("model", "")
+    )
+
     # Define mapping dictionary for clean inputs -> actual stems
     """Models aliaes for query in API calls"""
     aliases = {
@@ -145,7 +165,7 @@ def _resolve_model_name(input_name: str) -> str:
         "randomforest": "RandomForestRegressor_model",
         "rf": "RandomForestRegressor_model",
         "decisiontree": "DecisionTreeRegressor_model",
-        "dt": "DecisionTreeRegressor_model"
+        "dt": "DecisionTreeRegressor_model",
     }
 
     # Check alias dictionary match
@@ -153,20 +173,26 @@ def _resolve_model_name(input_name: str) -> str:
         target_stem = aliases[clean_input]
         if target_stem in stem_map:
             return target_stem
-        
+
     # Fallback loose partial matching against available stems
     for actual_stem in stem_map.keys():
-        clean_actual = actual_stem.lower().replace("_", "").replace("regressor", "").replace("model", "")
+        clean_actual = (
+            actual_stem.lower()
+            .replace("_", "")
+            .replace("regressor", "")
+            .replace("model", "")
+        )
 
         if clean_input == clean_actual or clean_input in clean_actual:
             return actual_stem
-        
+
     # If no match found, raise HTTP exception with available options
     readable_options = ["catboost", "xgboost", "randomforest", "decisiontree"]
     raise HTTPException(
-        status_code=400, 
-        detail=f"Model identifier '{input_name}' not recognized. Please choose from: {readable_options}"
+        status_code=400,
+        detail=f"Model identifier '{input_name}' not recognized. Please choose from: {readable_options}",
     )
+
 
 def _get_best_model_name() -> str:
     """Returns the default fallback best performing model name."""
@@ -185,12 +211,16 @@ def _get_best_model_name() -> str:
             return preferred
     return list(stem_map.keys())[0] if stem_map else ""
 
+
 def _get_scaler_path() -> Optional[Path]:
     """Returns the scaler path used during training model."""
     scaler_path = settings.MODEL_PATH / "sales_ml_models" / "scaler" / "scaler.joblib"
     return scaler_path if scaler_path.exists() else None
 
-def _calculate_regression_confidence(model, feature_array, prediction_raw: float) -> float:
+
+def _calculate_regression_confidence(
+    model, feature_array, prediction_raw: float
+) -> float:
     """
     Calculates an engineered variance confidence percentage for continuous regression outputs.
     Falls back gracefully based on tree variance or expected model boundaries.
@@ -202,22 +232,27 @@ def _calculate_regression_confidence(model, feature_array, prediction_raw: float
 
             # Convert variance to a bounded percentage inverse ratio
             confidence = 1.0 / (1.0 + variance)
-            return float(np.clip(confidence * 100, 55.0, 99.5))  # Confidence between 55% and 99.5%
-        
+            return float(
+                np.clip(confidence * 100, 55.0, 99.5)
+            )  # Confidence between 55% and 99.5%
+
         # General model structural fallback using target bound
         return float(np.clip(95.2 - (abs(prediction_raw) * 0.001), 70.0, 98.5))
-    
+
     except Exception:
-        return 90.0 # Safe pipeline fallback confidence
+        return 90.0  # Safe pipeline fallback confidence
+
 
 def _load_sales_components(selected_model_name: str):
     """Loads the specifically requested model + scaler into the registry."""
     actual_file_stem = _resolve_model_name(selected_model_name)
 
     if model_registry.get_model(actual_file_stem) is None:
-        model_registry.load_model(domain="sales", model_name=actual_file_stem, ext=".joblib")
+        model_registry.load_model(
+            domain="sales", model_name=actual_file_stem, ext=".joblib"
+        )
 
-    # Load shared scaler 
+    # Load shared scaler
     scaler = None
     scaler_path = _get_scaler_path()
 
@@ -229,23 +264,32 @@ def _load_sales_components(selected_model_name: str):
 
     model = model_registry.get_model(actual_file_stem)
     if model is None:
-        raise RuntimeError(f"❌ Model '{actual_file_stem}' failed to load from registry.")
+        raise RuntimeError(
+            f"❌ Model '{actual_file_stem}' failed to load from registry."
+        )
 
     return model, scaler, actual_file_stem
+
 
 @router.post("/sales-prediction")
 async def sales_prediction(
     payload: SalesRequest,
     model_name: Optional[str] = Query(
-        None, 
-        description="Specify which model to run. If omitted, defaults to the best available model."
+        None,
+        description="Specify which model to run. If omitted, defaults to the best available model.",
     ),
     pipeline_mode: PipelineMode = Query(
         PipelineMode.HISTORICAL,
-        description="Select runtime engine behavior. 'Historical Verification' runs data as-is. 'Inference Simulation' activates scenario forecasting multipliers."
+        description="Select runtime engine behavior. 'Historical Verification' runs data as-is. 'Inference Simulation' activates scenario forecasting multipliers.",
     ),
-    quantity_multiplier: float = Query(1, description="Simulate change in transaction sales volume (Only applies in Simulation mode)."),
-    discount_multiplier: float = Query(0.5, description="Simulate changes in promotional discounting activity (Only applies in Simulation mode).")
+    quantity_multiplier: float = Query(
+        1,
+        description="Simulate change in transaction sales volume (Only applies in Simulation mode).",
+    ),
+    discount_multiplier: float = Query(
+        0.5,
+        description="Simulate changes in promotional discounting activity (Only applies in Simulation mode).",
+    ),
 ):
     # Bridge prometheus metrics collection with request lifecycle
     start_time = time.time()
@@ -277,7 +321,9 @@ async def sales_prediction(
                 if "discount" in col.lower():
                     feature_vector[col] = feature_vector[col] * d_mult
         else:
-            logger.info("⚡ Pipeline operating in Historical mode. Forecasting multipliers bypassed.")
+            logger.info(
+                "⚡ Pipeline operating in Historical mode. Forecasting multipliers bypassed."
+            )
 
         # 3. Load runtime artifacts
         model, scaler, resolved_stem = _load_sales_components(target_query)
@@ -291,7 +337,11 @@ async def sales_prediction(
 
         # 5. Predict using ML model & log scale
         prediction = model.predict(feature_array)
-        pred_raw = float(prediction[0]) if isinstance(prediction, (np.ndarray, list)) else float(prediction)
+        pred_raw = (
+            float(prediction[0])
+            if isinstance(prediction, (np.ndarray, list))
+            else float(prediction)
+        )
 
         # Apply exponential scale conversion inversion logic to restore currency metrics
         prediction_actual = float(np.expm1(pred_raw))
@@ -299,7 +349,9 @@ async def sales_prediction(
             prediction_actual = 0.0  # Ensure no negative sales predictions
 
         # Calculate Model output confidence score
-        confidence_percentage = _calculate_regression_confidence(model, feature_array, pred_raw)
+        confidence_percentage = _calculate_regression_confidence(
+            model, feature_array, pred_raw
+        )
 
         return {
             "model_used": resolved_stem,
@@ -308,8 +360,8 @@ async def sales_prediction(
             "unit": "Rp",
             "applied_multipliers": {
                 "quantity_multiplier": q_mult,
-                "discount_multiplier": d_mult
-            }
+                "discount_multiplier": d_mult,
+            },
         }
 
     except HTTPException:
@@ -318,13 +370,15 @@ async def sales_prediction(
     except Exception as e:
         status = "error"
         logger.exception("❌ Prediction failed")
-        raise HTTPException(status_code=500, detail=f"Error during prediction: {str(e)}")
-    
+        raise HTTPException(
+            status_code=500, detail=f"Error during prediction: {str(e)}"
+        )
+
     finally:
         # Register metrics for Prometheus monitoring
         duration = time.time() - start_time
         metrics_collector.track_prediction(
-            latency=duration, 
+            latency=duration,
             model_name=resolved_stem if resolved_stem else model_used,
-            status=status
+            status=status,
         )

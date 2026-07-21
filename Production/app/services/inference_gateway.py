@@ -9,17 +9,15 @@ from pydantic import BaseModel, Field
 app = FastAPI(
     title="Supermarket Intelligence Multi-Model Gateway using kubeflow",
     description="Dynamically servers all available Fraud Classifiers and Sales Regressors",
-    version="2.0.0"
+    version="2.0.0",
 )
 
 # 📁 Target directories mapped inside your Kubeflow Docker image
 FRAUD_MODEL_DIR = "/app/Production/Models/fraud_ml_models"
 SALES_MODEL_DIR = "/app/Production/Models/sales_ml_models"
 
-loaded_engines = {
-    "fraud": {},
-    "sales": {}
-}
+loaded_engines = {"fraud": {}, "sales": {}}
+
 
 @app.on_event("startup")
 def dynamically_load_all_models():
@@ -37,7 +35,7 @@ def dynamically_load_all_models():
                     with open(full_path, "rb") as f:
                         loaded_engines["fraud"][model_name] = pickle.load(f)
                     print(f"✅ Loaded Fraud Model: {model_name}")
-        
+
         else:
             print(f"⚠️ Fraud model directory not found: {FRAUD_MODEL_DIR}")
 
@@ -55,14 +53,18 @@ def dynamically_load_all_models():
 
         # Ensure at least one engine online
         if not loaded_engines["fraud"] and not loaded_engines["sales"]:
-            raise RuntimeError("No models were loaded. Ensure model files exist in the specified directories.")
-        
-        print(f"🚀 Dynamically initialization complete. Running serving registry: { {k: list(v.keys()) for k, v in loaded_engines.items()} }")
+            raise RuntimeError(
+                "No models were loaded. Ensure model files exist in the specified directories."
+            )
+
+        print(
+            f"🚀 Dynamically initialization complete. Running serving registry: { {k: list(v.keys()) for k, v in loaded_engines.items()} }"
+        )
 
     except Exception as e:
         print(f"❌ Error during model loading: {e}")
         raise RuntimeError(f"Failed to load models: {e}")
-    
+
 
 class InferenceRequest(BaseModel):
     category: str
@@ -72,12 +74,14 @@ class InferenceRequest(BaseModel):
     profit_margin: float
     sales: float
 
+
 @app.get("/v1/models")
 def kserve_health_probe():
     return {
         "status": "healthy",
-        "active_engines": {k: list(v.keys()) for k, v in loaded_engines.items()}
+        "active_engines": {k: list(v.keys()) for k, v in loaded_engines.items()},
     }
+
 
 @app.post("/v1/models/supermarket-intelligence:predict")
 def run_multi_model_inference(payload: InferenceRequest):
@@ -88,44 +92,62 @@ def run_multi_model_inference(payload: InferenceRequest):
 
         # Evaluate all active fraud classifiers
         if loaded_engines["fraud"]:
-            df_fraud = pd.DataFrame([{
-                "category": input_data["category"],
-                "sub_category": input_data["sub_category"],
-                "quantity": input_data["quantity"],
-                "unit_price": input_data["unit_price"],
-                "profit_margin": input_data["profit_margin"],
-                "sales": input_data["sales"]
-            }])
+            df_fraud = pd.DataFrame(
+                [
+                    {
+                        "category": input_data["category"],
+                        "sub_category": input_data["sub_category"],
+                        "quantity": input_data["quantity"],
+                        "unit_price": input_data["unit_price"],
+                        "profit_margin": input_data["profit_margin"],
+                        "sales": input_data["sales"],
+                    }
+                ]
+            )
 
             for name, model in loaded_engines["fraud"].items():
                 pred = int(model.predict(df_fraud)[0])
-                proba = model.predict_proba(df_fraud)[0].tolist() if hasattr(model, "predict_proba") else None
+                proba = (
+                    model.predict_proba(df_fraud)[0].tolist()
+                    if hasattr(model, "predict_proba")
+                    else None
+                )
                 response_payload["fraud_assessments"][name] = {
                     "is_fraud": pred,
-                    "probability_distribution": proba
+                    "probability_distribution": proba,
                 }
 
         # Evaluate all active sales regressors
         if loaded_engines["sales"]:
-            df_sales = pd.DataFrame([{
-                "category": input_data["category"],
-                "sub_category": input_data["sub_category"],
-                "quantity": input_data["quantity"],
-                "unit_price": input_data["unit_price"],
-                "profit_margin": input_data["profit_margin"]
-            }])
+            df_sales = pd.DataFrame(
+                [
+                    {
+                        "category": input_data["category"],
+                        "sub_category": input_data["sub_category"],
+                        "quantity": input_data["quantity"],
+                        "unit_price": input_data["unit_price"],
+                        "profit_margin": input_data["profit_margin"],
+                    }
+                ]
+            )
 
             for name, model in loaded_engines["sales"].items():
                 pred = float(model.predict(df_sales)[0])
                 response_payload["sales_assessments"][name] = {
                     "predicted_sales": round(pred, 2),
-                    "variance_delta": round(float(input_data["sales"] - pred), 2)
+                    "variance_delta": round(float(input_data["sales"] - pred), 2),
                 }
 
         return {"predictions:": response_payload}
-    
+
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Multi-engine processing cluster execution error: {str(e)}")
-    
+        raise HTTPException(
+            status_code=500,
+            detail=f"Multi-engine processing cluster execution error: {str(e)}",
+        )
+
+
 if __name__ == "__main__":
-    uvicorn.run("Production.app.services.inference_gateway:app", host="0.0.0.0", port=8085)
+    uvicorn.run(
+        "Production.app.services.inference_gateway:app", host="0.0.0.0", port=8085
+    )

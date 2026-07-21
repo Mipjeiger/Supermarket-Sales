@@ -23,7 +23,7 @@ CRITICAL ANTI-HALLUCINATION RULES:
 
 BEHAVIOR_USER_PROMPT = """
 [VERIFIED CUSTOMER DATABASE PROFILE]
-Customer Name/Token: {customer_id}
+Customer Name/Token: {order_id}
 Behavioral Segment: {segment}
 Geographic Region: {region}
 Verified Historical Purchases Summary:

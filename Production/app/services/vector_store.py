@@ -37,14 +37,14 @@ class VectorStoreClient:
                 )
 
         except Exception as e:
-            logger.error(f"Qdrant collection provisioning error: {e}")
+            logger.error(f"🚨 Qdrant collection provisioning error: {e}")
             raise RuntimeError("Failed to ensure Qdrant collection state.") from e
 
     def get_embedding(self, text: str) -> list:
         """Extracts dense feature coordinates via serverless pipeline without relying on local dependencies."""
         if not settings.HUGGINGFACE_API_KEY:
             logger.error(
-                "Hugging Face API key is not configured. Please set HUGGINGFACE_API_KEY in your environment."
+                "⚠️ Hugging Face API key is not configured. Please set HUGGINGFACE_API_KEY in your environment."
             )
             return [0.0] * 384  # Return a zero vector of the expected size
 
@@ -76,10 +76,11 @@ class VectorStoreClient:
                 query_vector=vector_coordinates,
                 limit=limit,
             )
+
             return [hit.payload for hit in hits]
 
         except Exception as e:
-            logger.error(f"❌ Qdrant search operation failed: {e}")
+            logger.error(f"🚨 Qdrant search operation failed: {e}")
             return []  # Return an empty list on failure
 
 

@@ -3,7 +3,7 @@ services:
   # PostgreSQL Database
   postgres:
     image: postgres:18-alpine
-    container_name: postgres_sales
+    container_name: postgres_supermarket
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -25,7 +25,7 @@ services:
     build:
       context: ..
       dockerfile: Production/docker/Dockerfile.mlflow
-    container_name: mlflow_sales
+    container_name: mlflow_supermarket
     ports:
       - "5002:5000"
     environment:
@@ -41,7 +41,7 @@ services:
     build:
       context: ..
       dockerfile: Production/docker/Dockerfile.api
-    container_name: fastapi_sales
+    container_name: fastapi_supermarket
     ports:
       - "8000:8000"
     depends_on:
@@ -83,7 +83,7 @@ services:
   # Apache Kafka
   kafka:
     image: confluentinc/cp-kafka:7.6.0
-    container_name: kafka_sales
+    container_name: kafka_supermarket
     ports:
       - "9092:9092"
     environment:
@@ -107,7 +107,7 @@ services:
   # Apache kafka UI
   kafka-ui:
     image: kafbat/kafka-ui:260f9e8
-    container_name: kafka_ui_sales
+    container_name: kafka_ui_supermarket
     ports:
       - "8082:8080"
     depends_on:
@@ -125,7 +125,7 @@ services:
   # Redis
   redis:
     image: redis:7.2-alpine
-    container_name: redis_sales
+    container_name: redis_supermarket
     ports:
       - "6379:6379"
     networks:
@@ -135,7 +135,7 @@ services:
 
   redisinsight:
     image: redis/redisinsight:latest
-    container_name: redisinsight_sales
+    container_name: redisinsight_supermarket
     ports:
       - "5540:5540"
     depends_on:
@@ -146,7 +146,7 @@ services:
   # Prometheus
   prometheus:
     image: prom/prometheus:latest
-    container_name: prometheus_sales
+    container_name: prometheus_supermarket
     ports:
       - "9090:9090"
     volumes:
@@ -161,7 +161,7 @@ services:
   # Grafana
   grafana:
     image: grafana/grafana:latest
-    container_name: grafana_sales
+    container_name: grafana_supermarket
     ports:
       - "3000:3000"
     environment:

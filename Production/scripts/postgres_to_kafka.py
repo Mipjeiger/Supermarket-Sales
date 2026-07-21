@@ -9,7 +9,7 @@ from sqlalchemy import create_engine, text
 producer = KafkaProducer(
     bootstrap_servers=settings.KAFKA_BOOTSTRAP_SERVERS,
     api_version=(3, 6, 0),
-    value_serializer=lambda v: json.dumps(v, default=str).encode('utf-8'),
+    value_serializer=lambda v: json.dumps(v, default=str).encode("utf-8"),
 )
 
 conn = None
@@ -22,9 +22,7 @@ try:
     cursor = conn.cursor()
 
     # Execute pure SQL query
-    print(
-        "🚀 Extracting rows from engineering.supermarket and streaming to Kafka..."
-    )
+    print("🚀 Extracting rows from engineering.supermarket and streaming to Kafka...")
     query = """
         SELECT order_id, category, sub_category, sales, quantity, unit_price, profit_margin 
         FROM engineering.supermarket 

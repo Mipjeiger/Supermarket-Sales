@@ -71,3 +71,31 @@ class MetricsCollector:
     def update_data_quality(dataset: str, quality_score: float):
         """Update data quality metrics."""
         DATA_QUALITY.labels(dataset=dataset).set(quality_score)
+
+    @staticmethod
+    def initialize_startup_metrics():
+        """Pre-initialize labels so Proemtheus discovers them on startup."""
+        fraud_models = [
+            "GradientBoostingClassifier",
+            "RandomForestClassifier",
+            "XGBClassifier",
+        ]
+        sales_models = [
+            "CatboostRegressor_model",
+            "DecisionTreeRegressor_model",
+            "RandomForestRegressor_model",
+            "XGBRegressor_model",
+        ]
+
+        for model in fraud_models + sales_models:
+            PREDICTIONS_TOTAL.labels(model_name=model, status="success").inc(0)
+            PREDICTIONS_TOTAL.labels(model_name=model, status="error").inc(0)
+
+        for model in sales_models:
+            MODEL_RMSE.labels(model_name=model).set(0)
+            MODEL_MAE.labels(model_name=model).set(0)
+            MODEL_R2.labels(model_name=model).set(0)
+
+
+# Singleton instance of MetricsCollector for global access
+metrics_collector = MetricsCollector()

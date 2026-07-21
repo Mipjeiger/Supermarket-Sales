@@ -4,6 +4,7 @@ from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
+
 class ModelRegistry:
     """Centralized in-memory registry for managing and retrieving trained classical ML models."""
 
@@ -36,6 +37,7 @@ class ModelRegistry:
     def get_model(self, model_name: str):
         """Retrieves a pre-loaded model instance from the shared global cache map."""
         return self.models.get(model_name)
+
 
 # Thread-safe module singleton initialization
 model_registry = ModelRegistry()
