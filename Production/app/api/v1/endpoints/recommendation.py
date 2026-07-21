@@ -6,6 +6,7 @@ from app.services.behavior_analyst import behavior_analyst
 
 router = APIRouter()
 
+
 class RecommendationRequest(BaseModel):
     order_id: str = Field(..., description="Unique identifier for the customer.")
     transaction_data: Dict[str, Any] = Field(

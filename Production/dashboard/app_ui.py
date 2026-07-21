@@ -288,7 +288,9 @@ def get_customer_day_match(
     return customer_subset.sort_values("date_distance").iloc[0]
 
 
-def llm_abuse_summary(llm_model, context_text: str, score: float, risk_level: str) -> str:
+def llm_abuse_summary(
+    llm_model, context_text: str, score: float, risk_level: str
+) -> str:
     if llm_model is None:
         return (
             f"⚠️ LLM unavailable. Risk={risk_level}, score={score:.2f}.\n\n"
@@ -508,11 +510,21 @@ if selected_row.empty and st.session_state.selected_customer is not None:
         .tail(1)
     )
 
-selected_index = selected_row.index[0] if not selected_row.empty else primary_df.index[0]
+selected_index = (
+    selected_row.index[0] if not selected_row.empty else primary_df.index[0]
+)
 
 selected_record = primary_df.loc[selected_index]
-feature_sales_record = features_sales_df.loc[selected_index] if not features_sales_df.empty else pd.Series()
-feature_fraud_record = features_fraud_df.loc[selected_index] if not features_fraud_df.empty else pd.Series()
+feature_sales_record = (
+    features_sales_df.loc[selected_index]
+    if not features_sales_df.empty
+    else pd.Series()
+)
+feature_fraud_record = (
+    features_fraud_df.loc[selected_index]
+    if not features_fraud_df.empty
+    else pd.Series()
+)
 
 # -----------------------------------------------------------------------------
 # Tabs Interface
@@ -542,18 +554,26 @@ with tab1:
         horizontal=True,
     )
 
-    if not st.session_state.sales_model_name or st.session_state.sales_model_name not in sales_models:
+    if (
+        not st.session_state.sales_model_name
+        or st.session_state.sales_model_name not in sales_models
+    ):
         st.info("No valid sales model selected.")
     else:
         sales_model = sales_models.get(st.session_state.sales_model_name)
-        sales_input_df = build_model_input_from_row(feature_sales_record, features_sales_df)
+        sales_input_df = build_model_input_from_row(
+            feature_sales_record, features_sales_df
+        )
 
         if sales_mode == "Phase 1: Historical Alignment (Minimize Error)":
             st.markdown("### 🎯 Model Error Verification")
             col1, col2 = st.columns([1, 1])
             with col1:
                 st.markdown("**Selected Record**")
-                st.dataframe(pd.DataFrame([selected_record]).T.rename(columns={0: "value"}), use_container_width=True)
+                st.dataframe(
+                    pd.DataFrame([selected_record]).T.rename(columns={0: "value"}),
+                    use_container_width=True,
+                )
             with col2:
                 st.markdown("**Model Feature Vector**")
                 st.dataframe(sales_input_df, use_container_width=True)
@@ -561,20 +581,32 @@ with tab1:
             if st.button("Execute Verification", type="primary"):
                 try:
                     sales_input_scaled = (
-                        pd.DataFrame(scaler.transform(sales_input_df), columns=sales_input_df.columns)
-                        if scaler is not None else sales_input_df
+                        pd.DataFrame(
+                            scaler.transform(sales_input_df),
+                            columns=sales_input_df.columns,
+                        )
+                        if scaler is not None
+                        else sales_input_df
                     )
-                    prediction, _, status = model_prediction_summary(sales_model, sales_input_scaled)
+                    prediction, _, status = model_prediction_summary(
+                        sales_model, sales_input_scaled
+                    )
 
                     if status == "ok":
                         prediction_actual = np.expm1(prediction)
                         actual_sales = float(selected_record.get("sales", 0))
                         absolute_variance = abs(actual_sales - prediction_actual)
-                        error_percentage = (absolute_variance / actual_sales * 100) if actual_sales > 0 else 0
+                        error_percentage = (
+                            (absolute_variance / actual_sales * 100)
+                            if actual_sales > 0
+                            else 0
+                        )
 
                         c1, c2, c3 = st.columns(3)
                         c1.metric("Actual Store Sales", f"Rp {actual_sales:,.2f}")
-                        c2.metric("Model Predicted Sales", f"Rp {prediction_actual:,.2f}")
+                        c2.metric(
+                            "Model Predicted Sales", f"Rp {prediction_actual:,.2f}"
+                        )
                         c3.metric(
                             "Row Variance Error",
                             f"{error_percentage:.2f}%",
@@ -592,11 +624,17 @@ with tab1:
             sim_col1, sim_col2, sim_col3 = st.columns(3)
 
             with sim_col1:
-                quantity_mult = st.slider("Transaction Volume Scale", 0.5, 5.0, 1.0, step=0.1)
+                quantity_mult = st.slider(
+                    "Transaction Volume Scale", 0.5, 5.0, 1.0, step=0.1
+                )
             with sim_col2:
-                discount_mult = st.slider("Promotion/Discount Aggression", 0.0, 2.0, 1.0, step=0.1)
+                discount_mult = st.slider(
+                    "Promotion/Discount Aggression", 0.0, 2.0, 1.0, step=0.1
+                )
             with sim_col3:
-                operational_shift = st.number_input("Bulk Processing Correction Adjustment", value=0.0)
+                operational_shift = st.number_input(
+                    "Bulk Processing Correction Adjustment", value=0.0
+                )
 
             simulated_input_df = sales_input_df.copy()
             for col in simulated_input_df.columns:
@@ -610,14 +648,24 @@ with tab1:
             if st.button("Generate Future Projections", type="primary"):
                 try:
                     simulated_input_scaled = (
-                        pd.DataFrame(scaler.transform(simulated_input_df), columns=simulated_input_df.columns)
-                        if scaler is not None else simulated_input_df
+                        pd.DataFrame(
+                            scaler.transform(simulated_input_df),
+                            columns=simulated_input_df.columns,
+                        )
+                        if scaler is not None
+                        else simulated_input_df
                     )
-                    sim_prediction, _, sim_status = model_prediction_summary(sales_model, simulated_input_scaled)
+                    sim_prediction, _, sim_status = model_prediction_summary(
+                        sales_model, simulated_input_scaled
+                    )
 
                     if sim_status == "ok":
-                        forecasted_revenue = np.expm1(sim_prediction) + operational_shift
-                        st.success("Future inference engine generated projections successfully! 📈")
+                        forecasted_revenue = (
+                            np.expm1(sim_prediction) + operational_shift
+                        )
+                        st.success(
+                            "Future inference engine generated projections successfully! 📈"
+                        )
                         st.metric(
                             label="Forecasted Projected Revenue Output",
                             value=f"Rp {forecasted_revenue:,.2f}",
@@ -635,22 +683,32 @@ with tab2:
     st.subheader("🕵️ Fraud Prediction")
     st.caption("Score transaction fraud risk using tuned classification ensembles.")
 
-    if not st.session_state.fraud_model_name or st.session_state.fraud_model_name not in fraud_models:
+    if (
+        not st.session_state.fraud_model_name
+        or st.session_state.fraud_model_name not in fraud_models
+    ):
         st.info("No valid fraud classifier selected.")
     else:
         fraud_model = fraud_models.get(st.session_state.fraud_model_name)
-        fraud_input_df = build_model_input_from_row(feature_fraud_record, features_fraud_df)
+        fraud_input_df = build_model_input_from_row(
+            feature_fraud_record, features_fraud_df
+        )
 
         col1, col2 = st.columns([1, 1])
         with col1:
             st.markdown("**Selected Transaction Record**")
-            st.dataframe(pd.DataFrame([selected_record]).T.rename(columns={0: "value"}), use_container_width=True)
+            st.dataframe(
+                pd.DataFrame([selected_record]).T.rename(columns={0: "value"}),
+                use_container_width=True,
+            )
         with col2:
             st.markdown("**Classifier Feature Input**")
             st.dataframe(fraud_input_df, use_container_width=True)
 
         if st.button("Run Fraud Inference", type="primary"):
-            pred, confidence, status = model_prediction_summary(fraud_model, fraud_input_df)
+            pred, confidence, status = model_prediction_summary(
+                fraud_model, fraud_input_df
+            )
 
             if status == "ok":
                 fraud_prob = None
@@ -663,9 +721,18 @@ with tab2:
                         fraud_prob = None
 
                 c1, c2, c3 = st.columns(3)
-                c1.metric("Classification Result", "🚨 Fraud Alert" if int(pred) == 1 else "✅ Legitimate")
-                c2.metric("Confidence Score", f"{confidence:.2%}" if confidence is not None else "N/A")
-                c3.metric("Fraud Probability", f"{fraud_prob:.2%}" if fraud_prob is not None else "N/A")
+                c1.metric(
+                    "Classification Result",
+                    "🚨 Fraud Alert" if int(pred) == 1 else "✅ Legitimate",
+                )
+                c2.metric(
+                    "Confidence Score",
+                    f"{confidence:.2%}" if confidence is not None else "N/A",
+                )
+                c3.metric(
+                    "Fraud Probability",
+                    f"{fraud_prob:.2%}" if fraud_prob is not None else "N/A",
+                )
             else:
                 st.error(f"Prediction Failed: {status}")
 
@@ -676,7 +743,10 @@ with tab3:
     st.subheader("🚨 Customer Abuse & Velocity Detection")
 
     metric_match = None
-    if st.session_state.selected_customer and st.session_state.selected_date is not None:
+    if (
+        st.session_state.selected_customer
+        and st.session_state.selected_date is not None
+    ):
         metric_match = get_customer_day_match(
             customer_day_metrics,
             st.session_state.selected_customer,
@@ -691,7 +761,9 @@ with tab3:
         c1, c2, c3, c4 = st.columns(4)
         c1.metric("Daily Orders", int(metric_match.get("daily_orders", 0)))
         c2.metric("Weekly Orders", f"{float(metric_match.get('weekly_orders', 0)):.2f}")
-        c3.metric("Monthly Orders", f"{float(metric_match.get('monthly_orders', 0)):.2f}")
+        c3.metric(
+            "Monthly Orders", f"{float(metric_match.get('monthly_orders', 0)):.2f}"
+        )
         c4.metric("Spike Ratio", f"{float(metric_match.get('spike_ratio', 0)):.2f}")
 
         st.markdown("**Rule-Based Velocity Score**")
@@ -716,7 +788,9 @@ with tab3:
                 marker_color=["#EF476F", "#118AB2", "#06D6A0"],
             )
         )
-        fig.update_layout(title="Velocity Distribution", template="plotly_white", height=320)
+        fig.update_layout(
+            title="Velocity Distribution", template="plotly_white", height=320
+        )
         st.plotly_chart(fig, use_container_width=True)
     else:
         st.warning("No matching customer-day metric record found.")
@@ -726,16 +800,24 @@ with tab3:
 # -----------------------------------------------------------------------------
 with tab4:
     st.subheader("🛡️ Enterprise Threat Intelligence Agent")
-    st.caption("Interactive copilot for automated investigation of suspicious activity patterns.")
+    st.caption(
+        "Interactive copilot for automated investigation of suspicious activity patterns."
+    )
 
-    metric_match = get_customer_day_match(
-        customer_day_metrics,
-        st.session_state.selected_customer,
-        pd.to_datetime(st.session_state.selected_date),
-    ) if st.session_state.selected_customer and st.session_state.selected_date else None
+    metric_match = (
+        get_customer_day_match(
+            customer_day_metrics,
+            st.session_state.selected_customer,
+            pd.to_datetime(st.session_state.selected_date),
+        )
+        if st.session_state.selected_customer and st.session_state.selected_date
+        else None
+    )
 
     if metric_match is None:
-        st.warning("Select a valid customer and date from the sidebar to inspect velocity telemetry.")
+        st.warning(
+            "Select a valid customer and date from the sidebar to inspect velocity telemetry."
+        )
     else:
         context_text = build_velocity_context(metric_match)
         abuse_score = weighted_abuse_score(metric_match)
@@ -747,7 +829,9 @@ with tab4:
             st.session_state.chat_messages = {}
 
         if session_id not in st.session_state.chat_messages:
-            initial_summary = llm_abuse_summary(llm, context_text, abuse_score, risk_level)
+            initial_summary = llm_abuse_summary(
+                llm, context_text, abuse_score, risk_level
+            )
             st.session_state.chat_messages[session_id] = [
                 {
                     "role": "assistant",
@@ -760,7 +844,11 @@ with tab4:
         with ui_col_left:
             st.markdown("#### Real-Time Metric Telemetry")
             st.code(context_text, language="text")
-            st.metric("Computed Anomaly Risk Level", risk_level, delta=f"Score: {abuse_score:.2f}")
+            st.metric(
+                "Computed Anomaly Risk Level",
+                risk_level,
+                delta=f"Score: {abuse_score:.2f}",
+            )
 
         with ui_col_right:
             st.markdown("#### Interactive Investigation Window")
@@ -772,9 +860,13 @@ with tab4:
                     with st.chat_message(msg["role"]):
                         st.markdown(msg["content"])
 
-            if user_prompt := st.chat_input("Ask for pattern evaluations or lockdown paths..."):
+            if user_prompt := st.chat_input(
+                "Ask for pattern evaluations or lockdown paths..."
+            ):
                 # Append user prompt to state
-                st.session_state.chat_messages[session_id].append({"role": "user", "content": user_prompt})
+                st.session_state.chat_messages[session_id].append(
+                    {"role": "user", "content": user_prompt}
+                )
 
                 # Generate AI response
                 with st.spinner("Analyzing risk context..."):
@@ -796,7 +888,9 @@ with tab4:
                         )
 
                 # Append assistant response and refresh UI
-                st.session_state.chat_messages[session_id].append({"role": "assistant", "content": assistant_response})
+                st.session_state.chat_messages[session_id].append(
+                    {"role": "assistant", "content": assistant_response}
+                )
                 st.rerun()
 
 # -----------------------------------------------------------------------------

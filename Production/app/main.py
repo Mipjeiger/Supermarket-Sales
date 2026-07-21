@@ -8,7 +8,12 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
-from app.api.v1.endpoints import recommendation, security, sales_prediction, fraud_prediction
+from app.api.v1.endpoints import (
+    recommendation,
+    security,
+    sales_prediction,
+    fraud_prediction,
+)
 from app.services.model_registry import model_registry
 from app.core.redis import redis_cache
 from aiokafka import AIOKafkaConsumer, AIOKafkaProducer
@@ -23,6 +28,7 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -47,7 +53,9 @@ async def lifespan(app: FastAPI):
         kafka_task = asyncio.create_task(run_transaction_consumer())
 
     except Exception as e:
-        logger.error(f"🚨 Critical failure during model registration startup sequence: {str(e)}")
+        logger.error(
+            f"🚨 Critical failure during model registration startup sequence: {str(e)}"
+        )
 
     yield
 
@@ -59,8 +67,9 @@ async def lifespan(app: FastAPI):
             await kafka_task
         except asyncio.CancelledError:
             logger.info("✅ Kafka consumer task cancelled cleanly.")
-    
+
     await redis_cache.close()
+
 
 # Initialize FastAPI with metadata parsed
 app = FastAPI(
@@ -94,18 +103,11 @@ app.include_router(
 )
 
 # Sales Prediction API with explicit pipeline mode choices and simulation multipliers
-app.include_router(
-    sales_prediction.router,
-    prefix="/api/v1",
-    tags=["Sales Prediction"]
-)
+app.include_router(sales_prediction.router, prefix="/api/v1", tags=["Sales Prediction"])
 
 # Fraud Detection API with real-time anomaly detection and LLM investigative analysis
-app.include_router(
-    fraud_prediction.router,
-    prefix="/api/v1",
-    tags=["Fraud Detection"]
-)
+app.include_router(fraud_prediction.router, prefix="/api/v1", tags=["Fraud Detection"])
+
 
 @app.get("/")
 def root_health_check():
@@ -119,6 +121,7 @@ def root_health_check():
         "vector_store": "Qdrant Cloud Managed Cluster",
         "debug_mode": settings.DEBUG,
     }
+
 
 @app.get("/metrics", tags=["Telemetry"])
 def get_metrics():

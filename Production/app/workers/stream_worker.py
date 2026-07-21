@@ -10,6 +10,7 @@ from app.monitoring.metrics import metrics_collector
 
 logger = logging.getLogger(__name__)
 
+
 async def run_transaction_consumer():
     """Subscribes to Kafka broker and continously feeds data to the ML engine."""
     consumer = AIOKafkaConsumer(
@@ -35,7 +36,9 @@ async def run_transaction_consumer():
                 risk_metrics = payload.get("risk_metrics", {"abuse_score": 0.0})
 
                 if not streaming_row:
-                    logger.warning("⚠️ Received empty streaming row. Skipping processing.")
+                    logger.warning(
+                        "⚠️ Received empty streaming row. Skipping processing."
+                    )
                     continue
 
                 df_row = pd.DataFrame([streaming_row])
@@ -52,11 +55,9 @@ async def run_transaction_consumer():
                 # Track stream processing latency and counters
                 duration = time.time() - start_time
                 metrics_collector.track_prediction(
-                    latency=duration,
-                    model_name="KafkaStreamWorker",
-                    status=status
+                    latency=duration, model_name="KafkaStreamWorker", status=status
                 )
-                
+
     except asyncio.CancelledError:
         logger.info("🛑 Kafka Streaming Consumer task has been cancelled.")
     finally:
