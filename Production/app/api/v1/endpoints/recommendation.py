@@ -6,9 +6,8 @@ from app.services.behavior_analyst import behavior_analyst
 
 router = APIRouter()
 
-
 class RecommendationRequest(BaseModel):
-    customer_id: str = Field(..., description="Unique identifier for the customer.")
+    order_id: str = Field(..., description="Unique identifier for the customer.")
     transaction_data: Dict[str, Any] = Field(
         ...,
         description="Dictionary mapping exactly to your engineering.supermarket table columns",
@@ -29,12 +28,12 @@ async def generate_offer(payload: RecommendationRequest):
         df_features = pd.DataFrame([payload.transaction_data])
 
         report = behavior_analyst.generate_personalized_offers(
-            customer_id=payload.customer_id, last_transaction_df=df_features
+            order_id=payload.order_id, last_transaction_df=df_features
         )
 
         return {
             "status": "success",
-            "customer_id": payload.customer_id,
+            "order_id": payload.order_id,
             "recommendation_report": report,
         }
 

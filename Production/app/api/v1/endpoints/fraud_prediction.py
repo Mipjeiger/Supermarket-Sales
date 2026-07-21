@@ -3,7 +3,7 @@ import logging
 import time
 import numpy as np
 import pandas as pd
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Request
 from pydantic import BaseModel, Field
 from typing import Optional, List, Tuple, Any, Dict
 from pathlib import Path
