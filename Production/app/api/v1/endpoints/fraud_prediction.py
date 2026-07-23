@@ -132,8 +132,12 @@ def build_encoding_schema() -> tuple[List[str], List[str], Dict[str, Dict[str, i
         raise RuntimeError("Raw data path not found.")
 
     X_reference = pd.read_parquet(encode_path)
+    
+    # MODIFIED: Define metadata/target columsn to exclude from model input features
+    NON_FEATURE_COLS = {"order_id", "order_date", "product_id", "ship_date", "fraud"}
+    feature_columns: List[str] = [col for col in X_reference.columns if col not in NON_FEATURE_COLS]
     raw_df = pd.read_parquet(raw_path)
-    feature_columns: List[str] = X_reference.columns.tolist()
+
     categorical_cols: List[str] = [
         col for col in feature_columns
         if col in raw_df.columns and X_reference[col].dtype == np.int64 and raw_df[col].dtype == object
@@ -288,7 +292,10 @@ async def fraud_prediction(
         # 3. Load runtime artifacts for the selected model
         model, resolved_stem = load_fraud_components(target_query)
 
-        # 4. Predict probability score directly (0.0 to 1.0)
+        # 4. Predict probability score directly (0.0 to 1.0) and align columns with exact feature names
+        if hasattr(model, "feature_names_in_"):
+            feature_vector = feature_vector[list(model.feature_names_in_)]
+
         if hasattr(model, "predict_proba"):
             prediction_prob = float(model.predict_proba(feature_vector)[:, 1][0])  # Probability of the positive class
         else:
