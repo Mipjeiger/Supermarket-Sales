@@ -12,7 +12,7 @@ from enum import Enum
 from app.core.config import settings
 from app.monitoring.metrics import metrics_collector
 from app.services.model_registry import model_registry
-
+    
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
@@ -21,7 +21,6 @@ router = APIRouter()
 class PipelineMode(str, Enum):
     HISTORICAL = "Historical Verification"
     SIMULATION = "Inference Simulation"
-
 
 class SalesRequest(BaseModel):
     ship_mode: str
@@ -41,8 +40,7 @@ class SalesRequest(BaseModel):
     order_priority: str
     year: int
     unit_price: float
-    profit_margin: float
-
+    profit_margin: float    
 
 # --- Module-level caches - built once on first request ---
 _feature_columns: Optional[List[str]] = None
