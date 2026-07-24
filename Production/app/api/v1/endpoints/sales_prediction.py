@@ -5,10 +5,10 @@ import time
 import pandas as pd
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
-from typing import Optional, List, Tuple, Any, Dict
+from typing import Optional, List, Tuple, Any, Dict, Union
 from pathlib import Path
 from enum import Enum
-
+from feast import FeatureStore
 from app.core.config import settings
 from app.monitoring.metrics import metrics_collector
 from app.services.model_registry import model_registry
@@ -16,6 +16,12 @@ from app.services.model_registry import model_registry
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
+# --- Initialize Feast Feature Store ---
+try:
+    feast_store = FeatureStore(repo_path=str(settings.FEAST_REPO_PATH))
+except Exception as e:
+    logger.error(f"❌ Failed to initialize Feast Feature Store: {str(e)}")
+    feast_store = None
 
 # -- Decalartive Enums for UI selection toggles --
 class PipelineMode(str, Enum):
@@ -23,34 +29,80 @@ class PipelineMode(str, Enum):
     SIMULATION = "Inference Simulation"
 
 class SalesRequest(BaseModel):
-    ship_mode: str
-    customer_name: str
-    segment: str
-    state: str
-    country: str
-    market: str
-    region: str
-    category: str
-    sub_category: str
-    product_name: str
-    quantity: int
-    discount: float
-    profit: float
-    shipping_cost: float
-    order_priority: str
-    year: int
-    unit_price: float
-    profit_margin: float    
+    order_id: Optional[Union[int, str]] = Field(None, description="Order ID to retrieve pre-computed features from Feast store.")
+    ship_mode: Optional[str] = None
+    customer_name: Optional[str] = None
+    segment: Optional[str] = None
+    state: Optional[str] = None
+    country: Optional[str] = None
+    market: Optional[str] = None
+    region: Optional[str] = None
+    category: Optional[str] = None
+    sub_category: Optional[str] = None
+    product_name: Optional[str] = None
+    quantity: Optional[int] = None
+    discount: Optional[float] = None
+    profit: Optional[float] = None
+    shipping_cost: Optional[float] = None
+    order_priority: Optional[str] = None
+    year: Optional[int] = None
+    unit_price: Optional[float] = None
+    profit_margin: Optional[float] = None
+
+def fetch_sales_features(order_id: Union[int, str]) -> Dict[str, Any]:
+    """Retrieves online features for a given order_id from Feast feature store."""
+    if feast_store is None:
+        raise RuntimeError("Feast Feature Store is not initialized.")
+    
+    # Ensure order_id is integer-compatible for Feast lookup
+    try:
+        feast_entity_id = int(order_id)
+    except (ValueError, TypeError):
+        raise HTTPException(status_code=400, detail=f"Invalid order_id '{order_id}'. Must be an integer.")
+
+    feature_refs = [
+        "sales_features:ship_mode",
+        "sales_features:customer_name",
+        "sales_features:segment",
+        "sales_features:state",
+        "sales_features:country",
+        "sales_features:market",
+        "sales_features:region",
+        "sales_features:category",
+        "sales_features:sub_category",
+        "sales_features:product_name",
+        "sales_features:quantity",
+        "sales_features:discount",
+        "sales_features:profit",
+        "sales_features:shipping_cost",
+        "sales_features:order_priority",
+        "sales_features:year",
+        "sales_features:unit_price",
+        "sales_features:profit_margin"
+    ]
+
+    response = feast_store.get_online_features(features=feature_refs, entity_rows=[{"order_id": feast_entity_id}])
+    df = response.to_df()
+
+    if df.empty or df["sales_features:ship_mode"].isnull().all():
+        raise HTTPException(status_code=404, detail=f"No features found for order_id '{order_id}'.")
+    
+    # Strip the 'sales_features:' prefix for payload building
+    raw_dict = {}
+    for col in df.columns:
+        clean_col = col.replace("sales_features:", "")
+        raw_dict[clean_col] = df[col].iloc[0]  # Extract the first row value for each feature
+
+    return raw_dict
 
 # --- Module-level caches - built once on first request ---
 _feature_columns: Optional[List[str]] = None
 _categorical_cols: Optional[List[str]] = None
 _label_maps: Optional[Dict[str, Dict[str, int]]] = None
 
-
 def _get_encode_features() -> Optional[Path]:
     """Returns the encode features path used during training model."""
-    sales_features_path = settings.SALES_FEATURES
+    sales_features_path = settings.SALES_FEATURES_FEAST
     return sales_features_path if sales_features_path.exists() else None
 
 
@@ -60,9 +112,7 @@ def _build_encoding_schema() -> tuple[List[str], List[str], Dict[str, Dict[str, 
     """
     encode_path = _get_encode_features()
     if encode_path is None:
-        raise RuntimeError(
-            f"❌ X_features.parquet not found at: {settings.SALES_FEATURES}"
-        )
+        raise RuntimeError(f"❌ X_features.parquet not found at: {settings.SALES_FEATURES_FEAST}")
 
     raw_path = settings.DATA_CLEANED.parent / "combined_sql_supermarket.parquet"
     if not raw_path.exists():
@@ -74,27 +124,20 @@ def _build_encoding_schema() -> tuple[List[str], List[str], Dict[str, Dict[str, 
     feature_columns: List[str] = X_ref.columns.tolist()
 
     categorical_cols: List[str] = [
-        col
-        for col in feature_columns
-        if col in raw_df.columns
-        and X_ref[col].dtype == np.int64
-        and raw_df[col].dtype == object
+        col for col in feature_columns 
+        if col in raw_df.columns and X_ref[col].dtype == np.int64 and raw_df[col].dtype == object
     ]
 
     label_maps: Dict[str, Dict[str, int]] = {
-        col: {
-            v: i for i, v in enumerate(sorted(raw_df[col].dropna().unique().tolist()))
-        }
+        col: {v: i for i, v in enumerate(sorted(raw_df[col].dropna().unique().tolist()))}
         for col in categorical_cols
     }
 
-    logger.info(
-        f"✅ Encoding schema built from X_features.parquet: {len(feature_columns)} features."
-    )
+    logger.info(f"✅ Encoding schema built from X_features.parquet: {len(feature_columns)} features.")
     return feature_columns, categorical_cols, label_maps
 
 
-def _get_encoded_features(payload: SalesRequest) -> pd.DataFrame:
+def _get_encoded_features(payload_dict: Dict[str, Any]) -> pd.DataFrame:
     """
     Converts human-readable SalesRequest into an integer-encoded DataFrame.
     """
@@ -104,37 +147,26 @@ def _get_encoded_features(payload: SalesRequest) -> pd.DataFrame:
         _feature_columns, _categorical_cols, _label_maps = _build_encoding_schema()
 
     # FIX: Kept OUTSIDE the if-block so it processes data on EVERY single request
-    raw = {k.lower().replace("_", ""): v for k, v in payload.model_dump().items()}
+    raw = {k.lower().replace("_", ""): v for k, v in payload_dict.items()}
     encoded: Dict[str, Any] = {}
 
     for col in _feature_columns:
         lookup_key = col.lower().replace("_", "")
 
-        if lookup_key not in raw:
-            logger.warning(f"⚠️ Missing feature '{col}' in payload, defaulting to 0")
-            val = 0
-        else:
-            val = raw[lookup_key]
+        val = raw.get(lookup_key, 0)  # Default to 0 if not provided
 
         if col in _categorical_cols:
             label_map = _label_maps[col]
-            if str(val) not in label_map:
-                encoded[col] = 0  # Fallback
-            else:
-                encoded[col] = label_map[str(val)]
+            encoded[col] = label_map.get(str(val), 0)
         else:
             try:
                 encoded[col] = float(val) if val is not None else 0.0
             except ValueError:
-                logger.warning(
-                    f"⚠️ Non-numeric value for '{col}': {val}, defaulting to 0.0"
-                )
+                logger.warning(f"⚠️ Non-numeric value for '{col}': {val}, defaulting to 0.0")
                 encoded[col] = 0.0
 
-    df = pd.DataFrame([encoded], columns=_feature_columns)
-    df = df.fillna(0.0)
+    df = pd.DataFrame([encoded], columns=_feature_columns).fillna(0)
     return df
-
 
 def _get_available_models() -> Dict[str, Path]:
     """Returns a dictionary of available model stems mapped to their full path."""
@@ -143,16 +175,13 @@ def _get_available_models() -> Dict[str, Path]:
         return {}
     return {p.stem: p for p in available}
 
-
 def _resolve_model_name(input_name: str) -> str:
     """
     Maps a clean, user-friendly model name string to the actual file stem.
     Supports flexible aliases (case-insensitive, handles missing '_model' or 'regressor').
     """
     stem_map = _get_available_models()
-    clean_input = (
-        input_name.lower().strip().replace("regressor", "").replace("model", "")
-    )
+    clean_input = (input_name.lower().strip().replace("regressor", "").replace("model", ""))
 
     # Define mapping dictionary for clean inputs -> actual stems
     """Models aliaes for query in API calls"""
@@ -166,21 +195,11 @@ def _resolve_model_name(input_name: str) -> str:
         "dt": "DecisionTreeRegressor_model",
     }
 
-    # Check alias dictionary match
-    if clean_input in aliases:
-        target_stem = aliases[clean_input]
-        if target_stem in stem_map:
-            return target_stem
-
-    # Fallback loose partial matching against available stems
-    for actual_stem in stem_map.keys():
-        clean_actual = (
-            actual_stem.lower()
-            .replace("_", "")
-            .replace("regressor", "")
-            .replace("model", "")
-        )
-
+    if clean_input in aliases and aliases[clean_input] in stem_map:
+        return aliases[clean_input]
+    
+    for actual_stem in stem_map.keys(): # Fallback loose partial matching againts available model stems
+        clean_actual = (actual_stem.lower().replace("regressor", "").replace("model", "")).replace("_", "")
         if clean_input == clean_actual or clean_input in clean_actual:
             return actual_stem
 
@@ -190,7 +209,6 @@ def _resolve_model_name(input_name: str) -> str:
         status_code=400,
         detail=f"Model identifier '{input_name}' not recognized. Please choose from: {readable_options}",
     )
-
 
 def _get_best_model_name() -> str:
     """Returns the default fallback best performing model name."""
@@ -214,7 +232,6 @@ def _get_scaler_path() -> Optional[Path]:
     """Returns the scaler path used during training model."""
     scaler_path = settings.MODEL_PATH / "sales_ml_models" / "scaler" / "scaler.joblib"
     return scaler_path if scaler_path.exists() else None
-
 
 def _calculate_regression_confidence(
     model, feature_array, prediction_raw: float
@@ -240,15 +257,12 @@ def _calculate_regression_confidence(
     except Exception:
         return 90.0  # Safe pipeline fallback confidence
 
-
 def _load_sales_components(selected_model_name: str):
     """Loads the specifically requested model + scaler into the registry."""
     actual_file_stem = _resolve_model_name(selected_model_name)
 
     if model_registry.get_model(actual_file_stem) is None:
-        model_registry.load_model(
-            domain="sales", model_name=actual_file_stem, ext=".joblib"
-        )
+        model_registry.load_model(domain="sales", model_name=actual_file_stem, ext=".joblib")
 
     # Load shared scaler
     scaler = None
@@ -262,12 +276,9 @@ def _load_sales_components(selected_model_name: str):
 
     model = model_registry.get_model(actual_file_stem)
     if model is None:
-        raise RuntimeError(
-            f"❌ Model '{actual_file_stem}' failed to load from registry."
-        )
+        raise RuntimeError(f"❌ Model '{actual_file_stem}' failed to load from registry.")
 
     return model, scaler, actual_file_stem
-
 
 @router.post("/sales-prediction")
 async def sales_prediction(
@@ -298,11 +309,19 @@ async def sales_prediction(
     Enhanced Sales Prediction API with explicit pipeline mode choices.
     """
     try:
-        # 1. Fallback to default model strategy if parameter isn't provided
+        # 1. Check if Feast store lookup is requested - if not. use the provided payload directly
+        if payload.order_id is not None and payload.sales is None:
+            logger.info(f"🔍 Fetching features for order_id: {payload.order_id} from Feast store.")
+            data_dict = fetch_sales_features(payload.order_id)
+        else:
+            logger.info("⚡ Using provided payload directly for prediction.")
+            data_dict = payload.model_dump()
+        
+        # 2. Fallback to default model strategy if parameter isn't provided
         target_query = model_name if model_name else _get_best_model_name()
 
-        # 2. Encode payload (Runs securely on every hit)
-        feature_vector: pd.DataFrame = _get_encoded_features(payload)
+        # 3. Encode payload (Runs securely on every hit)
+        feature_vector: pd.DataFrame = _get_encoded_features(data_dict)
 
         # Enchanced Policy: Evaluate explicit execution selection choices for pipeline mode
         q_mult = 1.0
@@ -323,23 +342,19 @@ async def sales_prediction(
                 "⚡ Pipeline operating in Historical mode. Forecasting multipliers bypassed."
             )
 
-        # 3. Load runtime artifacts
+        # 4. Load runtime artifacts
         model, scaler, resolved_stem = _load_sales_components(target_query)
 
-        # 4. Pipeline Scale Normalization Realignment
+        # 5. Pipeline Scale Normalization Realignment
         if scaler is not None:
-            raw_array = np.nan_to_num(feature_vector.to_numpy().astype(np.float64))
+            raw_array = np.nan_to_num(feature_vector.to_numpy().astype(np.float64)) 
             feature_array = scaler.transform(raw_array.reshape(1, -1))
         else:
             feature_array = feature_vector.to_numpy().reshape(1, -1)
 
-        # 5. Predict using ML model & log scale
+        # 6. Predict using ML model & log scale
         prediction = model.predict(feature_array)
-        pred_raw = (
-            float(prediction[0])
-            if isinstance(prediction, (np.ndarray, list))
-            else float(prediction)
-        )
+        pred_raw = (float(prediction[0]) if isinstance(prediction, (np.ndarray, list)) else float(prediction))
 
         # Apply exponential scale conversion inversion logic to restore currency metrics
         prediction_actual = float(np.expm1(pred_raw))
@@ -347,9 +362,7 @@ async def sales_prediction(
             prediction_actual = 0.0  # Ensure no negative sales predictions
 
         # Calculate Model output confidence score
-        confidence_percentage = _calculate_regression_confidence(
-            model, feature_array, pred_raw
-        )
+        confidence_percentage = _calculate_regression_confidence(model, feature_array, pred_raw)
 
         return {
             "model_used": resolved_stem,
