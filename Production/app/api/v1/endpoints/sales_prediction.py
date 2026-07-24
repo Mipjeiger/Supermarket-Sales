@@ -105,7 +105,6 @@ def _get_encode_features() -> Optional[Path]:
     sales_features_path = settings.SALES_FEATURES_FEAST
     return sales_features_path if sales_features_path.exists() else None
 
-
 def _build_encoding_schema() -> tuple[List[str], List[str], Dict[str, Dict[str, int]]]:
     """
     Derives the full encoding schema directly from X_features.parquet.
@@ -121,7 +120,9 @@ def _build_encoding_schema() -> tuple[List[str], List[str], Dict[str, Dict[str, 
     X_ref = pd.read_parquet(encode_path)
     raw_df = pd.read_parquet(raw_path)
 
-    feature_columns: List[str] = X_ref.columns.tolist()
+    # MODIFIED: Filter out non-feature metadata/target columns
+    NON_FEATURE_COLS = {"order_id", "order_date", "product_id", "ship_date", "sales"}
+    feature_columns: List[str] = [col for col in X_ref.columns if col not in NON_FEATURE_COLS]
 
     categorical_cols: List[str] = [
         col for col in feature_columns 
@@ -135,7 +136,6 @@ def _build_encoding_schema() -> tuple[List[str], List[str], Dict[str, Dict[str, 
 
     logger.info(f"✅ Encoding schema built from X_features.parquet: {len(feature_columns)} features.")
     return feature_columns, categorical_cols, label_maps
-
 
 def _get_encoded_features(payload_dict: Dict[str, Any]) -> pd.DataFrame:
     """
@@ -227,35 +227,46 @@ def _get_best_model_name() -> str:
             return preferred
     return list(stem_map.keys())[0] if stem_map else ""
 
-
 def _get_scaler_path() -> Optional[Path]:
     """Returns the scaler path used during training model."""
     scaler_path = settings.MODEL_PATH / "sales_ml_models" / "scaler" / "scaler.joblib"
     return scaler_path if scaler_path.exists() else None
 
 def _calculate_regression_confidence(
-    model, feature_array, prediction_raw: float
+    model: Any, 
+    feature_array: np.ndarray, 
+    prediction_actual: float,
+    actual_sales: Optional[float] = None,
+    pipeline_mode: PipelineMode = PipelineMode.HISTORICAL
 ) -> float:
-    """
-    Calculates an engineered variance confidence percentage for continuous regression outputs.
-    Falls back gracefully based on tree variance or expected model boundaries.
-    """
+    """Calculates an engineered variance confidence percentage for continuous regression outputs."""
     try:
-        if hasattr(model, "estimators_") and len(model.estimators_) > 0:
+        # Historical Verification: Compare against true ground truth if available
+        if pipeline_mode == PipelineMode.HISTORICAL and actual_sales is not None and actual_sales > 0:
+            ape = abs(prediction_actual - actual_sales) / actual_sales # Absolute Percentage Error
+            accuracy_confidence = (1.0 - ape) * 100.0 # If prediction matches actual sales exactly (or near exact), confidence is ~98.5%
+            return float(np.clip(accuracy_confidence, 50.0, 98.5))
+
+        # Inference simulation: Structural confidence when actual ground truth isn't known
+        if hasattr(model, "tree_"):
+            leaf_id = model.apply(feature_array)[0] # Get the leaf node index for the input sample
+            n_node_samples = model.tree_.n_node_samples[leaf_id]
+            leaf_confidence = 65.0 + (30.0 * (1.0 - np.exp(-n_node_samples / 15.0)))  # Sigmoid-like scaling (Increased)
+            return float(np.clip(leaf_confidence, 60.0, 95.0))
+
+        # Ensemble Models with multiple estimators: Calculate variance across predictions
+        elif hasattr(model, "estimators_") and len(model.estimators_) > 0:
             preds = [est.predict(feature_array)[0] for est in model.estimators_]
-            variance = np.var(preds)
-
-            # Convert variance to a bounded percentage inverse ratio
-            confidence = 1.0 / (1.0 + variance)
-            return float(
-                np.clip(confidence * 100, 55.0, 99.5)
-            )  # Confidence between 55% and 99.5%
-
-        # General model structural fallback using target bound
-        return float(np.clip(95.2 - (abs(prediction_raw) * 0.001), 70.0, 98.5))
+            relative_std = np.std(preds) / (abs(np.mean(preds)) + 1e-5)
+            confidence = (1.0 / (1.0 + relative_std)) * 100.0
+            return float(np.clip(confidence, 55.0, 98.5))
+        
+        else:
+            return 88.5
 
     except Exception:
-        return 90.0  # Safe pipeline fallback confidence
+        logger.warning("⚠️ Confidence calculation failed, returning default fallback.")
+        return 82.5  # Safe pipeline fallback confidence
 
 def _load_sales_components(selected_model_name: str):
     """Loads the specifically requested model + scaler into the registry."""
@@ -283,22 +294,10 @@ def _load_sales_components(selected_model_name: str):
 @router.post("/sales-prediction")
 async def sales_prediction(
     payload: SalesRequest,
-    model_name: Optional[str] = Query(
-        None,
-        description="Specify which model to run. If omitted, defaults to the best available model.",
-    ),
-    pipeline_mode: PipelineMode = Query(
-        PipelineMode.HISTORICAL,
-        description="Select runtime engine behavior. 'Historical Verification' runs data as-is. 'Inference Simulation' activates scenario forecasting multipliers.",
-    ),
-    quantity_multiplier: float = Query(
-        1,
-        description="Simulate change in transaction sales volume (Only applies in Simulation mode).",
-    ),
-    discount_multiplier: float = Query(
-        0.5,
-        description="Simulate changes in promotional discounting activity (Only applies in Simulation mode).",
-    ),
+    model_name: Optional[str] = Query(None,description="Specify which model to run. If omitted, defaults to the best available model."),
+    pipeline_mode: PipelineMode = Query(PipelineMode.HISTORICAL,description="Select runtime engine behavior. 'Historical Verification' runs data as-is."),
+    quantity_multiplier: float = Query(1,description="Simulate change in transaction sales volume (Only applies in Simulation mode)."),
+    discount_multiplier: float = Query(0.5,description="Simulate changes in promotional discounting activity (Only applies in Simulation mode)."),
 ):
     # Bridge prometheus metrics collection with request lifecycle
     start_time = time.time()
@@ -310,12 +309,21 @@ async def sales_prediction(
     """
     try:
         # 1. Check if Feast store lookup is requested - if not. use the provided payload directly
-        if payload.order_id is not None and payload.sales is None:
+        if payload.order_id is not None and payload.unit_price is None:
             logger.info(f"🔍 Fetching features for order_id: {payload.order_id} from Feast store.")
             data_dict = fetch_sales_features(payload.order_id)
         else:
             logger.info("⚡ Using provided payload directly for prediction.")
             data_dict = payload.model_dump()
+
+        # Ectract ground truth 'sales' or 'actual_sales' if present in Feast
+        actual_sales_val = data_dict.get("sales") or data_dict.get("actual_sales")
+        if actual_sales_val is not None:
+            try:
+                actual_sales_val = float(actual_sales_val)
+            except (ValueError, TypeError):
+                logger.warning(f"⚠️ Non-numeric actual sales value: {actual_sales_val}. Ignoring for confidence calculation.")
+                actual_sales_val = None
         
         # 2. Fallback to default model strategy if parameter isn't provided
         target_query = model_name if model_name else _get_best_model_name()
@@ -338,9 +346,7 @@ async def sales_prediction(
                 if "discount" in col.lower():
                     feature_vector[col] = feature_vector[col] * d_mult
         else:
-            logger.info(
-                "⚡ Pipeline operating in Historical mode. Forecasting multipliers bypassed."
-            )
+            logger.info("⚡ Pipeline operating in Historical mode. Forecasting multipliers bypassed.")
 
         # 4. Load runtime artifacts
         model, scaler, resolved_stem = _load_sales_components(target_query)
@@ -362,7 +368,7 @@ async def sales_prediction(
             prediction_actual = 0.0  # Ensure no negative sales predictions
 
         # Calculate Model output confidence score
-        confidence_percentage = _calculate_regression_confidence(model, feature_array, pred_raw)
+        confidence_percentage = _calculate_regression_confidence(model, feature_array, prediction_actual, actual_sales_val, pipeline_mode)
 
         return {
             "model_used": resolved_stem,

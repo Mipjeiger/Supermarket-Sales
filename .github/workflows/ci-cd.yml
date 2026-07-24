@@ -7,7 +7,7 @@ on:
     branches: [ "main", "master" ]
 
 permissions:
-  contents: read
+  contents: write    # Required for git-auto-commit to push Black formatting changes
   packages: write
 
 env:
@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout Code Repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }} # Ensures the correct branch reference for auto-commits on PRs
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
@@ -35,8 +37,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 black bandit
 
-      - name: Code Formatting Check (Black)
-        run: black --check Production/app/
+      - name: Auto-Format Code (Black)
+        run: black Production/app/
+
+      - name: Auto-Commit Formatting Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "style(ci): auto-format Python code with Black [skip ci]"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
 
       - name: Linting Verification (Flake8)
         run: |
@@ -79,7 +88,7 @@ jobs:
       - name: Build and Push FastAPI Production Image
         uses: docker/build-push-action@v6
         with:
-          context: . # context to repo root for docker can access all files
+          context: . # Context set to repository root so Docker can access all files
           file: ./Production/docker/Dockerfile.api
           push: true
           tags: ${{ steps.meta.outputs.tags }}
@@ -90,16 +99,15 @@ jobs:
   # 🚨 Job 3: Operations Alert Slack Dispatcher
   slack-deployment-alert:
     name: Dispatch Operational Signals
-    needs: continuous-delivery
+    needs: [continuous-integration, continuous-delivery]
     runs-on: ubuntu-latest
     if: always() && github.event_name == 'push'
 
     steps:
       - name: Send Pipeline Status Notification to Slack
-        if: env.SLACK_WEBHOOK_URL != ''
         uses: 8398a7/action-slack@v3
         with:
-          status: ${{ needs.continuous-delivery.result }}
+          status: ${{ contains(needs.*.result, 'failure') && 'failure' || 'success' }}
           fields: repo,message,commit,author,action,workflow
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
