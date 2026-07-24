@@ -10,7 +10,7 @@ response = store.get_online_features(
     features=[
         "sales_features:quantity",
         "sales_features:profit_margin",
-        "fraud_features:shipping_days"
+        "fraud_features:shipping_days",
     ],
     entity_rows=entity_rows,
 )

@@ -33,15 +33,29 @@ class Settings(BaseSettings):
 
     # File Paths Configuration
     MODEL_PATH: Path = BASE_DIR / "Models"
-    SALES_MODEL_PATH: list = list((BASE_DIR / "Models" / "sales_ml_models").glob("*.joblib"))
-    FRAUD_MODEL_PATH: list = list((BASE_DIR / "Models" / "fraud_ml_models").glob("*.pkl"))
+    SALES_MODEL_PATH: list = list(
+        (BASE_DIR / "Models" / "sales_ml_models").glob("*.joblib")
+    )
+    FRAUD_MODEL_PATH: list = list(
+        (BASE_DIR / "Models" / "fraud_ml_models").glob("*.pkl")
+    )
     MLFLOW_PATH: Path = BASE_DIR / "mlflow"
-    DATA_RAW: Path = (BASE_DIR / "app" / "data" / "raw" / "SuperStoreOrders - SuperStoreOrders.csv")
-    DATA_CLEANED: Path = (BASE_DIR / "app" / "data" / "cleaned" / "data_sales_cleaned.parquet")
+    DATA_RAW: Path = (
+        BASE_DIR / "app" / "data" / "raw" / "SuperStoreOrders - SuperStoreOrders.csv"
+    )
+    DATA_CLEANED: Path = (
+        BASE_DIR / "app" / "data" / "cleaned" / "data_sales_cleaned.parquet"
+    )
     SALES_FEATURES: Path = BASE_DIR / "app" / "data" / "cleaned" / "X_features.parquet"
-    FRAUD_FEATURES: Path = (BASE_DIR / "app" / "data" / "cleaned" / "X_features_fraud.parquet")
-    SALES_FEATURES_FEAST: Path = (BASE_DIR / "app" / "data" / "cleaned" / "X_features_feast.parquet")
-    FRAUD_FEATURES_FEAST: Path = (BASE_DIR / "app" / "data" / "cleaned" / "X_features_fraud_feast.parquet")
+    FRAUD_FEATURES: Path = (
+        BASE_DIR / "app" / "data" / "cleaned" / "X_features_fraud.parquet"
+    )
+    SALES_FEATURES_FEAST: Path = (
+        BASE_DIR / "app" / "data" / "cleaned" / "X_features_feast.parquet"
+    )
+    FRAUD_FEATURES_FEAST: Path = (
+        BASE_DIR / "app" / "data" / "cleaned" / "X_features_fraud_feast.parquet"
+    )
 
     # PostgreSQL Database Configuration
     POSTGRES_USER: str

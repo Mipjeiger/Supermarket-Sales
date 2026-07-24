@@ -7,17 +7,13 @@ from pathlib import Path
 BASE_DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "cleaned"
 
 # 1. Define Entity (Primary Key)
-customer = Entity(
-    name="order_id",
-    value_type=ValueType.INT64,
-    join_keys=["order_id"]
-)
+customer = Entity(name="order_id", value_type=ValueType.INT64, join_keys=["order_id"])
 
 # 2. Define Data Sources pointing to parquet files
 fraud_source = FileSource(
     name="fraud_feature_source",
     path=str(BASE_DATA_DIR / "X_features_fraud_with_order_date.parquet"),
-    timestamp_field="order_date"
+    timestamp_field="order_date",
 )
 
 sales_source = FileSource(
@@ -51,10 +47,10 @@ fraud_feature_view = FeatureView(
         Field(name="unit_price", dtype=Float64),
         Field(name="profit_margin", dtype=Float64),
         Field(name="sales", dtype=Float64),
-        Field(name="shipping_days", dtype=Int64)
+        Field(name="shipping_days", dtype=Int64),
     ],
     online=True,
-    source=fraud_source
+    source=fraud_source,
 )
 
 # 4. Define Sales Feature View
@@ -80,8 +76,8 @@ sales_feature_view = FeatureView(
         Field(name="order_priority", dtype=Int64),
         Field(name="year", dtype=Int64),
         Field(name="unit_price", dtype=Float64),
-        Field(name="profit_margin", dtype=Float64)
+        Field(name="profit_margin", dtype=Float64),
     ],
     online=True,
-    source=sales_source
+    source=sales_source,
 )

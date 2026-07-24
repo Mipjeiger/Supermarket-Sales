@@ -22,7 +22,11 @@ try:
     logger.info("✅ Feast Feature Store initialized successfully.")
 except Exception as e:
     feature_store = None
-    logger.warning("⚠️ Failed to initialize Feast Feature Store. Ensure the repository path is correct. Error: %s", str(e))
+    logger.warning(
+        "⚠️ Failed to initialize Feast Feature Store. Ensure the repository path is correct. Error: %s",
+        str(e),
+    )
+
 
 class FraudRiskLevel(str, Enum):
     """Enumeration for fraud risk levels."""
@@ -31,8 +35,11 @@ class FraudRiskLevel(str, Enum):
     MEDIUM = "Medium Risk Level"
     HIGH = "High Risk Level"
 
+
 class FraudPredictionRequest(BaseModel):
-    order_id: Optional[Union[int, str]] = Field(None, description="Order ID to retrieve pre-computed features from Feast store.")
+    order_id: Optional[Union[int, str]] = Field(
+        None, description="Order ID to retrieve pre-computed features from Feast store."
+    )
     ship_mode: Optional[str] = None
     customer_name: Optional[str] = None
     segment: Optional[str] = None
@@ -54,11 +61,12 @@ class FraudPredictionRequest(BaseModel):
     sales: Optional[float] = None
     shipping_days: Optional[int] = None
 
+
 def fetch_fraud_features_from_feast(order_id: Union[int, str]) -> Dict[str, Any]:
     """Retrieves online features for a given order_id from SQLite Feast store."""
     if feast_store is None:
         raise RuntimeError("Feast Feature Store is not initialized.")
-    
+
     # Ensure order_id is integer-compatible for Feast lookup
     try:
         feast_entity_id = int(order_id)
@@ -67,7 +75,7 @@ def fetch_fraud_features_from_feast(order_id: Union[int, str]) -> Dict[str, Any]
             status_code=400,
             detail=f"Invalid order_id '{order_id}'. Must be an integer or string representing an integer.",
         )
-    
+
     feature_refs = [
         "fraud_features:ship_mode",
         "fraud_features:customer_name",
@@ -102,7 +110,7 @@ def fetch_fraud_features_from_feast(order_id: Union[int, str]) -> Dict[str, Any]
             status_code=404,
             detail=f"❌ Order ID '{order_id}' not found in Feast online feature store.",
         )
-    
+
     # Strip the 'fraud_features:' prefix for payload building
     raw_dict = {}
     for col in df.columns:
@@ -111,43 +119,55 @@ def fetch_fraud_features_from_feast(order_id: Union[int, str]) -> Dict[str, Any]
 
     return raw_dict
 
+
 # --- Module-level caches - built once on first request ---
 _feature_columns: Optional[List[str]] = None
 _categorical_cols: Optional[List[str]] = None
 _label_maps: Optional[Dict[str, Dict[str, int]]] = None
+
 
 def get_encode_features() -> Optional[Path]:
     """Returns the encode features path used during training model."""
     fraud_features_path = settings.FRAUD_FEATURES_FEAST
     return fraud_features_path if fraud_features_path.exists() else None
 
+
 def build_encoding_schema() -> tuple[List[str], List[str], Dict[str, Dict[str, int]]]:
     """Derives the full encoding schema"""
     encode_path = get_encode_features()
     if encode_path is None:
-       raise RuntimeError("Encode features path not found.")
+        raise RuntimeError("Encode features path not found.")
 
     raw_path = settings.DATA_CLEANED.parent / "combined_sql_supermarket.parquet"
     if not raw_path.exists():
         raise RuntimeError("Raw data path not found.")
 
     X_reference = pd.read_parquet(encode_path)
-    
+
     # MODIFIED: Define metadata/target columsn to exclude from model input features
     NON_FEATURE_COLS = {"order_id", "order_date", "product_id", "ship_date", "fraud"}
-    feature_columns: List[str] = [col for col in X_reference.columns if col not in NON_FEATURE_COLS]
+    feature_columns: List[str] = [
+        col for col in X_reference.columns if col not in NON_FEATURE_COLS
+    ]
     raw_df = pd.read_parquet(raw_path)
 
     categorical_cols: List[str] = [
-        col for col in feature_columns
-        if col in raw_df.columns and X_reference[col].dtype == np.int64 and raw_df[col].dtype == object
+        col
+        for col in feature_columns
+        if col in raw_df.columns
+        and X_reference[col].dtype == np.int64
+        and raw_df[col].dtype == object
     ]
 
     label_maps: Dict[str, Dict[str, int]] = {
-        col: {v: i for i, v in enumerate(sorted(raw_df[col].dropna().unique().tolist()))}
-        for col in categorical_cols}  # enumerate unique values for each categorical column
+        col: {
+            v: i for i, v in enumerate(sorted(raw_df[col].dropna().unique().tolist()))
+        }
+        for col in categorical_cols
+    }  # enumerate unique values for each categorical column
 
     return feature_columns, categorical_cols, label_maps
+
 
 def get_encoded_features(payload_dict: Dict[str, Any]) -> pd.DataFrame:
     """Converts human-readable transaction data into encoded features for model prediction."""
@@ -171,7 +191,9 @@ def get_encoded_features(payload_dict: Dict[str, Any]) -> pd.DataFrame:
             try:
                 encoded[col] = float(val) if val is not None else 0.0
             except ValueError:
-                logger.warning(f"⚠️ Non-numeric value '{val}' for column '{col}'. Defaulting to 0.0.")
+                logger.warning(
+                    f"⚠️ Non-numeric value '{val}' for column '{col}'. Defaulting to 0.0."
+                )
                 encoded[col] = 0.0
 
     # Return to Dataframe with a single row for prediction
@@ -186,10 +208,17 @@ def get_available_models() -> Dict[str, Path]:
         return {}
     return {model.stem: model for model in available_models}
 
+
 def resolve_model_name(input_name: str) -> str:
     """Loweercase model-name and simplify to stem for matching against available models."""
     stem_map = get_available_models()
-    clean_input = (input_name.lower().strip().replace("classifier", "").replace("model", "").replace("_", ""))
+    clean_input = (
+        input_name.lower()
+        .strip()
+        .replace("classifier", "")
+        .replace("model", "")
+        .replace("_", "")
+    )
 
     # Define dynamic mapping shorthand for your classification production stack
     aliases = {
@@ -205,18 +234,34 @@ def resolve_model_name(input_name: str) -> str:
     # Check for alias match first
     if clean_input in aliases and aliases[clean_input] in stem_map:
         return aliases[clean_input]
-    
-    for actual_stem in stem_map.keys(): # Fallback loose partial matching againts available model stems
-        clean_actual = (actual_stem.lower().replace("classifier", "").replace("model", "").replace("_", ""))
+
+    for (
+        actual_stem
+    ) in (
+        stem_map.keys()
+    ):  # Fallback loose partial matching againts available model stems
+        clean_actual = (
+            actual_stem.lower()
+            .replace("classifier", "")
+            .replace("model", "")
+            .replace("_", "")
+        )
 
         if clean_input == clean_actual or clean_input in clean_actual:
             return actual_stem
 
-    raise HTTPException(status_code=400, detail=f"Model identifier '{input_name}' not found.")
+    raise HTTPException(
+        status_code=400, detail=f"Model identifier '{input_name}' not found."
+    )
+
 
 def get_best_model_name() -> str:
     """Returns the default fallback best performing model name."""
-    list_models = ["GradientBoostingClassifier", "RandomForestClassifier", "XGBClassifier"]
+    list_models = [
+        "GradientBoostingClassifier",
+        "RandomForestClassifier",
+        "XGBClassifier",
+    ]
     stem_map = get_available_models()
 
     if not stem_map:
@@ -226,6 +271,7 @@ def get_best_model_name() -> str:
         if pref_model in stem_map:
             return pref_model
     return list(stem_map.keys())[0] if stem_map else ""
+
 
 def calculate_classifier_confidence(
     model, feature_array, prediction_raw: float
@@ -241,31 +287,44 @@ def calculate_classifier_confidence(
 
             # Convert variance to a confidence percentage (0-100)
             confidence = 1.0 / (1.0 + variance)
-            return float(np.clip(confidence * 100, 50.0, 98.5)) # Ensure within 0-98.5 range
+            return float(
+                np.clip(confidence * 100, 50.0, 98.5)
+            )  # Ensure within 0-98.5 range
 
-        return float(np.clip(96.5 - abs(prediction_raw) * 0.001, 70.0, 98.5)) # Fallback confidence based on raw prediction
+        return float(
+            np.clip(96.5 - abs(prediction_raw) * 0.001, 70.0, 98.5)
+        )  # Fallback confidence based on raw prediction
 
     except Exception:
         return 80.0  # Fallback to safe default confidence
+
 
 def load_fraud_components(selected_model_name: str):
     """Loads the selected model and its associated components from the model registry."""
     actual_file_stem = resolve_model_name(selected_model_name)
 
     if model_registry.get_model(actual_file_stem) is None:
-        model_registry.load_model(domain="fraud", model_name=actual_file_stem, ext=".pkl")
+        model_registry.load_model(
+            domain="fraud", model_name=actual_file_stem, ext=".pkl"
+        )
 
     # Ensure the model is loaded
     model = model_registry.get_model(actual_file_stem)
     if model is None:
-        raise RuntimeError(f"❌ Failed to load model '{actual_file_stem}' from the registry.")
+        raise RuntimeError(
+            f"❌ Failed to load model '{actual_file_stem}' from the registry."
+        )
 
     return model, actual_file_stem
+
 
 @router.post("/fraud-prediction")
 async def fraud_prediction(
     payload: FraudPredictionRequest,
-    model_name: Optional[str] = Query(None, description="Specify the model name to use for prediction.",),
+    model_name: Optional[str] = Query(
+        None,
+        description="Specify the model name to use for prediction.",
+    ),
 ):
     # Brdige prometheus metrics collection for this endpoint
     start_time = time.time()
@@ -278,11 +337,13 @@ async def fraud_prediction(
     try:
         # 1. Check if Feast store lookup is requested - if not, use the provided payload directly
         if payload.order_id is not None and payload.sales is None:
-            logger.info(f"🔍 Fetching features from Feast store for order_id: {payload.order_id}")
+            logger.info(
+                f"🔍 Fetching features from Feast store for order_id: {payload.order_id}"
+            )
             data_dict = fetch_fraud_features_from_feast(payload.order_id)
         else:
             logger.info("⚡ Using direct payload features for inference.")
-            data_dict = payload.model_dump() 
+            data_dict = payload.model_dump()
 
         target_query = model_name if model_name else get_best_model_name()
 
@@ -297,12 +358,18 @@ async def fraud_prediction(
             feature_vector = feature_vector[list(model.feature_names_in_)]
 
         if hasattr(model, "predict_proba"):
-            prediction_prob = float(model.predict_proba(feature_vector)[:, 1][0])  # Probability of the positive class
+            prediction_prob = float(
+                model.predict_proba(feature_vector)[:, 1][0]
+            )  # Probability of the positive class
         else:
-            prediction_prob = float(model.predict(feature_vector)[0]) # Fallback to direct prediction
+            prediction_prob = float(
+                model.predict(feature_vector)[0]
+            )  # Fallback to direct prediction
 
         # 5. Calculate model output confidence percentage score
-        confidence_percentage = calculate_classifier_confidence(model, feature_vector, prediction_prob)
+        confidence_percentage = calculate_classifier_confidence(
+            model, feature_vector, prediction_prob
+        )
 
         return {
             "order_id": payload.order_id,
@@ -313,7 +380,11 @@ async def fraud_prediction(
             "risk_level": (
                 FraudRiskLevel.HIGH
                 if prediction_prob >= 0.5
-                else (FraudRiskLevel.LOW if prediction_prob < 0.2 else FraudRiskLevel.MEDIUM)
+                else (
+                    FraudRiskLevel.LOW
+                    if prediction_prob < 0.2
+                    else FraudRiskLevel.MEDIUM
+                )
             ),
         }
 
