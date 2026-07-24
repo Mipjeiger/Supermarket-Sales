@@ -18,6 +18,7 @@ SALES_MODEL_DIR = "/app/Production/Models/sales_ml_models"
 
 loaded_engines = {"fraud": {}, "sales": {}}
 
+
 @app.on_event("startup")
 def dynamically_load_all_models():
     """Scans model directories and loads all available models into memory for inference."""
@@ -32,7 +33,9 @@ def dynamically_load_all_models():
                     full_path = os.path.join(FRAUD_MODEL_DIR, file)
 
                     with open(full_path, "rb") as f:
-                        loaded_engines["fraud"][model_name] = pickle.load(f)  # nosec B301
+                        loaded_engines["fraud"][model_name] = pickle.load(
+                            f
+                        )  # nosec B301
                     print(f"✅ Loaded Fraud Model: {model_name}")
 
         else:
@@ -56,11 +59,14 @@ def dynamically_load_all_models():
                 "No models were loaded. Ensure model files exist in the specified directories."
             )
 
-        print(f"🚀 Dynamically initialization complete. Running serving registry: { {k: list(v.keys()) for k, v in loaded_engines.items()} }")
+        print(
+            f"🚀 Dynamically initialization complete. Running serving registry: { {k: list(v.keys()) for k, v in loaded_engines.items()} }"
+        )
 
     except Exception as e:
         print(f"❌ Error during model loading: {e}")
         raise RuntimeError(f"Failed to load models: {e}")
+
 
 class InferenceRequest(BaseModel):
     category: str
@@ -70,12 +76,14 @@ class InferenceRequest(BaseModel):
     profit_margin: float
     sales: float
 
+
 @app.get("/v1/models")
 def kserve_health_probe():
     return {
         "status": "healthy",
         "active_engines": {k: list(v.keys()) for k, v in loaded_engines.items()},
     }
+
 
 @app.post("/v1/models/supermarket-intelligence:predict")
 def run_multi_model_inference(payload: InferenceRequest):
@@ -143,7 +151,7 @@ def run_multi_model_inference(payload: InferenceRequest):
 
 if __name__ == "__main__":
     uvicorn.run(
-        "Production.app.services.inference_gateway:app", 
-        host="0.0.0.0", # nosec B104 - DEBUG FIX: Explicitly allow binding all interfaces in container
-        port=8085
+        "Production.app.services.inference_gateway:app",
+        host="0.0.0.0",  # nosec B104 - DEBUG FIX: Explicitly allow binding all interfaces in container
+        port=8085,
     )
