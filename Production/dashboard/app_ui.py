@@ -257,7 +257,6 @@ def build_velocity_context(metrics_row: Optional[pd.Series]) -> str:
         f"- Velocity Alert Flag: {int(metrics_row.get('velocity_alert_flag', 0))}"
     )
 
-
 def get_customer_day_match(
     customer_day_metrics: pd.DataFrame,
     customer_name: str,
@@ -286,7 +285,6 @@ def get_customer_day_match(
         customer_subset["order_date"] - target_date
     ).abs()
     return customer_subset.sort_values("date_distance").iloc[0]
-
 
 def llm_abuse_summary(
     llm_model, context_text: str, score: float, risk_level: str
@@ -372,7 +370,6 @@ def model_prediction_summary(model, input_df):
         return prediction[0], confidence, "ok"
     except Exception as e:
         return None, None, f"Runtime Error: {str(e)}"
-
 
 # -----------------------------------------------------------------------------
 # Data & Model Initialization
