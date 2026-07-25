@@ -40,13 +40,6 @@ jobs:
       - name: Auto-Format Code (Black)
         run: black Production/app/
 
-      - name: Auto-Commit Formatting Changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "style(ci): auto-format Python code with Black [skip ci]"
-          commit_user_name: "github-actions[bot]"
-          commit_user_email: "github-actions[bot]@users.noreply.github.com"
-
       - name: Linting Verification (Flake8)
         run: |
           flake8 Production/app/ --count --select=E9,F63,F7,F82 --show-source --statistics
