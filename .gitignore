@@ -11,3 +11,4 @@ Production/EDA/catboost_info
 kafka-ui/config.yaml
 infra
 .vscode
+Production/dashboard/streamlit.env
