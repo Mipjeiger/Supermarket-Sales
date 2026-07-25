@@ -1,7 +1,7 @@
 import os
 from typing import Optional, Dict, Any
 import httpx
-from fastapi import APIRouter,  HTTPException, status
+from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel, Field
 from app.services.sales_llm_investigation import sales_investigation_request
 from app.services.fraud_llm_investigation import fraud_investigation_request
@@ -16,11 +16,13 @@ if ENV_PATH.exists():
 
 router = APIRouter(prefix="/llm", tags=["LLM Intelligence Gateway"])
 
+
 # ================================================================
 # 1. Pydantic Models for LLM Investigation Requests
 # ===============================================================
 class InvestigationResponse(BaseModel):
     """Unified response schema for LLM-driven investigation insights."""
+
     status: str = Field(..., example="success")
     investigation_type: str = Field(..., example="fraud")
     provider_used: str = Field(..., example="Groq (llama-3.3-70b-versatile)")
@@ -28,6 +30,7 @@ class InvestigationResponse(BaseModel):
     investigation_date: str = Field(..., example="2026-07-25")
     metrics_summary: Dict[str, Any]
     analysis_summary: str
+
 
 # ===============================================================
 # 2. Async Provider Invocation Handlers
@@ -48,20 +51,21 @@ async def _invoke_groq(prompt: str) -> Optional[str]:
             model=model_name,
             messages=[{"role": "user", "content": prompt}],
             max_tokens=128,
-            temperature=0.2
+            temperature=0.2,
         )
         return completion.choices[0].message.content
-    
+
     except Exception as e:
         print(f"❌ Error invoking Groq LLM: {str(e)}")
         return None
-    
+
+
 async def _invoke_huggingface(prompt: str) -> Optional[str]:
     """Invoke HuggingFace LLM asynchronously"""
     api_key = os.getenv("HUGGINGFACE_API_KEY")
     if not api_key:
         return None
-    
+
     model_name = "meta-llama/Llama-3.2-3B-Instruct"
     url = f"https://api-inference.huggingface.co/models/{model_name}"
     headers = {"Authorization": f"Bearer {api_key}"}
@@ -70,6 +74,6 @@ async def _invoke_huggingface(prompt: str) -> Optional[str]:
         "parameters": {
             "max_new_tokens": 128,
             "temperature": 0.2,
-            "return_full_text": False
-        }
+            "return_full_text": False,
+        },
     }
