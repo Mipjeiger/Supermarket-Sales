@@ -21,7 +21,6 @@ router = APIRouter(prefix="/llm", tags=["LLM Intelligence Gateway"])
 # ===============================================================
 class InvestigationResponse(BaseModel):
     """Unified response schema for LLM-driven investigation insights."""
-
     status: str = Field(..., example="success")
     investigation_type: str = Field(..., example="fraud")
     provider_used: str = Field(..., example="Groq (llama-3.3-70b-versatile)")
@@ -106,7 +105,6 @@ def _fraud_rule_fallback(req: FraudInvestigationRequest) -> str:
         f"4. Long-term Prevention: Review shipping SLAs and discount capping rules for {req.category}."
     )
 
-
 def _sales_rule_fallback(req: SalesInvestigationRequest) -> str:
     """Rule-based fallback summary for sales variance analysis."""
     return (
@@ -141,6 +139,7 @@ async def investigate_fraud_endpoint(payload: FraudInvestigationRequest):
             f"Discount: {payload.discount:.2%} | Profit: {payload.profit:,.2f} | Profit Margin: {payload.profit_margin:.2%}\n"
             f"Shipping Days: {payload.shipping_days} | Order Priority: {payload.order_priority}\n"
             f"Fraud Flag: {payload.fraud_flag} | Risk Level: {payload.risk_level} | Abuse Score: {payload.abuse_score:.2f}\n"
+            f"Derived Context: {payload.custom_context}\n"
         )
         if payload.custom_context:
             formatted_context += f"Custom Context: {payload.custom_context}\n"
@@ -158,20 +157,7 @@ async def investigate_fraud_endpoint(payload: FraudInvestigationRequest):
         4. Long-term Prevention
         """
 
-        # Step 1: Try Groq
-        groq_res = await _invoke_groq(prompt)
-        if groq_res:
-            return InvestigationResponse(
-                status="success",
-                investigation_type="fraud",
-                provider_used=f"Groq ({os.getenv('GROQ_MODEL_NAME', 'llama-3.3-70b-versatile')})",
-                target_entity=payload.customer_name,
-                investigation_date=payload.investigation_date,
-                metrics_summary=payload.dict(),
-                analysis_summary=groq_res.strip(),
-            )
-
-        # Step 2: Fallback to HuggingFace
+        # Step 1: Try HuggingFace
         hf_res = await _invoke_huggingface(prompt)
         if hf_res:
             return InvestigationResponse(
@@ -182,6 +168,19 @@ async def investigate_fraud_endpoint(payload: FraudInvestigationRequest):
                 investigation_date=payload.investigation_date,
                 metrics_summary=payload.dict(),
                 analysis_summary=hf_res.strip(),
+            )
+
+        # Step 2: Fallback to Groq
+        groq_res = await _invoke_groq(prompt)
+        if groq_res:
+            return InvestigationResponse(
+                status="success",
+                investigation_type="fraud",
+                provider_used=f"Groq ({os.getenv('GROQ_MODEL_NAME', 'llama-3.3-70b-versatile')})",
+                target_entity=payload.customer_name,
+                investigation_date=payload.investigation_date,
+                metrics_summary=payload.dict(),
+                analysis_summary=groq_res.strip(),
             )
 
         # Step 3: Rule-based fallback
@@ -226,32 +225,19 @@ async def investigate_sales_endpoint(payload: SalesInvestigationRequest):
             formatted_context += f"Custom Context: {payload.custom_context}\n"
 
         prompt = f"""
-You are a Senior Commercial Data Analyst investigating sales revenue variance and market trends.
+        You are a Senior Commercial Data Analyst investigating sales revenue variance and market trends.
 
-Context & Variance Metrics:
-{formatted_context}
+        Context & Variance Metrics:
+        {formatted_context}
 
-Provide a concise, executive-level 4-bullet investigation summary:
-1. Performance & Variance Summary
-2. Key Revenue Drivers & Root Cause
-3. Immediate Commercial Recommendation
-4. Long-term Sales & Demand Strategy
-"""
+        Provide a concise, executive-level 4-bullet investigation summary:
+        1. Performance & Variance Summary
+        2. Key Revenue Drivers & Root Cause
+        3. Immediate Commercial Recommendation
+        4. Long-term Sales & Demand Strategy
+        """
 
-        # Step 1: Try Groq
-        groq_res = await _invoke_groq(prompt)
-        if groq_res:
-            return InvestigationResponse(
-                status="success",
-                investigation_type="sales",
-                provider_used=f"Groq ({os.getenv('GROQ_MODEL_NAME', 'llama-3.3-70b-versatile')})",
-                target_entity=payload.customer_target,
-                investigation_date=payload.investigation_date,
-                metrics_summary=payload.dict(),
-                analysis_summary=groq_res.strip(),
-            )
-
-        # Step 2: Fallback to HuggingFace
+        # Step 1: Try HuggingFace
         hf_res = await _invoke_huggingface(prompt)
         if hf_res:
             return InvestigationResponse(
@@ -264,6 +250,19 @@ Provide a concise, executive-level 4-bullet investigation summary:
                 analysis_summary=hf_res.strip(),
             )
 
+        # Step 2: Fallback to Groq
+        groq_res = await _invoke_groq(prompt)
+        if groq_res:
+            return InvestigationResponse(
+                status="success",
+                investigation_type="sales",
+                provider_used=f"Groq ({os.getenv('GROQ_MODEL_NAME', 'llama-3.3-70b-versatile')})",
+                target_entity=payload.customer_target,
+                investigation_date=payload.investigation_date,
+                metrics_summary=payload.dict(),
+                analysis_summary=groq_res.strip(),
+            )
+    
         # Step 3: Rule-based fallback
         return InvestigationResponse(
             status="fallback",

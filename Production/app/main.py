@@ -23,12 +23,12 @@ from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 from fastapi.responses import Response
 from app.monitoring.metrics import metrics_collector
 from app.workers.stream_worker import run_transaction_consumer
+from app.api.v1.endpoints.llm import router as llm_router
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -102,12 +102,14 @@ app.include_router(
     tags=["Real-time Streaming Security Operations"],
 )
 
+# Register LLM Intelligence Gateway router for investigative insights and anomaly detection
+app.include_router(llm_router, prefix="/api/v1", tags=["LLM Intelligence Gateway"])
+
 # Sales Prediction API with explicit pipeline mode choices and simulation multipliers
 app.include_router(sales_prediction.router, prefix="/api/v1", tags=["Sales Prediction"])
 
 # Fraud Detection API with real-time anomaly detection and LLM investigative analysis
 app.include_router(fraud_prediction.router, prefix="/api/v1", tags=["Fraud Detection"])
-
 
 @app.get("/")
 def root_health_check():
