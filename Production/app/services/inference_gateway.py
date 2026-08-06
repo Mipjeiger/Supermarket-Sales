@@ -18,7 +18,6 @@ SALES_MODEL_DIR = "/app/Production/Models/sales_ml_models"
 
 loaded_engines = {"fraud": {}, "sales": {}}
 
-
 @app.on_event("startup")
 def dynamically_load_all_models():
     """Scans model directories and loads all available models into memory for inference."""
@@ -83,7 +82,6 @@ def kserve_health_probe():
         "status": "healthy",
         "active_engines": {k: list(v.keys()) for k, v in loaded_engines.items()},
     }
-
 
 @app.post("/v1/models/supermarket-intelligence:predict")
 def run_multi_model_inference(payload: InferenceRequest):
