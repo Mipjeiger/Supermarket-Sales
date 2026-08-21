@@ -49,6 +49,7 @@ langchain-huggingface>=0.1.0
 langchain-classic>=1.0.8
 #sentence-transformers==2.2.2
 # chromadb==0.4.22
+groq==0.37.1
 
 # Utilities
 python-dotenv==1.0.0
